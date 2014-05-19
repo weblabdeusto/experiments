@@ -4,22 +4,25 @@ import math
 import Image
 from time import sleep
 
-global hiloterminado
+SHOULD_LEAVE_DATA_THREAD = False
 
-def loadregisterthread():
+
+def t_data_thread():
+    global SHOULD_LEAVE_DATA_THREAD
+
     try:
-        i=1
+        i = 1
         load = open('/sys/devices/ocp.3/helper.11/AIN6', 'r')
         register = open('/opt/restlite/loadregister', 'w')
-        hiloterminado =False
-        while not hiloterminado:
+        SHOULD_LEAVE_DATA_THREAD = False
+        while not SHOULD_LEAVE_DATA_THREAD:
             medida = load.read()
             medidagr = round(((int(medida) - 89.00) * 0.059), 2)
             load.seek(0)
-            escribir = str(i) + ":" + str(medidagr) + "\n"
-            register.write(escribir)
+            write = str(i) + ":" + str(medidagr) + "\n"
+            register.write(write)
             i += 1
-            print escribir
+            print write
             sleep(0.03)
 
         print "Load Register done"
@@ -43,7 +46,7 @@ def upthread():
             using.close()
             print 'Motor is using'
             return
-        #comprobar si esta arriba o abajo
+            #comprobar si esta arriba o abajo
         updown = open('/opt/restlite/updown', 'r+')
         i = updown.read()
         updown.seek(0)
@@ -114,7 +117,7 @@ def downthread():
         #Proceso que bajara la bola
 
         #Activo el hilo para guardar el registro del peso
-        r = threading.Thread(target=loadregisterthread, name='RegistroLoad')
+        r = threading.Thread(target=t_data_thread, name='RegistroLoad')
         r.setDaemon(True)
         r.start()
         sleep(0.5)
@@ -172,13 +175,13 @@ def downthread():
             while '1' in i:
                 i = hall.read()
                 hall.seek(0)
-            #print 'Hall is 1'
+                #print 'Hall is 1'
 
             while '0' in i:
                 i = hall.read()
                 hall.seek(0)
-            #print 'Hall is 0'
-            #print vueltas
+                #print 'Hall is 0'
+                #print vueltas
 
         run = open('/sys/devices/ocp.3/pwm_test_P8_46.10/run', 'w')
         run.write('0')
@@ -192,10 +195,9 @@ def downthread():
         slowfile.close()
 
         print "Terminar el hilo de registro"
-        global hiloterminado
-        hiloterminado = True
+        global SHOULD_LEAVE_DATA_THREAD
+        SHOULD_LEAVE_DATA_THREAD = True
         r.join()
-
 
         print 'DOWN DONE'
         return
@@ -214,15 +216,14 @@ def slowthread():
         i = slowfile.read()
         j = int(i)
         print "La variable en el archivo de control tiene" + i
-        if (j<15):
-            j=j+1
+        if (j < 15):
+            j = j + 1
             slowfile.write(j + "\n")
         else:
             slowfile.close()
             return
 
         slowfile.close()
-
 
         using = open('/opt/restlite/using', 'r+')
         i = using.read()
@@ -281,7 +282,6 @@ def slowthread():
         using.write('0')
         using.close()
 
-
         print 'DOWNSLOW DONE'
         return
     except:
@@ -305,7 +305,7 @@ def imagethread(ruta):
         if not photo:
             print 'Error en foto'
             return 0
-        #font = cv2.FONT_HERSHEY_SIMPLEX
+            #font = cv2.FONT_HERSHEY_SIMPLEX
         #print "Fuente Seleccionada"
         #cv2.PutText(photo, 'PRUEBA TEXTO', (50,50), font, 4,(255,0,0))
         #cv.putText(photo, "Press ESC to close.", (5, 25), cv.FONT_HERSHEY_SIMPLEX, 1.0, (255,255,255))
@@ -399,7 +399,6 @@ def image(env, start_response):
 
 
 def load(env, start_response):
-
     try:
         loadm = open('/sys/devices/ocp.3/helper.11/AIN6', 'r')
         totval = 0
@@ -407,7 +406,7 @@ def load(env, start_response):
             val = loadm.read()
             loadm.seek(0)
             totval = totval + int(val)
-        # print val
+            # print val
         #print med
         #print totval
         #print "--"
@@ -420,6 +419,7 @@ def load(env, start_response):
         #		raise restlite.Status, '400 Error capturing level'
         return 'TOTAL_LOAD=0'
 
+
 def level(env, start_response):
     #start_response('200 OK', [('Content-Type', 'text/plain')])
     level = open('/sys/devices/ocp.3/helper.11/AIN4', 'r')
@@ -430,7 +430,7 @@ def level(env, start_response):
             val = level.read()
             level.seek(0)
             totval = totval + int(val)
-        #print med
+            #print med
         #print totval
         #print "--"
         #totval = level.read()
@@ -442,7 +442,8 @@ def level(env, start_response):
         #		raise restlite.Status, '400 Error capturing level'
         return 'WATERLEVELERROR=0'  #+ str(totval)
 
-def plotload (env, start_response):
+
+def plotload(env, start_response):
     start_response('200 OK', [('Content-Type', 'text/plain')])
     try:
         ruta = '/opt/restlite/loadregister'
@@ -453,44 +454,48 @@ def plotload (env, start_response):
         raise restlite.Status, '400 Error retrieving data'
     return result
 
-def plotlevel (env, start_response):
+
+def plotlevel(env, start_response):
     start_response('200 OK', [('Content-Type', 'text/plain')])
 
 
-def object (env, start_response):
+def object(env, start_response):
     #start_response('200 OK', [('Content-Type', 'text/plain')])
+    nombre = "PingPong ball fill off Water"
     try:
-        nombre = "PingPong ball fill off Water"
         radio = 4
-        volumen = round((4.00/3.00) * math.pi * (radio**3.00), 2)
+        volumen = round((4.00 / 3.00) * math.pi * (radio ** 3.00), 2)
         masa = load(env, start_response)
         masa = masa.split("=")
         masagr = round(((int(masa[1]) - 89.00) * 0.059), 2)
-        peso = round((masagr/1000.00) * 9.80, 2)
+        peso = round((masagr / 1000.00) * 9.80, 2)
         densidad = round(masagr / volumen, 2)
-        dobj = "Nombre=" + nombre + "," + "Radio(cm)=" + str(radio) + "," + "Volumen(cm3)=" + str(volumen) + ","\
-               + "Masa(g)=" +  str(masagr) + "," + "Peso(N)=" +  str(peso) + "," + "Densidad(g/cm3)=" + str(densidad)
+        dobj = "Nombre=" + nombre + "," + "Radio(cm)=" + str(radio) + "," + "Volumen(cm3)=" + str(volumen) + "," \
+               + "Masa(g)=" + str(masagr) + "," + "Peso(N)=" + str(peso) + "," + "Densidad(g/cm3)=" + str(densidad)
     except:
         dobj = "Nombre=" + nombre + "," + "Radio(cm)=4," + "Volumen(cm3)=0," + "Peso(g)=0," + "Masa(N)=0," + "Densidad(g/cm3)=0"
         raise restlite.Status, '400 Error retrieving data'
     return dobj
 
-def liquid (env, start_response):
+
+def liquid(env, start_response):
     #start_response('200 OK', [('Content-Type', 'text/plain')])
+    nombre = "Colored Water"
     try:
-        nombre = "Colored Water"
         radio = 6.5
         densidad = 1
-        altura = level(env,start_response)
+        altura = level(env, start_response)
         altura = altura.split("=")
-        alturacm = round((8.00 - ((int(altura[1]) - 935.00)/85.00)) * 2.54, 2)
-        volumen = round(math.pi * (radio**2) * alturacm, 2)
-        dobj = "Nombre=" + nombre + "," + "Altura(cm)=" + str(alturacm) + "," + "Volumen(cm3)=" + str(volumen)+ "," + "Densidad(g/cm3)=" +str(densidad)
+        alturacm = round((8.00 - ((int(altura[1]) - 935.00) / 85.00)) * 2.54, 2)
+        volumen = round(math.pi * (radio ** 2) * alturacm, 2)
+        dobj = "Nombre=" + nombre + "," + "Altura(cm)=" + str(alturacm) + "," + "Volumen(cm3)=" + str(
+            volumen) + "," + "Densidad(g/cm3)=" + str(densidad)
         return dobj
     except:
         dobj = "Nombre=" + nombre + ",Altura=0,Volumen(cm3)=0,Densidad(g/cm3)=0"
         #raise restlite.Status, '400 Error retrieving data'
         return dobj
+
 
 routes = [
     (r'GET /up', up),

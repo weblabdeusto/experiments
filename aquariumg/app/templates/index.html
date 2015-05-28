@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<div class="container text-center">
+   <img id='cam_img' width="70%" src= 'http://cams.weblab.deusto.es/webcam/proxied.py/fishtank1'>
+</div>
+<br>
+<div class="container text-center">
+    <button id="food" type="button" class="btn btn-info btn-lg">Feed fishes</button>
+    <button id="light" type="button" class="btn btn-warning btn-lg">Turn light on</button>
+</div>
+<div id="bfinish" class="text-center">
+    <br>
+    <button id="logout" type="button" class="btn btn-default btn-lg">Fisnish</button>
+</div>
+
+{% endblock %}
+
+

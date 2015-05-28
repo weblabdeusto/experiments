@@ -8,7 +8,7 @@ function inIframe () {
 
 var poll = function poll(){
 	$.get("/labs/aquariumg/poll", function(data, status){
-            if(data.contains('Fail')){
+            if(data='Fail'){
                 window.location.replace("https://weblab.deusto.es/weblab/client/#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg");
             }
         });
@@ -18,7 +18,7 @@ $(document).ready(function(){
 
     $("#food").click(function(){
         $.get("/labs/aquariumg/food", function(data, status){
-            if(data.contains('Fail')){
+            if(data='Fail'){
                 window.location.replace("https://weblab.deusto.es/weblab/client/#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg");
             }
             else{  
@@ -29,7 +29,7 @@ $(document).ready(function(){
 
     $("#light").click(function(){
         $.get("/labs/aquariumg/light", function(data, status){
-            if(data.contains('Fail')){
+            if(data='Fail'){
                 window.location.replace("https://weblab.deusto.es/weblab/client/#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg");
             }
             else{  

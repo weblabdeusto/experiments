@@ -7,42 +7,76 @@ function inIframe () {
 }
 
 var poll = function poll(){
-	$.get("/labs/aquariumg/poll", function(data, status){
-            if(data.contains('Fail')){
-                window.location.replace("https://weblab.deusto.es/weblab/client/#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg");
+
+    $.ajax({ url:"/labs/aquariumg/poll", datatype: 'json', success : function(data) {
+        if (data["error"]) {
+            console.log('Error detected');
+            if (!data["auth"]) {
+                console.log('Not authenticated');
+                window.location.replace(BACK_URL);
             }
-        });
+        }
+    }
+    });
 }
 
 $(document).ready(function(){
 
     $("#food").click(function(){
-        $.get("/labs/aquariumg/food", function(data, status){
-            if(data.contains('Fail')){
-                window.location.replace("https://weblab.deusto.es/weblab/client/#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg");
+        $.ajax({ url : "/labs/aquariumg/feed", datatype: 'json', success : function(data) {
+            console.log(data["hours"]);
+            if (data["error"]) {
+                if(data["auth"]){
+                    $("#fish-fed-block").hide();
+                    $("#already-fed-block").show();
+                    $("#already-fed-number").html(data["hours"]);
+                    $("#already-light-block").hide();
+                    $("#light-block").hide();
+                }
+                else{
+                    window.location.replace(BACK_URL);
+                } 
             }
-            else{  
-                alert(data);
+            else {
+                $("#already-fed-block").hide();
+                $("#fish-fed-block").show();
+                $("#already-light-block").hide();
+                $("#light-block").hide();
             }
+          }
         });
     });
 
-    $("#light").click(function(){
-        $.get("/labs/aquariumg/light", function(data, status){
-            if(data.contains('Fail')){
-                window.location.replace("https://weblab.deusto.es/weblab/client/#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg");
+    $("#light").click(function(data){
+    $.ajax({ url : "/labs/aquariumg/light", datatype: 'json', success : function(data) {
+        console.log(data);
+        if (data["error"]) {
+            if (data["auth"]) {
+                $("#light-block").hide();
+                $("#already-light-block").show();
+                $("#already-fed-block").hide();
+                $("#fish-fed-block").hide();
+            } else {
+                window.location.replace(BACK_URL);
             }
-            else{  
-                alert(data);
-            }
-        });
+        }
+        else {
+            $("#already-light-block").hide();
+            $("#light-block").show();
+            $("#already-fed-block").hide();
+            $("#fish-fed-block").hide();
+        }
+      }
     });
 
-    $("#logout").click(function(){
-        $.get("/labs/aquariumg/logout",function(data, status){
-            alert(data);
-        });
     });
+
+    $("#bfinish").click(function(){
+        $.get("/labs/aquariumg/logout");
+        window.location.replace(BACK_URL);
+    });
+
+    
 
     if (inIframe()) {
         $("#nav1").hide()

@@ -1,228 +1,169 @@
+polled
+True
+polled
+polled
+False
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+Light turned on by user
+Done
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+True
+polled
+False
+polled
+polled
+polled
+polled
+polled
+Light turned on by user
+polled
+polled
+False
+polled
+polled
+polled
+polled
+Done
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+True
+polled
+polled
+polled
+False
+polled
+polled
+polled
+polled
+False
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+Light turned on by user
+polled
+polled
+Done
+True
+polled
+polled
+polled
+non Authorized
+non Authorized
+User not found
 User exists
 http://weblab.deusto.es
-Assigned session_id: 592111977
-See: http://192.168.0.191/labs/aquariumg/lab/592111977/
-User exists
-https://weblab.deusto.es/weblab/client/?locale=es#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg
-Assigned session_id: 115217320
-See: http://weblab.deusto.es/labs/aquariumg/lab/115217320/
-Did not poll in 9 seconds
-User gabi still has 279 seconds
-Did not poll in 0 seconds
-User gabi still has 274 seconds
-Did not poll in 1 seconds
-User gabi still has 269 seconds
-Did not poll in 1 seconds
-User gabi still has 264 seconds
-Light is on
-Did not poll in 1 seconds
-User gabi still has 259 seconds
-Did not poll in 1 seconds
-User gabi still has 253 seconds
-Did not poll in 3 seconds
-User gabi still has 248 seconds
-Did not poll in 3 seconds
-User gabi still has 243 seconds
-Did not poll in 1 seconds
-User gabi still has 233 seconds
-Did not poll in 3 seconds
-User gabi still has 227 seconds
-Did not poll in 0 seconds
-User gabi still has 222 seconds
-Did not poll in 1 seconds
-User gabi still has 217 seconds
-Did not poll in 2 seconds
-User gabi still has 212 seconds
+Assigned session_id: 595222969
+See: http://weblab.deusto.es/labs/aquariumg/lab/595222969/
+polled
+polled
+polled
+polled
+Light turned on by user
+polled
+False
+polled
+polled
+False
+Done
+polled
+gabi going out
+http://weblab.deusto.es
+logout
 User not found
-User not found
-Did not poll in 1 seconds
-User gabi still has 201 seconds
-Did not poll in 0 seconds
-User gabi still has 189 seconds
-Did not poll in 2 seconds
-User gabi still has 184 seconds
-Did not poll in 3 seconds
-User gabi still has 179 seconds
-Did not poll in 0 seconds
-User gabi still has 173 seconds
-Did not poll in 3 seconds
-User gabi still has 163 seconds
-non Authorized
 User exists
-https://weblab.deusto.es/weblab/client/?locale=es#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg
-Assigned session_id: 450787681
-See: http://weblab.deusto.es/labs/aquariumg/lab/450787681/
-Did not poll in 1 seconds
-User gabi still has 297 seconds
-Did not poll in 0 seconds
-User gabi still has 292 seconds
-Did not poll in 1 seconds
-User gabi still has 287 seconds
-Did not poll in 3 seconds
-User gabi still has 282 seconds
-Did not poll in 0 seconds
-User gabi still has 276 seconds
-Did not poll in 1 seconds
-User gabi still has 271 seconds
-Did not poll in 2 seconds
-User gabi still has 266 seconds
-Did not poll in 3 seconds
-User gabi still has 261 seconds
-Did not poll in 2 seconds
-User gabi still has 250 seconds
-Did not poll in 3 seconds
-User gabi still has 245 seconds
-Did not poll in 0 seconds
-User gabi still has 240 seconds
-Did not poll in 1 seconds
-User gabi still has 235 seconds
-Did not poll in 0 seconds
-User gabi still has 224 seconds
-Did not poll in 1 seconds
-User gabi still has 219 seconds
-Did not poll in 2 seconds
-User gabi still has 214 seconds
-Did not poll in 3 seconds
-User gabi still has 209 seconds
-Did not poll in 1 seconds
-User gabi still has 203 seconds
-Did not poll in 2 seconds
-User gabi still has 198 seconds
-Did not poll in 3 seconds
-User gabi still has 193 seconds
-Did not poll in 1 seconds
-User gabi still has 188 seconds
-Did not poll in 0 seconds
-User gabi still has 182 seconds
-Did not poll in 3 seconds
-User gabi still has 177 seconds
-non Authorized
-https://weblab.deusto.es/weblab/client/#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg
-Assigned session_id: 460180974
-See: http://weblab.deusto.es/labs/aquariumg/lab/460180974/
-Did not poll in 1 seconds
-User porduna still has 297 seconds
-Did not poll in 3 seconds
-User porduna still has 292 seconds
-Did not poll in 0 seconds
-User porduna still has 287 seconds
-Did not poll in 3 seconds
-User porduna still has 272 seconds
-Did not poll in 0 seconds
-User porduna still has 266 seconds
-Did not poll in 1 seconds
-User porduna still has 261 seconds
-Did not poll in 2 seconds
-User porduna still has 251 seconds
-Did not poll in 0 seconds
-User porduna still has 231 seconds
-Did not poll in 1 seconds
-User porduna still has 225 seconds
-Did not poll in 2 seconds
-User porduna still has 220 seconds
-Did not poll in 3 seconds
-User porduna still has 215 seconds
-Did not poll in 1 seconds
-User porduna still has 209 seconds
-Did not poll in 2 seconds
-User porduna still has 204 seconds
-Did not poll in 3 seconds
-User porduna still has 199 seconds
-Did not poll in 1 seconds
-User porduna still has 194 seconds
-Did not poll in 2 seconds
-User porduna still has 188 seconds
-Did not poll in 0 seconds
-User porduna still has 178 seconds
-non Authorized
-User exists
-https://weblab.deusto.es/weblab/client/?locale=es#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg
-Assigned session_id: 867521712
-See: http://weblab.deusto.es/labs/aquariumg/lab/867521712/
-Did not poll in 1 seconds
-User gabi still has 289 seconds
-Did not poll in 1 seconds
-User gabi still has 283 seconds
-Light is on
-Did not poll in 0 seconds
-User gabi still has 278 seconds
-Did not poll in 1 seconds
-User gabi still has 273 seconds
-Did not poll in 2 seconds
-User gabi still has 268 seconds
-Did not poll in 0 seconds
-User gabi still has 257 seconds
-Did not poll in 1 seconds
-User gabi still has 252 seconds
-Did not poll in 3 seconds
-User gabi still has 247 seconds
-Did not poll in 0 seconds
-User gabi still has 242 seconds
-Did not poll in 1 seconds
-User gabi still has 236 seconds
-Did not poll in 3 seconds
-User gabi still has 231 seconds
-Did not poll in 1 seconds
-User gabi still has 221 seconds
-Did not poll in 2 seconds
-User gabi still has 216 seconds
-Did not poll in 3 seconds
-User gabi still has 210 seconds
-Did not poll in 1 seconds
-User gabi still has 205 seconds
-Did not poll in 3 seconds
-User gabi still has 195 seconds
-Did not poll in 0 seconds
-User gabi still has 189 seconds
-Did not poll in 1 seconds
-User gabi still has 184 seconds
-Did not poll in 3 seconds
-User gabi still has 179 seconds
-non Authorized
-User exists
-https://weblab.deusto.es/weblab/client/?locale=es#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg
-Assigned session_id: 662237812
-See: http://weblab.deusto.es/labs/aquariumg/lab/662237812/
-Did not poll in 1 seconds
-User gabi still has 297 seconds
-Did not poll in 0 seconds
-User gabi still has 292 seconds
-Did not poll in 1 seconds
-User gabi still has 287 seconds
-Did not poll in 2 seconds
-User gabi still has 281 seconds
-Did not poll in 1 seconds
-User gabi still has 276 seconds
-Did not poll in 2 seconds
-User gabi still has 271 seconds
-Did not poll in 3 seconds
-User gabi still has 266 seconds
-Did not poll in 1 seconds
-User gabi still has 261 seconds
-Did not poll in 1 seconds
-User gabi still has 255 seconds
-Did not poll in 3 seconds
-User gabi still has 250 seconds
-Did not poll in 0 seconds
-User gabi still has 245 seconds
-Did not poll in 2 seconds
-User gabi still has 239 seconds
-Did not poll in 0 seconds
-User gabi still has 224 seconds
-Did not poll in 2 seconds
-User gabi still has 219 seconds
-Did not poll in 1 seconds
-User gabi still has 209 seconds
-Did not poll in 2 seconds
-User gabi still has 203 seconds
-Did not poll in 0 seconds
-User gabi still has 198 seconds
-Did not poll in 1 seconds
-User gabi still has 192 seconds
-Did not poll in 2 seconds
-User gabi still has 187 seconds
-Did not poll in 3 seconds
-User gabi still has 182 seconds
-Did not poll in 0 seconds
-User gabi still has 177 seconds
-non Authorized
+http://weblab.deusto.es
+Assigned session_id: 926470930
+See: http://weblab.deusto.es/labs/aquariumg/lab/926470930/
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+True
+polled
+Light turned on by user
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+False
+polled
+gabi going out
+http://weblab.deusto.es
+logout
+Done
+Feeding fish
+Fish feeded
+Feeding fish
+Fish feeded
+Feeding fish
+Fish feeded
+Feeding fish
+Fish feeded

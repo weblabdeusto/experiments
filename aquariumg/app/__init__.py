@@ -11,7 +11,7 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 lm = LoginManager()
 lm.init_app(app)
-lm.login_view = ''
+lm.login_view = "https://weblab.deusto.es/weblab/client/#page=experiment&exp.category=Aquatic%20experiments&exp.name=aquariumg"
 aq = Aquarium()
 
 

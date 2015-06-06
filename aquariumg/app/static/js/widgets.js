@@ -40,7 +40,7 @@ function displayMessage(msg, alertclass, time)
 TimerDisplayer = function (timer_id) {
 
     // Below the WARNING_THRESHOLD the value will be displayed in red.
-    var WARNING_THRESHOLD = 120;
+    var WARNING_THRESHOLD = 30;
 
     var $timer = $("#" + timer_id);
     var _value = 0; // Value of the timer in seconds.
@@ -240,19 +240,5 @@ CameraRefresher = function (img_id) {
     // Call the ctor
     this._init();
 }; // end-of CameraRefresher
-
-$(document).ready(function () {
-
-        var FIRST_CAMERA_URL = "http://cams.weblab.deusto.es/webcam/proxied.py/fishtank1";
-        var STATUS_UPDATES_FREQUENCY = 2500;
-
-        var augmentedViewEnabled = true; // To indicate in which mode we are.
-        var cameraRefresher; // To help refresh the main cameras.
-
-        var statusUpdaterTimer; //
-
-        cameraRefresher = new CameraRefresher("cam_img");
-        cameraRefresher.start(FIRST_CAMERA_URL);
-    });
 
 

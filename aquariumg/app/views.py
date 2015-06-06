@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, session, url_for, request, g
+from flask import render_template, flash, redirect, session, url_for, request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 from datetime import datetime, timedelta
@@ -24,15 +24,17 @@ def check_permission(func):
         try:
             if not g.user.permission:
                 g.user.session_id = ""
+                url = g.user.back
                 db.session.add(g.user)
                 db.session.commit()
-                logout_user()
                 print 'non Authorized'
-                return 'Fail'
+                logout_user()
+                return jsonify(error=True, auth=False)
             return func(*args, **kwargs)
         except:
-            print 'non Authorized'
-            return 'Fail'
+            print 'non found'
+#            return redirect(url_for('logout'))
+            return jsonify(error=True, auth=False)
     return wrapper
 
 @lm.user_loader
@@ -48,71 +50,81 @@ def before_request():
         db.session.add(g.user)
         db.session.commit()
 
-@lm.unauthorized_handler
-def unauthorized():
-    return redirect(LOGIN_URL) 
+#@lm.unauthorized_handler
+#def unauthorized():
+#    return redirect(LOGIN_URL)
 
 @app.route('/home')
 @login_required
-@check_permission
 def home():
+    time=(g.user.max_date - datetime.now()).seconds
     return render_template('index.html',
                            title='Home',
-                           user=g.user)
+                           user=g.user,
+                           timeleft=time)
 
 @app.route('/logout')
 @login_required
 def logout():
-    print g.user.nickname +'going out'
+    print g.user.nickname +' going out'
     g.user.session_id = ""
     g.user.permission = False
+    back = g.user.back
     db.session.add(g.user)
     db.session.commit()
-    back = g.user.back
     print back
     logout_user()
+    print 'logout'
     return redirect(back)
 
-@app.route('/food')
-@login_required
+@app.route('/feed')
 @check_permission
+@login_required
 def food():
-    resp = aq.tryFeed()
-#    resp='Fishes feeded'
-    if resp=='Fishes feeded': 
-        event = Event(body='has feed fishes', timestamp=datetime.utcnow(),
+    success, last = aq.tryFeed()
+#    success = True
+#    last = 3
+#    success = False
+#    last = 1
+    if success: 
+        event = Event(body='has fed fishes', timestamp=datetime.utcnow(),
                     author=g.user)
         db.session.add(event)
         db.session.commit()
-    return resp
+        return jsonify(error=False, auth=True)
+    return jsonify(error=True, auth=True, hours=last)
 
 @app.route('/light')
-@login_required
 @check_permission
+@login_required
 def light():
-#    resp='test light'
-    resp = aq.turnLightOn()
-    return resp
+    success = aq.turnLightOn()
+    print success
+#    success = True
+    if success:
+        return jsonify(error=False)
+    return jsonify(error=True, auth=True)
 
 @app.route('/poll')
-@login_required
 @check_permission
+@login_required
 def poll():
     g.user.last_poll = datetime.now()
     db.session.add(g.user)
     db.session.commit()
+    print 'polled'
     # In JavaScript, use setTimeout() to call this method every 5 seconds or whatever
     # Save in User or Redis or whatever that the user has just polled
-    return "ok"
+    return jsonify(error=False)
 
 @app.route('/chat', methods=['GET', 'POST'])
 @app.route('/chat/<int:page>', methods=['GET', 'POST'])
+#@check_permission
 @login_required
-@check_permission
 def chat(page=1):
     form = PostForm()
     if form.validate_on_submit():
-    	post = Post(body=form.post.data, timestamp=datetime.utcnow(),
+        post = Post(body=form.post.data, timestamp=datetime.utcnow(),
                     author=g.user)
         db.session.add(post)
         db.session.commit()
@@ -126,8 +138,8 @@ def chat(page=1):
 
 @app.route('/timeline', methods=['GET', 'POST'])
 @app.route('/timeline/<int:page>', methods=['GET', 'POST'])
+#@check_permission
 @login_required
-@check_permission
 def timeline(page=1):
     events=Event.query.order_by(desc(Event.timestamp)).paginate(page, POSTS_PER_PAGE, False)
     return render_template('timeline.html',
@@ -256,7 +268,8 @@ def status(session_id):
         if (datetime.now() - user.last_poll).seconds >= 20:
             return json.dumps({'should_finish' : -1})
         print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
-        if (user.max_date - datetime.now()).seconds <= 0:
+        time = (user.max_date - datetime.now()).seconds
+        if time <= 0 or time > user.max_date.second:
             return json.dumps({'should_finish' : -1})
         return json.dumps({'should_finish' : 5})
     #    print "User %s still has %s seconds" % (user.nickname, user.max_date.seconds - datetime.now().seconds)

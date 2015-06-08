@@ -58,7 +58,6 @@ $(document).ready(function(){
                 $("#fish-fed-block").hide();
             } else {
                 window.location.replace(BACK_URL);
-            }
         }
         else {
             $("#already-light-block").hide();

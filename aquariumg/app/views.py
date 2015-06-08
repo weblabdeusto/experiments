@@ -269,7 +269,8 @@ def status(session_id):
             return json.dumps({'should_finish' : -1})
         print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
         time = (user.max_date - datetime.now()).seconds
-        if time <= 0 or time > user.max_date.second:
+        print time
+        if time <= 0:
             return json.dumps({'should_finish' : -1})
         return json.dumps({'should_finish' : 5})
     #    print "User %s still has %s seconds" % (user.nickname, user.max_date.seconds - datetime.now().seconds)

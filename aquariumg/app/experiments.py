@@ -25,15 +25,16 @@ class Aquarium(object):
         else:
             feedLapse = currentTime - self._lastFeed
         if feedLapse >= REQUIRED_FEED_LAPSE:
-            resp = self._food()
-            if resp == 'Fishes feeded':
+            if self._food():
                 f = open(basedir + "/app/lastFeed", "w")
                 f.write(str(currentTime))
                 f.close()
                 self._lastFeed = currentTime
-            return True, feedLapse
+                return True, REQUIRED_FEED_LAPSE-feedLapse
+            else:
+                return False, REQUIRED_FEED_LAPSE-feedLapse
         else:
-            return False, feedLapse
+            return False, REQUIRED_FEED_LAPSE-feedLapse
 
     def _food(self):
         try:

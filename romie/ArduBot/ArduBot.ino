@@ -66,7 +66,7 @@ void loop()
     lastTimeFollow=millis();
   }
   if(lastF==1){
-    if(digitalRead(MRline)==HIGH || digitalRead(MLline)==HIGH){ 
+    if(digitalRead(MRline)==HIGH || digitalRead(MLline)==HIGH){
       // When an intersection is reached, the robot stops, attempts to read an RFID tag, and sends an "ACK" signal.
       if(digitalRead(MRline)==HIGH && digitalRead(MLline)==LOW){
         while(MLline==LOW)Motors.forward(100);
@@ -84,7 +84,7 @@ void loop()
     }
   }
   else{
-    if(digitalRead(MRline)==HIGH && digitalRead(MLline)==HIGH){ 
+    if(digitalRead(MRline)==HIGH && digitalRead(MLline)==HIGH){
       Motors.stop();
       ReadTag();
       Serial.print("ACK");
@@ -99,25 +99,25 @@ void loop()
 //-- Steers the robot in order to follow a black line --
 //------------------------------------------------------
 void FollowLine()
-{ 
+{
   if(digitalRead(FRIline)==HIGH && digitalRead(FLIline)==HIGH)     //Si el robot está centrado ...
-    Motors.forward(100);     
+    Motors.forward(100);
   else if(digitalRead(FRIline)==LOW  && digitalRead(FLIline)==HIGH) //Si se ha salido por la dcha ...
-    Motors.shiftLeft(50);     
+    Motors.shiftLeft(50);
   else if(digitalRead(FLIline)==LOW  && digitalRead(FRIline)==HIGH) //Si se ha salido por la izda ...
-    Motors.shiftRight(50);     
+    Motors.shiftRight(50);
 }
 
 //----------------------------------------------------------------
 //-- Receives the next BlueTooth command from the WebLab Server --
 //----------------------------------------------------------------
-char ReceiveCommand()          
+char ReceiveCommand()
 {
   char BTcommand;
 
   if (Serial.available() > 0)
-    BTcommand=Serial.read();  
-  else 
+    BTcommand=Serial.read();
+  else
     BTcommand=NULL;
 
   return BTcommand;
@@ -128,17 +128,17 @@ char ReceiveCommand()
 void ReciveProcess(){
 // Enters a loop for command reception and processing unless the command is "F": Forward.
     do
-    {  
+    {
       /*
       Serial.print("Awaiting Command...");
       Serial.println();
       */
-      
+
       // Waits until a new Bluetooth command is received.
       ReadTag();
       do
       {
-        next=ReceiveCommand(); 
+        next=ReceiveCommand();
       }
       while(next==NULL);
 
@@ -146,7 +146,7 @@ void ReciveProcess(){
       switch(next)
       {
       case 'F': // The command is "F": Forward
-        lastTimeFollow=millis(); 
+        lastTimeFollow=millis();
         // If a wall is in the way, the robot stops and sends an "NAK" signal.
         if(digitalRead(FRIline)==LOW && digitalRead(FLIline)==LOW) centered = 0;
         else centered=1;
@@ -159,7 +159,7 @@ void ReciveProcess(){
           Serial.print("Obstacle in the way. Cannot move Forward.");
           Serial.println();
           */
-          Motors.stop(); 
+          Motors.stop();
           next=NULL;
         }
         else if(centered==0){
@@ -183,8 +183,8 @@ void ReciveProcess(){
             next=NULL;
             //if(digitalRead(Wall)==HIGH){
             //   while(digitalRead(MRline)==HIGH || digitalRead(MLline)==HIGH)Motors.forward(100);
-            //}  
-          } 
+            //}
+          }
         }
         // If there is no wall, the robot advances (until the next intersection).
         else
@@ -195,7 +195,7 @@ void ReciveProcess(){
               while(digitalRead(MRline)!=LOW || digitalRead(MLline)!=LOW) Motors.forward(100);
           //}
         }
-        lastTime=millis();        
+        lastTime=millis();
         break;
 
       case 'R': // The command is "R": Right
@@ -215,7 +215,7 @@ void ReciveProcess(){
         lastF = 0;
         break;
 
-      case 'L': // The command is "L": Left    
+      case 'L': // The command is "L": Left
         /*
         Serial.print("Command received: Turn Left");
         Serial.println();
@@ -231,17 +231,18 @@ void ReciveProcess(){
         lastTurn = 1;
         lastF = 0;
         break;
-        
-      case 'S': // The commmand is "S": Read Wall Sensor    
-        // Checks if there is a wall or not. If there is, it sends "True" over BT. Otherwise, it sends "False". 
+
+      case 'S': // The commmand is "S": Read Wall Sensor
+        // Checks if there is a wall or not. If there is, it sends "True" over BT. Otherwise, it sends "False".
         detect=!digitalRead(Wall); //Inverts the value of the sensor because the sensor is logic-low active, but blockly expects a "True" if there is a wall.
         Motors.stop();
         Serial.print(detect);
+        Serial.print("ACK");
         Serial.println();
         Serial.flush();
         break;
 
-      default:  // If the command is not recognized, the robot stops. 
+      default:  // If the command is not recognized, the robot stops.
         Motors.stop();
         Serial.print("NAK");
         Serial.println();
@@ -249,13 +250,13 @@ void ReciveProcess(){
         break;
       }
     }
-    while(next!='F');  
+    while(next!='F');
 }
 
 //-----------------------
 //-- Reads an RFID tag --
 //-----------------------
-void ReadTag()          
+void ReadTag()
 {
   byte i = 0;
   byte val = 0;
@@ -265,52 +266,52 @@ void ReadTag()
   byte tempbyte = 0;
 
   if(swSerial.available() > 0 )
-    if((val = swSerial.read()) == 2) {                  // check for header 
-      bytesread = 0; 
+    if((val = swSerial.read()) == 2) {                  // check for header
+      bytesread = 0;
       while (bytesread < 12) {                        // read 10 digit code + 2 digit checksum
-        if( swSerial.available() > 0) { 
+        if( swSerial.available() > 0) {
           val = swSerial.read();
-          if((val == 0x0D)||(val == 0x0A)||(val == 0x03)||(val == 0x02)) { // if header or stop bytes before the 10 digit reading 
+          if((val == 0x0D)||(val == 0x0A)||(val == 0x03)||(val == 0x02)) { // if header or stop bytes before the 10 digit reading
             break;                                    // stop reading
           }
-  
+
           // Do Ascii/Hex conversion:
           if ((val >= '0') && (val <= '9')) {
             val = val - '0';
-          } 
+          }
           else if ((val >= 'A') && (val <= 'F')) {
             val = 10 + val - 'A';
           }
-  
+
           // Every two hex-digits, add byte to code:
           if (bytesread & 1 == 1) {
             // make some space for this hex-digit by
             // shifting the previous hex-digit with 4 bits to the left:
             code[bytesread >> 1] = (val | (tempbyte << 4));
-  
+
             if (bytesread >> 1 != 5) {                // If we're at the checksum byte,
               checksum ^= code[bytesread >> 1];       // Calculate the checksum... (XOR)
             };
-          } 
+          }
           else {
             tempbyte = val;                           // Store the first hex digit first...
           };
-  
+
           bytesread++;                                // ready to read next digit
-        } 
-      } 
-  
+        }
+      }
+
       // Output to Serial:
-  
+
       if (bytesread == 12)                          // if 12 digit read is complete
         if(code[5] == checksum)
         {
           Serial.print("Tag: ");
           Serial.flush();
-          for (i=0; i<5; i++) 
+          for (i=0; i<5; i++)
           {
             if (code[i] < 16)
-           { 
+           {
               Serial.print("0");
               Serial.flush();
            }
@@ -320,7 +321,7 @@ void ReadTag()
             Serial.flush();
           }
           Serial.println();
-          Serial.flush();          
+          Serial.flush();
         }
         else
         {
@@ -337,7 +338,3 @@ void ReadTag()
 
   return;
 }
-
-
-
-

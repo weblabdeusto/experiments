@@ -9,13 +9,13 @@ int DIRright = 7;
 
 void DCMotors::setup()
 {
-  pinMode(PWMleft,OUTPUT);  
+  pinMode(PWMleft,OUTPUT);
   pinMode(PWMright,OUTPUT);
   pinMode(DIRleft,OUTPUT);
   pinMode(DIRright,OUTPUT);
-  	
+
   digitalWrite(DIRleft,LOW);
-  digitalWrite(DIRright,LOW);      
+  digitalWrite(DIRright,LOW);
   analogWrite(PWMleft,0);
   analogWrite(PWMright,0);
 }
@@ -23,7 +23,7 @@ void DCMotors::setup()
 void DCMotors::stop()
 {
   digitalWrite(DIRleft,LOW);
-  digitalWrite(DIRright,LOW);      
+  digitalWrite(DIRright,LOW);
   analogWrite(PWMleft,0);
   analogWrite(PWMright,0);
 }
@@ -31,7 +31,7 @@ void DCMotors::stop()
 void DCMotors::shiftRight(int percent)
 {
   digitalWrite(DIRleft,HIGH);
-  digitalWrite(DIRright,HIGH);      
+  digitalWrite(DIRright,HIGH);
   analogWrite(PWMleft,(int)(percent*255/100));
   analogWrite(PWMright,0);
 }
@@ -39,7 +39,7 @@ void DCMotors::shiftRight(int percent)
 void DCMotors::shiftLeft(int percent)
 {
   digitalWrite(DIRleft,HIGH);
-  digitalWrite(DIRright,HIGH);      
+  digitalWrite(DIRright,HIGH);
   analogWrite(PWMleft,0);
   analogWrite(PWMright,(int)(percent*255/100));
 }
@@ -47,7 +47,7 @@ void DCMotors::shiftLeft(int percent)
 void DCMotors::turnRight(int percent)
 {
   digitalWrite(DIRleft,HIGH);
-  digitalWrite(DIRright,LOW);      
+  digitalWrite(DIRright,LOW);
   analogWrite(PWMleft,(int)(percent*255/100));
   analogWrite(PWMright,(int)(percent*255/100));
 }
@@ -55,7 +55,7 @@ void DCMotors::turnRight(int percent)
 void DCMotors::turnLeft(int percent)
 {
   digitalWrite(DIRleft,LOW);
-  digitalWrite(DIRright,HIGH);      
+  digitalWrite(DIRright,HIGH);
   analogWrite(PWMleft,(int)(percent*255/100));
   analogWrite(PWMright,(int)(percent*255/100));
 }
@@ -63,7 +63,7 @@ void DCMotors::turnLeft(int percent)
 void DCMotors::forward(int percent)
 {
   digitalWrite(DIRleft,HIGH);
-  digitalWrite(DIRright,HIGH);      
+  digitalWrite(DIRright,HIGH);
   analogWrite(PWMleft,(int)(percent*255/100));
   analogWrite(PWMright,(int)(percent*255/100));
 }
@@ -71,7 +71,7 @@ void DCMotors::forward(int percent)
 void DCMotors::backward(int percent)
 {
   digitalWrite(DIRleft,LOW);
-  digitalWrite(DIRright,LOW);      
+  digitalWrite(DIRright,LOW);
   analogWrite(PWMleft,(int)(percent*255/100));
   analogWrite(PWMright,(int)(percent*255/100));
 }

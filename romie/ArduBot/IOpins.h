@@ -5,11 +5,6 @@
 #define MRline               8   // Middle Right line sensor
 
 #define Wall                 2   // Infrared line sensor
-  
+
 #define rxPin                3   // Bluetooth "receive" line
 #define txPin                13  // Bluetooth "transmit" line
-
-
-
-
-

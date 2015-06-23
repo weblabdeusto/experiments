@@ -6,7 +6,7 @@
 class DCMotors
 {
   public:
-  
+
   void setup();                  // Prepares the motors for use by initializing the correct pins. Should be called in setup() before the program itself
   void stop();                   // Stops the motors.
   void shiftRight(int percent);  // Turns the robot right while advancing at the specified percentage of maximum power.

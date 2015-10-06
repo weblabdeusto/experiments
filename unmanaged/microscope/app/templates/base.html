@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lan="en">
+  <head>
+    <title>Weblab microscope</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/microscope.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid" id="nav1">
+      <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a href="#" class="navbar-brand">Weblab-Microscope </a>
+            </div>
+            <div>
+              <ul class="nav navbar-nav">
+                {% if g.user.is_authenticated() %}
+                <li><a href="{{ url_for('home') }}">Control</a></li>
+                <li><a href="{{ url_for('info') }}">Information</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% endif %} 
+              </ul>
+              {% if g.user.is_authenticated() %}
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Conected as: <span> {{g.user.nickname}}</span></a><li>
+              </ul>
+              {% endif %} 
+            </div>
+          </div>
+      </nav>
+    </div>
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+    <script>
+        var BACK_URL = "{{g.user.back}}";
+    </script>
+    <script type="text/javascript"  src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/microscope.js') }}"></script>
+
+  </body>
+</html>

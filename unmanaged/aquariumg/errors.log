@@ -1,0 +1,1957 @@
+Exception on /home [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 757, in decorated_view
+    return current_app.login_manager.unauthorized()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 205, in unauthorized
+    return redirect(login_url(self.login_view, request.url))
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 609, in login_url
+    base = url_for(login_view)
+  File "/usr/local/lib/python2.7/dist-packages/flask/helpers.py", line 312, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1641, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/helpers.py", line 305, in url_for
+    force_external=external)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/routing.py", line 1678, in build
+    raise BuildError(endpoint, values, method)
+BuildError: ('login', {}, None)
+Exception on /home [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 758, in decorated_view
+    return func(*args, **kwargs)
+  File "/opt/aquarium/app/views.py", line 32, in home
+    user=g.user)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 969, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 742, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/opt/aquarium/app/templates/base.html", line 9, in template
+    <script type="text/javascript" src="{{ url_for('static', filename='/js/widgets.js' }}"></script>
+TemplateSyntaxError: unexpected '}', expected ')'
+Exception on /home [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 758, in decorated_view
+    return func(*args, **kwargs)
+  File "/opt/aquarium/app/views.py", line 32, in home
+    user=g.user)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 969, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 742, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/opt/aquarium/app/templates/base.html", line 9, in template
+    <script type="text/javascript" src="{{ url_for('static', filename='/js/widgets.js' }}"></script>
+TemplateSyntaxError: unexpected '}', expected ')'
+Exception on /home [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 758, in decorated_view
+    return func(*args, **kwargs)
+  File "/opt/aquarium/app/views.py", line 32, in home
+    user=g.user)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 969, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 742, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/opt/aquarium/app/templates/base.html", line 9, in template
+    <script type="text/javascript" src="{{ url_for('static', filename='/js/widgets.js' }}"></script>
+TemplateSyntaxError: unexpected '}', expected ')'
+Exception on /chat [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 758, in decorated_view
+    return func(*args, **kwargs)
+  File "/opt/aquarium/app/views.py", line 84, in chat
+    return render_template('chat.html', form=form, posts=posts, onlineUsers=onlineUsers)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 969, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 742, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/opt/aquarium/app/templates/base.html", line 9, in template
+    <script type="text/javascript" src="{{ url_for('static', filename='/js/widgets.js' }}"></script>
+TemplateSyntaxError: unexpected '}', expected ')'
+Exception on /home [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 758, in decorated_view
+    return func(*args, **kwargs)
+  File "/opt/aquarium/app/views.py", line 32, in home
+    user=g.user)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 969, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 742, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/opt/aquarium/app/templates/base.html", line 9, in template
+    <script type="text/javascript" src="{{ url_for('static', filename='/js/widgets.js' }}"></script>
+TemplateSyntaxError: unexpected '}', expected ')'
+Exception on /home [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 758, in decorated_view
+    return func(*args, **kwargs)
+  File "/opt/aquarium/app/views.py", line 32, in home
+    user=g.user)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 969, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 742, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/opt/aquarium/app/templates/index.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: base.html
+Exception on /home [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/opt/aquarium/app/views.py", line 49, in before_request
+    db.session.commit()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/scoping.py", line 150, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 788, in commit
+    self.transaction.commit()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 384, in commit
+    self._prepare_impl()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 364, in _prepare_impl
+    self.session.flush()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 1985, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 2103, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 2067, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/unitofwork.py", line 372, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/unitofwork.py", line 526, in execute
+    uow
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/persistence.py", line 60, in save_obj
+    mapper, table, update)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/persistence.py", line 518, in _emit_update_statements
+    execute(statement, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 841, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 322, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 938, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1070, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1271, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1063, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 442, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) database is locked u'UPDATE user SET last_poll=? WHERE user.id = ?' ('2015-05-28 10:40:12.036628', 1)
+Exception on /poll [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/opt/aquarium/app/views.py", line 51, in before_request
+    db.session.commit()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/scoping.py", line 150, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 788, in commit
+    self.transaction.commit()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 384, in commit
+    self._prepare_impl()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 364, in _prepare_impl
+    self.session.flush()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 1985, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 2103, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 2067, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/unitofwork.py", line 372, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/unitofwork.py", line 526, in execute
+    uow
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/persistence.py", line 60, in save_obj
+    mapper, table, update)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/persistence.py", line 518, in _emit_update_statements
+    execute(statement, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 841, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 322, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 938, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1070, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1271, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1063, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 442, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) database is locked u'UPDATE user SET last_poll=? WHERE user.id = ?' ('2015-06-05 19:51:06.107946', 1)
+Exception on /light [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/opt/aquarium/app/views.py", line 48, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/opt/aquarium/app/views.py", line 42, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 840, in get
+    return loading.load_on_ident(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 235, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2398, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2441, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2456, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 841, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 322, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 938, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1070, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1271, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1063, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 442, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) database is locked u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?' (1,)
+Exception on /light [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/opt/aquarium/app/views.py", line 48, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/opt/aquarium/app/views.py", line 42, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 840, in get
+    return loading.load_on_ident(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 235, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2398, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2441, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2456, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 841, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 322, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 938, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1070, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1271, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1063, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 442, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) database is locked u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?' (1,)
+Exception on /feed [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/opt/aquarium/app/views.py", line 48, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/opt/aquarium/app/views.py", line 42, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 840, in get
+    return loading.load_on_ident(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 235, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2398, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2441, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2456, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 841, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 322, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 938, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1070, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1271, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1063, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 442, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) database is locked u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?' (1,)
+Exception on /feed [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/opt/aquarium/app/views.py", line 48, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/opt/aquarium/app/views.py", line 42, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 840, in get
+    return loading.load_on_ident(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 235, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2398, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2441, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2456, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 841, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 322, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 938, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1070, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1271, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1063, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 442, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) database is locked u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?' (1,)
+Exception on /poll [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/opt/aquarium/app/views.py", line 48, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/opt/aquarium/app/views.py", line 42, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 840, in get
+    return loading.load_on_ident(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 235, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2398, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2441, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2456, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 841, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 322, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 938, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1070, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1271, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1063, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 442, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) database is locked u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?' (1,)
+Exception on /light [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/opt/aquarium/app/views.py", line 48, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/opt/aquarium/app/views.py", line 42, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 840, in get
+    return loading.load_on_ident(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 235, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2398, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2441, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2456, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 841, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 322, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 938, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1070, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1271, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1063, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 442, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) database is locked u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?' (1,)
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2721, in configure_mappers
+    mapper._post_configure_properties()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1710, in _post_configure_properties
+    prop.init()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/interfaces.py", line 183, in init
+    self.do_init()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1616, in do_init
+    self._process_dependent_arguments()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1673, in _process_dependent_arguments
+    self.target = self.mapper.mapped_table
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 747, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1589, in mapper
+    argument = self.argument()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/ext/declarative/clsregistry.py", line 293, in __call__
+    (self.prop.parent, self.arg, n.args[0], self.cls)
+InvalidRequestError: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2718, in configure_mappers
+    raise e
+InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers.  Original exception was: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 209, in start_experiment
+    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 452, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1167, in _configure_all
+    configure_mappers()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2721, in configure_mappers
+    mapper._post_configure_properties()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1710, in _post_configure_properties
+    prop.init()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/interfaces.py", line 183, in init
+    self.do_init()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1616, in do_init
+    self._process_dependent_arguments()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1673, in _process_dependent_arguments
+    self.target = self.mapper.mapped_table
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 747, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1589, in mapper
+    argument = self.argument()
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/ext/declarative/clsregistry.py", line 293, in __call__
+    (self.prop.parent, self.arg, n.args[0], self.cls)
+InvalidRequestError: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+Exception on /poll [GET]
+Traceback (most recent call last):
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1473, in full_dispatch_request
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/flask/app.py", line 1666, in preprocess_request
+  File "/home/gabi/proyectos/WebApps/test/aquarium/app/views.py", line 54, in before_request
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/scoping.py", line 150, in do
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 790, in commit
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 396, in commit
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1574, in commit
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1605, in _do_commit
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 690, in _commit_impl
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 688, in _commit_impl
+  File "/home/gabi/proyectos/WebApps/test/testenv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 423, in do_commit
+OperationalError: (sqlite3.OperationalError) disk I/O error
+Exception on /weblab/sessions/132857168/status [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 230, in status
+    user = User.query.filter_by(session_id=session_id).first()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2445, in first
+    ret = list(self[0:1])
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2281, in __getitem__
+    return list(res)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.session_id = ?\n LIMIT ? OFFSET ?'] [parameters: (u'132857168', 1, 0)]
+Exception on /poll [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/home/pi/aquarium/app/views.py", line 43, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 819, in get
+    return self._get_impl(ident, loading.load_on_ident)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 852, in _get_impl
+    return fallback_fn(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 219, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2473, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?'] [parameters: (1,)]
+Exception on /poll [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/home/pi/aquarium/app/views.py", line 43, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 819, in get
+    return self._get_impl(ident, loading.load_on_ident)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 852, in _get_impl
+    return fallback_fn(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 219, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2473, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?'] [parameters: (1,)]
+Exception on /weblab/sessions/700863557/status [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 230, in status
+    user = User.query.filter_by(session_id=session_id).first()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2445, in first
+    ret = list(self[0:1])
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2281, in __getitem__
+    return list(res)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.session_id = ?\n LIMIT ? OFFSET ?'] [parameters: (u'700863557', 1, 0)]
+Exception on /weblab/sessions/260873070/status [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 230, in status
+    user = User.query.filter_by(session_id=session_id).first()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2445, in first
+    ret = list(self[0:1])
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2281, in __getitem__
+    return list(res)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.session_id = ?\n LIMIT ? OFFSET ?'] [parameters: (u'260873070', 1, 0)]
+Exception on /feed [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/home/pi/aquarium/app/views.py", line 43, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 819, in get
+    return self._get_impl(ident, loading.load_on_ident)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 852, in _get_impl
+    return fallback_fn(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 219, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2473, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?'] [parameters: (1,)]
+Exception on /feed [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/home/pi/aquarium/app/views.py", line 43, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 819, in get
+    return self._get_impl(ident, loading.load_on_ident)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 852, in _get_impl
+    return fallback_fn(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 219, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2473, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?'] [parameters: (1,)]
+Exception on /feed [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/home/pi/aquarium/app/views.py", line 43, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 819, in get
+    return self._get_impl(ident, loading.load_on_ident)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 852, in _get_impl
+    return fallback_fn(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 219, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2473, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?'] [parameters: (1,)]
+Exception on /weblab/sessions/582150636/status [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 230, in status
+    user = User.query.filter_by(session_id=session_id).first()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2445, in first
+    ret = list(self[0:1])
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2281, in __getitem__
+    return list(res)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.session_id = ?\n LIMIT ? OFFSET ?'] [parameters: (u'582150636', 1, 0)]
+Exception on /feed [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 338, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/local.py", line 297, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 46, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 794, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 363, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python2.7/dist-packages/flask_login.py", line 325, in reload_user
+    user = self.user_callback(user_id)
+  File "/home/pi/aquarium/app/views.py", line 43, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 819, in get
+    return self._get_impl(ident, loading.load_on_ident)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 852, in _get_impl
+    return fallback_fn(self, key)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/loading.py", line 219, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2473, in one
+    ret = list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.id = ?'] [parameters: (1,)]
+Exception on /weblab/sessions/160055563/status [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 230, in status
+    print "Weblab status check
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2445, in first
+    ret = list(self[0:1])
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2281, in __getitem__
+    return list(res)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.session_id = ?\n LIMIT ? OFFSET ?'] [parameters: (u'160055563', 1, 0)]
+Exception on /weblab/sessions/723660874/status [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 231, in status
+    user = User.query.filter_by(session_id=session_id).first()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2445, in first
+    ret = list(self[0:1])
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2281, in __getitem__
+    return list(res)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.session_id = ?\n LIMIT ? OFFSET ?'] [parameters: (u'723660874', 1, 0)]
+Exception on /weblab/sessions/558843154/status [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 231, in status
+    user = User.query.filter_by(session_id=session_id).first()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2445, in first
+    ret = list(self[0:1])
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2281, in __getitem__
+    return list(res)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2516, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2531, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'SELECT user.id AS user_id, user.nickname AS user_nickname, user.permission AS user_permission, user.max_date AS user_max_date, user.last_poll AS user_last_poll, user.back AS user_back, user.session_id AS user_session_id, user.weblab AS user_weblab \nFROM user \nWHERE user.session_id = ?\n LIMIT ? OFFSET ?'] [parameters: (u'558843154', 1, 0)]
+Exception on /test [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on /test [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on /test [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on /test [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on /test [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on /test [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on /test [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on /weblab/sessions/ [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1473, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1666, in preprocess_request
+    rv = func()
+  File "/home/pi/aquarium/app/views.py", line 49, in before_request
+    if g.user.is_authenticated():
+TypeError: 'bool' object is not callable
+Exception on /login/17349596/ [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 149, in login
+    form=form)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/pi/aquarium/app/templates/login.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/pi/aquarium/app/templates/base.html", line 18, in top-level template code
+    {% if g.user.is_authenticated() %}
+AttributeError: 'bool' object has no attribute '__call__'
+Exception on /login/699576869/ [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 149, in login
+    form=form)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/pi/aquarium/app/templates/login.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/pi/aquarium/app/templates/base.html", line 18, in top-level template code
+    {% if g.user.is_authenticated() %}
+AttributeError: 'bool' object has no attribute '__call__'
+Exception on /login/827118914/ [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 149, in login
+    form=form)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/pi/aquarium/app/templates/login.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/pi/aquarium/app/templates/base.html", line 18, in top-level template code
+    {% if g.user.is_authenticated() %}
+AttributeError: 'bool' object has no attribute '__call__'
+Exception on /login/796136673/ [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 149, in login
+    form=form)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/pi/aquarium/app/templates/login.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/pi/aquarium/app/templates/base.html", line 18, in top-level template code
+    {% if g.user.is_authenticated() %}
+AttributeError: 'bool' object has no attribute '__call__'
+Exception on /login/36341159/ [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 149, in login
+    form=form)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/pi/aquarium/app/templates/login.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/pi/aquarium/app/templates/base.html", line 18, in top-level template code
+    {% if g.user.is_authenticated() %}
+AttributeError: 'bool' object has no attribute '__call__'
+Exception on /login/36341159/ [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 149, in login
+    form=form)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/pi/aquarium/app/templates/login.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/pi/aquarium/app/templates/base.html", line 18, in top-level template code
+    {% if g.user.is_authenticated() %}
+AttributeError: 'bool' object has no attribute '__call__'
+Exception on /login/36341159/ [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/pi/aquarium/app/views.py", line 149, in login
+    form=form)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/pi/aquarium/app/templates/login.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/pi/aquarium/app/templates/base.html", line 18, in top-level template code
+    {% if g.user.is_authenticated() %}
+AttributeError: 'bool' object has no attribute '__call__'

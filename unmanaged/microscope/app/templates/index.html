@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row" id="back">
+    <div class="col-sm-3" style="margin-left:5%">
+        <br>
+        <div class="container">
+            <h3>Machine view</h3>
+            <img id='cam_img' width="30%" src= 'http://cams.weblab.deusto.es/webcam/proxied.py/flies1'>
+        </div>
+        <br>
+        <div class="text-center">
+            <button id="mjpeg" type="button" class="btn btn-info btn-sm">MJPEG</button>
+            <button id="jpg" style="display:none" type="button" class="btn btn-info btn-sm">JPG</button>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <br>
+        <h3>Microscope view</h3>
+        <img width="100%" src= '{{url_for('video_feed')}}'>
+        <div class="text-center" style="margin-top: 5%">
+            <button id="photo" type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">PARTIAL PICTURE</button>
+            <button id="fullphoto" style="margin-left:5%" type="button" class="btn btn-info btn-md">FULL PICTURE</button>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin-left:2%">
+        <div style="text-align:center">
+            <h1>
+                <span class="timer" id="timer"></span>
+            </h1>
+        </div>
+        <br>
+        <div>
+            <h3>Controls</h3><br>
+            <div>
+                <span><b>X Axis: </b> </span>
+                <select name="menu" id='Xresolution' style="margin-left: 11%">
+                    <option value="0" selected>-</option>
+                    <option value="1">0.1</option>
+                    <option value="2">1</option>
+                    <option value="3">10</option>
+                </select><span> mm</span>
+                <button id='button_left' class="btn btn-default " style="margin-left:5%">Left</button>
+                <button id='button_right' class="btn btn-default">Right</button>
+            </div>
+            <br>
+            <div>
+                <span><b>Y Axis: </b> </span>
+                <select name="menu" id='Yresolution' style="margin-left: 11%">
+                    <option value="0" selected>-</option>
+                    <option value="1">0.1</option>
+                    <option value="2">1</option>
+                    <option value="3">10</option>
+                </select><span> mm</span>
+                <button id='button_back' class="btn btn-default" style="margin-left:5%">Down</button>
+                <button id='button_front' class="btn btn-default">Up</button>
+            </div>
+            <br>
+            <div>
+                <span><b>Bed level:</b> </span>
+                <select name="menu" id='Zresolution' style="margin-left: 6%">
+                    <option value="0" selected>-</option>
+                    <option value="1">0.1</option>
+                    <option value="2">1</option>
+                    <option value="3">10</option>
+                </select><span> mm</span>
+                <button id='button_up' class="btn btn-default" style="margin-left:5%">Farder</button>
+                <button id='button_down' class="btn btn-default">Closer</button>
+            </div>
+        </div>
+        <br>
+        <div>
+            <h3>Position</h3><br>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="20%"></th>
+                            <th width="33%">Current</th>
+                            <th width="40%">New position</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="20%"><b>X Axis: </b></td>
+                            <td width="30%" style="text-align:center"><span id="x_position"></span> mm</td>
+                            <td width="40%"><input id="x_new_position" style="width:40%; margin-left:7%"/> mm</td>
+                        </tr>
+                        <tr>
+                            <td width="20%"><b>Y Axis:</b></td>
+                            <td width="30%" style="text-align:center"><span id="y_position"></span> mm</td>
+                            <td width="40%"><input id="y_new_position" style="width:40%; margin-left:7%"/> mm</td>
+                        </tr>
+                        <tr>
+                            <td width="20%"><b>Z Axis:</b></td>
+                            <td width="30%" style="text-align:center"><span id="z_position"></span> mm</td>
+                            <td width="40"><input id="z_new_position" style="width:40%; margin-left:7%"/> mm</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-left" style="margin-left:5%">
+                    <button id="autohome" type="button" class="btn btn-info btn-sm">AUTOHOME</button>
+                    <button id="set" style='margin-left:5%' type="button" class="btn btn-info btn-sm">SET CHANGES</button>
+                    <button id="stop" style='margin-left:5%' type="button" class="btn btn-danger btn-sm">STOP</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <br>
+    <button id="button_finish" type="button" class="btn btn-default btn-lg">Fisnish</button>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">    
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Partial picture</h4>
+            </div>
+            <div class="modal-body text-center">
+                <img id='pphoto' width="100%" src= '{{url_for('static',filename='img/partial.jpg')}}'>
+            </div>
+            <div class="modal-footer">
+                <a href="{{url_for('static',filename='img/partial.jpg')}}" class="btn-success btn-sm" role="button" download>DOWNLOAD</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/widgets.js') }}"></script>
+<!--<script type="text/javascript" src="http://weblab.deusto.es/labs/flies/static/js/widgets.js"></script> -->
+
+<script type="text/javascript">
+    var FIRST_CAMERA_URL = "http://cams.weblab.deusto.es/webcam/proxied.py/flies1";
+    var STATUS_UPDATES_FREQUENCY = 2500;
+
+    var augmentedViewEnabled = true; // To indicate in which mode we are.
+    var cameraRefresher; // To help refresh the main cameras.
+
+    var statusUpdaterTimer; //
+
+    cameraRefresher = new CameraRefresher("cam_img");
+    cameraRefresher.start(FIRST_CAMERA_URL);
+    timerDisplayer = new TimerDisplayer("timer");
+    timerDisplayer.setTimeLeft({{timeleft-1}});
+    timerDisplayer.startCountDown();
+</script>
+{% endblock %}

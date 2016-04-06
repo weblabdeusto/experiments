@@ -7,7 +7,7 @@
 .build/
 
 #ignore user files
-src/
+#src/
 
 #ignore database files
 *.db

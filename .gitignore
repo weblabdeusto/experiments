@@ -15,3 +15,5 @@ db_repository/
 tmp/
 nohup.out
 
+#Ignore compiled files
+*.pyc

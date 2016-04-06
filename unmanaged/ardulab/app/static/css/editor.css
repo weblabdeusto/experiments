@@ -1,0 +1,52 @@
+body {
+    background-color: white;
+}
+
+#editor {
+    margin-top: 1%;
+    padding-bottom: 40%;
+    top: 10%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 4px;
+    border: 1px solid #444;
+    box-shadow: 1px 1px 2px 1px #222;
+}
+#fixed-panel {
+
+    height: 150px;
+    overflow-y: scroll;
+    background-color: #c8c8ff;
+    border: 2px solid #444;
+    font-size: 12px;
+    line-height: 13px;
+}
+
+
+
+#file-manager{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
+    border-radius: 6px;
+    border: 1px solid #444;
+    margin-top:0%;
+    margin-right: 0%;
+    padding-bottom: 40%;
+    height: 300px;
+    overflow-y: scroll;
+
+}
+.file{
+    cursor:pointer;
+}
+
+.file-active{
+    color: #000000;
+}
+
+.file-unsaved{
+    color: #ff0000;
+}

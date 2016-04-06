@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3">
+            <br><br>
+            <div class="panel">
+                <form id="fileupload" method="POST" enctype="multipart/form-data">
+                    <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                    <!--<noscript><input type="hidden" name="redirect" value="http://blueimp.github.io/jQuery-File-Upload/"></noscript>--!>
+                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                    <div class="row fileupload-buttonbar">
+                        <div class="col-lg-12">
+                            <!-- The fileinput-button span is used to style the file input field as button -->
+                            <span class="btn btn-info" id="newfile-btn" data-toggle="modal" data-target="#add-modal">
+                                <i class="glyphicon glyphicon-file"></i>
+                                <span>New</span>
+                            </span>
+                            <span class="btn btn-success fileinput-button">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Add</span>
+                                <input type="file" name="file" multiple>
+                            </span>
+                            <span class="btn btn-default" id="save-btn">
+                                <i class="glyphicon glyphicon-save"></i>
+                                <span>Save</span>
+                            </span>
+
+                            <!-- The global file processing state -->
+                            <!--<span class="fileupload-process"></span>-->
+                        </div>
+                        <!-- The global progress state -->
+                    </div>
+
+                    <!-- The table listing the files available for upload/download -->
+                    <div id="file-manager">
+                        <table role="presentation" class="table table-striped" style="table-layout:fixed"><tbody class="files"></tbody></table>
+                    </div>
+                </form>
+                {% raw %}
+                <!-- The template to display files available for upload -->
+                <script id="template-upload" type="text/x-tmpl">
+                {% for (var i=0, file; file=o.files[i]; i++) { %}
+                    <tr class="template-upload fade">
+                        <td width="70%" class="file" id="{%=file.name%}">
+                            <p class="name">{%=file.name%}</p>
+                            <strong class="error text-danger"></strong>
+                        </td>
+                        <td width="30%">
+                            {% if (!i && !o.options.autoUpload) { %}
+                                <button class="btn btn-primary start" disabled>
+                                    <i class="glyphicon glyphicon-upload"></i>
+                                </button>
+                            {% } %}
+                            {% if (!i) { %}
+                                <button class="btn btn-warning cancel">
+                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                </button>
+                            {% } %}
+                        </td>
+                    </tr>
+                {% } %}
+                </script>
+                <!-- The template to display files available for download -->
+                <script id="template-download" type="text/x-tmpl" >
+
+                {% for (var i=0, file; file=o.files[i]; i++) { %}
+                    {% if (file.error != 'Empty file upload result') { %}
+                        <tr class="template-download fade">
+                            <td id="{%=file.name%}" width="70%" class="file" onclick="loadFile('{%=file.name%}')">
+                                <p class="name">
+                                        <span class="file-name">{%=file.name%}</span>
+                                </p>
+                                {% if (file.error) { %}
+                                    <p><span class="label label-danger">Error</span> {%=file.error%}</span></p>
+                                {% } %}
+                            </td>
+                            <td width="30%">
+                                <a class="btn btn-success"href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" >
+                                     <i class="glyphicon glyphicon-download"></i>
+                                </a>
+                                {% if (file.deleteUrl) { %}
+                                    <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                {% } else { %}
+                                    <button class="btn btn-warning cancel">
+                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                    </button>
+                                {% } %}
+                            </td>
+                        </tr>
+                    {% } %}
+                {% } %}
+                </script>
+                {% endraw %}
+            </div>
+
+        </div>
+
+        <div class="col-lg-8" style="margin-top: 2%">
+            <div style="margin-left: 0%">
+                <div class="row">
+                    <div class="col-md-4">
+
+                        <button class="btn btn-default" id="validate-btn">
+                            <i class="glyphicon glyphicon-check"></i>
+                            <span>Validate</span>
+                        </button>
+                    </div>
+                    <div class="col-md-8">
+                        <span>Launch on:</span>
+                        <span class="btn btn-default" style="margin-left: 2%">
+                            <i class="glyphicon glyphicon-road"></i>
+                            <span>Line Follower</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="editor"></div>
+            <div class="panel panel-default" id="fixed-panel" style="margin-top: 1%">
+                <div class="panel-body " id="console"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add-modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New file...</h4>
+            </div>
+            <div class="modal-body">
+                <p>File name: <span><input type="text" name="file-name"></span></p>
+                <span>File extension: </span>
+                        <select name="menu" id='new-file-extension' style="margin-left: 3%">
+                            <option value="cpp" selected>cpp</option>
+                            <option value="ino">ino</option>
+                            <option value="h">h</option>
+                        </select>
+            </div>
+            <div class="modal-footer">
+                <button  class="btn-success btn" id="create-file-btn">Create</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

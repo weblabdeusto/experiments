@@ -1,0 +1,17 @@
+#Ignore logs
+
+*.log
+
+
+#ignore build directory
+.build/
+
+#ignore user files
+src/
+
+#ignore database files
+*.db
+db_repository/
+tmp/
+nohup.out
+

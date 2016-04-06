@@ -51,8 +51,8 @@ def before_request():
     g.user = current_user
     if g.user.is_authenticated:
         g.user.last_poll = datetime.now()
-        db.session.add(g.user)
-        db.session.commit()
+#        db.session.add(g.user)
+#        db.session.commit()
 
 @app.route('/home')
 @login_required
@@ -315,6 +315,8 @@ def upload():
 @login_required
 def add(filename):
     user_folder = os.path.join(app.config['UPLOAD_FOLDER'], g.user.folder_id)
+    if not os.path.exists(user_folder):
+            os.makedirs(user_folder)
     file_path = os.path.join(user_folder, filename)
     print file_path
     if not os.path.exists(file_path):

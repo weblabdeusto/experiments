@@ -1,0 +1,889 @@
+polled
+polled
+polled
+polled
+polled
+polled
+Back URL: http://weblab.deusto.es
+Assigned session_id: 169179828
+See: http://weblab.deusto.es/labs/ardulab/lab/169179828/
+polled
+non found
+polled
+polled
+polled
+/home/weblab/experiments/unmanaged/ardulab/app/static/uploads/56ee58a5-a667-4921-8c9e-041b81fc034d/b.cpp
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+/home/weblab/experiments/unmanaged/ardulab/app/static/uploads/56ee58a5-a667-4921-8c9e-041b81fc034d/a.ino
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+User exists
+Back URL: http://weblab.deusto.es
+Assigned session_id: 599951865
+See: http://weblab.deusto.es/labs/ardulab/lab/599951865/
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+/home/weblab/experiments/unmanaged/ardulab/app/static/uploads/e74eb9a7-0760-4fb7-b731-7931e3595552/TurnSensor.h
+TurnSensor.h
+False
+/* Turnsensor.h and TurnSensor.cpp provide functions for
+configuring the L3GD20H gyro, calibrating it, and using it to
+measure how much the robot has turned about its Z axis. */
+
+#pragma once
+
+#include <Zumo32U4.h>
+
+// This constant represents a turn of 45 degrees.
+const int32_t turnAngle45 = 0x20000000;
+
+// This constant represents a turn of 90 degrees.
+const int32_t turnAngle90 = turnAngle45 * 2;
+
+// This constant represents a turn of approximately 1 degree.
+const int32_t turnAngle1 = (turnAngle45 + 22) / 45;
+
+// These are defined in TurnSensor.cpp:
+void turnSensorSetup();
+void turnSensorReset();
+void turnSensorUpdate();
+extern uint32_t turnAngle;
+extern int16_t turnRate;
+
+// These objects must be defined in your sketch.
+extern Zumo32U4ButtonA buttonA;
+extern Zumo32U4LCD lcd;
+extern L3G gyro;
+
+/home/weblab/experiments/unmanaged/ardulab/app/static/uploads/e74eb9a7-0760-4fb7-b731-7931e3595552/TurnSensor.cpp
+TurnSensor.cpp
+False
+/* Turnsensor.h and TurnSensor.cpp provide functions for
+configuring the L3GD20H gyro, calibrating it, and using it to
+measure how much the robot has turned about its Z axis. */
+
+#include <Wire.h>
+#include "TurnSensor.h"
+
+/* turnAngle is a 32-bit unsigned integer representing the amount
+the robot has turned since the last time turnSensorReset was
+called.  This is computed solely using the Z axis of the gyro, so
+it could be inaccurate if the robot is rotated about the X or Y
+axes.
+
+Our convention is that a value of 0x20000000 represents a 45
+degree counter-clockwise rotation.  This means that a uint32_t
+can represent any angle between 0 degrees and 360 degrees.  If
+you cast it to a signed 32-bit integer by writing
+(int32_t)turnAngle, that integer can represent any angle between
+-180 degrees and 180 degrees. */
+uint32_t turnAngle = 0;
+
+// turnRate is the current angular rate of the gyro, in units of
+// 0.07 degrees per second.
+int16_t turnRate;
+
+// This is the average reading obtained from the gyro's Z axis
+// during calibration.
+int16_t gyroOffset;
+
+// This variable helps us keep track of how much time has passed
+// between readings of the gyro.
+uint16_t gyroLastUpdate = 0;
+
+/* This should be called in setup() to enable and calibrate the
+gyro.  It uses the LCD, yellow LED, and button A.  While the LCD
+is displaying "Gyro cal", you should be careful to hold the robot
+still.
+
+The digital zero-rate level of the L3GD20H gyro can be as high as
+25 degrees per second, and this calibration helps us correct for
+that. */
+void turnSensorSetup()
+{
+  Wire.begin();
+  gyro.init();
+
+  // 800 Hz output data rate,
+  // low-pass filter cutoff 100 Hz
+  gyro.writeReg(L3G::CTRL1, 0b11111111);
+
+  // 2000 dps full scale
+  gyro.writeReg(L3G::CTRL4, 0b00100000);
+
+  // High-pass filter disabled
+  gyro.writeReg(L3G::CTRL5, 0b00000000);
+
+  lcd.clear();
+  lcd.print(F("Gyro cal"));
+
+  // Turn on the yellow LED in case the LCD is not available.
+  ledYellow(1);
+
+  // Delay to give the user time to remove their finger.
+  delay(500);
+
+  // Calibrate the gyro.
+  int32_t total = 0;
+  for (uint16_t i = 0; i < 1024; i++)
+  {
+    // Wait for new data to be available, then read it.
+    while(!gyro.readReg(L3G::STATUS_REG) & 0x08);
+    gyro.read();
+
+    // Add the Z axis reading to the total.
+    total += gyro.g.z;
+  }
+  ledYellow(0);
+  gyroOffset = total / 1024;
+
+  // Display the angle (in degrees from -180 to 180) until the
+  // user presses A.
+  lcd.clear();
+  turnSensorReset();
+  while (!buttonA.getSingleDebouncedRelease())
+  {
+    turnSensorUpdate();
+    lcd.gotoXY(0, 0);
+    lcd.print((((int32_t)turnAngle >> 16) * 360) >> 16);
+    lcd.print(F("   "));
+  }
+  lcd.clear();
+}
+
+// This should be called to set the starting point for measuring
+// a turn.  After calling this, turnAngle will be 0.
+void turnSensorReset()
+{
+  gyroLastUpdate = micros();
+  turnAngle = 0;
+}
+
+// Read the gyro and update the angle.  This should be called as
+// frequently as possible while using the gyro to do turns.
+void turnSensorUpdate()
+{
+  // Read the measurements from the gyro.
+  gyro.read();
+  turnRate = gyro.g.z - gyroOffset;
+
+  // Figure out how much time has passed since the last update (dt)
+  uint16_t m = micros();
+  uint16_t dt = m - gyroLastUpdate;
+  gyroLastUpdate = m;
+
+  // Multiply dt by turnRate in order to get an estimation of how
+  // much the robot has turned since the last update.
+  // (angular change = angular velocity * time)
+  int32_t d = (int32_t)turnRate * dt;
+
+  // The units of d are gyro digits times microseconds.  We need
+  // to convert those to the units of turnAngle, where 2^29 units
+  // represents 45 degrees.  The conversion from gyro digits to
+  // degrees per second (dps) is determined by the sensitivity of
+  // the gyro: 0.07 degrees per second per digit.
+  //
+  // (0.07 dps/digit) * (1/1000000 s/us) * (2^29/45 unit/degree)
+  // = 14680064/17578125 unit/(digit*us)
+  turnAngle += (int64_t)d * 14680064 / 17578125;
+}
+
+/home/weblab/experiments/unmanaged/ardulab/app/static/uploads/e74eb9a7-0760-4fb7-b731-7931e3595552/RotationResist.ino
+RotationResist.ino
+False
+polled
+/* This demo shows how the Zumo can use its gyroscope to detect
+when it is being rotated, and use the motors to resist that
+rotation.
+
+This code was tested on a Zumo with 4 NiMH batteries and two 75:1
+HP micro metal gearmotors.  If you have different batteries or
+motors, you might need to adjust the PID constants.
+
+Be careful to not move the robot for a few seconds after starting
+it while the gyro is being calibrated.  During the gyro
+calibration, the yellow LED is on and the words "Gyro cal" are
+displayed on the LCD.
+
+After the gyro calibration is done, press button A to start the
+demo.  If you try to turn the Zumo, or put it on a surface that
+is turning, it will drive its motors to counteract the turning.
+
+This demo only uses the Z axis of the gyro, so it is possible to
+pick up the Zumo, rotate it about its X and Y axes, and then put
+it down facing in a new position. */
+
+#include <Wire.h>
+#include <Zumo32U4.h>
+#include "TurnSensor.h"
+
+// This is the maximum speed the motors will be allowed to turn.
+// A maxSpeed of 400 lets the motors go at top speed.  Decrease
+// this value to impose a speed limit.
+const int16_t maxSpeed = 400;
+
+Zumo32U4LCD lcd;
+Zumo32U4ButtonA buttonA;
+Zumo32U4Motors motors;
+L3G gyro;
+
+void setup()
+{
+  turnSensorSetup();
+  delay(500);
+  turnSensorReset();
+
+  lcd.clear();
+  lcd.print(F("Try to"));
+  lcd.gotoXY(0, 1);
+  lcd.print(F("turn me!"));
+}
+
+void loop()
+{
+  // Read the gyro to update turnAngle, the estimation of how far
+  // the robot has turned, and turnRate, the estimation of how
+  // fast it is turning.
+  turnSensorUpdate();
+
+  // Calculate the motor turn speed using proportional and
+  // derivative PID terms.  Here we are a using a proportional
+  // constant of 56 and a derivative constant of 1/20.
+  int32_t turnSpeed = -(int32_t)turnAngle / (turnAngle1 / 56)
+    - turnRate / 20;
+
+  // Constrain our motor speeds to be between
+  // -maxSpeed and maxSpeed.
+  turnSpeed = constrain(turnSpeed, -maxSpeed, maxSpeed);
+
+  motors.setSpeeds(-turnSpeed, turnSpeed);
+}
+
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+polled
+porduna going out
+http://weblab.deusto.es
+logout
+User exists
+Back URL: https://weblab.deusto.es/weblab/labs/Arduino experiments/ardulab/
+Assigned session_id: 535947399
+See: http://weblab.deusto.es/labs/ardulab/lab/535947399/
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 598 seconds
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 593 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 588 seconds
+polled
+/home/weblab/experiments/unmanaged/ardulab/app/static/uploads/409202a6-ee3b-4540-8788-f95d46fe6c35/TurnSensor.h
+TurnSensor.h
+False
+/* Turnsensor.h and TurnSensor.cpp provide functions for
+configuring the L3GD20H gyro, calibrating it, and using it to
+measure how much the robot has turned about its Z axis. */
+
+#pragma once
+
+#include <Zumo32U4.h>
+
+// This constant represents a turn of 45 degrees.
+const int32_t turnAngle45 = 0x20000000;
+
+// This constant represents a turn of 90 degrees.
+const int32_t turnAngle90 = turnAngle45 * 2;
+
+// This constant represents a turn of approximately 1 degree.
+const int32_t turnAngle1 = (turnAngle45 + 22) / 45;
+
+// These are defined in TurnSensor.cpp:
+void turnSensorSetup();
+void turnSensorReset();
+void turnSensorUpdate();
+extern uint32_t turnAngle;
+extern int16_t turnRate;
+
+// These objects must be defined in your sketch.
+extern Zumo32U4ButtonA buttonA;
+extern Zumo32U4LCD lcd;
+extern L3G gyro;
+
+/home/weblab/experiments/unmanaged/ardulab/app/static/uploads/409202a6-ee3b-4540-8788-f95d46fe6c35/TurnSensor.cpp
+TurnSensor.cpp
+False
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 583 seconds
+/* Turnsensor.h and TurnSensor.cpp provide functions for
+configuring the L3GD20H gyro, calibrating it, and using it to
+measure how much the robot has turned about its Z axis. */
+
+#include <Wire.h>
+#include "TurnSensor.h"
+
+/* turnAngle is a 32-bit unsigned integer representing the amount
+the robot has turned since the last time turnSensorReset was
+called.  This is computed solely using the Z axis of the gyro, so
+it could be inaccurate if the robot is rotated about the X or Y
+axes.
+
+Our convention is that a value of 0x20000000 represents a 45
+degree counter-clockwise rotation.  This means that a uint32_t
+can represent any angle between 0 degrees and 360 degrees.  If
+you cast it to a signed 32-bit integer by writing
+(int32_t)turnAngle, that integer can represent any angle between
+-180 degrees and 180 degrees. */
+uint32_t turnAngle = 0;
+
+// turnRate is the current angular rate of the gyro, in units of
+// 0.07 degrees per second.
+int16_t turnRate;
+
+// This is the average reading obtained from the gyro's Z axis
+// during calibration.
+int16_t gyroOffset;
+
+// This variable helps us keep track of how much time has passed
+// between readings of the gyro.
+uint16_t gyroLastUpdate = 0;
+
+/* This should be called in setup() to enable and calibrate the
+gyro.  It uses the LCD, yellow LED, and button A.  While the LCD
+is displaying "Gyro cal", you should be careful to hold the robot
+still.
+
+The digital zero-rate level of the L3GD20H gyro can be as high as
+25 degrees per second, and this calibration helps us correct for
+that. */
+void turnSensorSetup()
+{
+  Wire.begin();
+  gyro.init();
+
+  // 800 Hz output data rate,
+  // low-pass filter cutoff 100 Hz
+  gyro.writeReg(L3G::CTRL1, 0b11111111);
+
+  // 2000 dps full scale
+  gyro.writeReg(L3G::CTRL4, 0b00100000);
+
+  // High-pass filter disabled
+  gyro.writeReg(L3G::CTRL5, 0b00000000);
+
+  lcd.clear();
+  lcd.print(F("Gyro cal"));
+
+  // Turn on the yellow LED in case the LCD is not available.
+  ledYellow(1);
+
+  // Delay to give the user time to remove their finger.
+  delay(500);
+
+  // Calibrate the gyro.
+  int32_t total = 0;
+  for (uint16_t i = 0; i < 1024; i++)
+  {
+    // Wait for new data to be available, then read it.
+    while(!gyro.readReg(L3G::STATUS_REG) & 0x08);
+    gyro.read();
+
+    // Add the Z axis reading to the total.
+    total += gyro.g.z;
+  }
+  ledYellow(0);
+  gyroOffset = total / 1024;
+
+  // Display the angle (in degrees from -180 to 180) until the
+  // user presses A.
+  lcd.clear();
+  turnSensorReset();
+  while (!buttonA.getSingleDebouncedRelease())
+  {
+    turnSensorUpdate();
+    lcd.gotoXY(0, 0);
+    lcd.print((((int32_t)turnAngle >> 16) * 360) >> 16);
+    lcd.print(F("   "));
+  }
+  lcd.clear();
+}
+
+// This should be called to set the starting point for measuring
+// a turn.  After calling this, turnAngle will be 0.
+void turnSensorReset()
+{
+  gyroLastUpdate = micros();
+  turnAngle = 0;
+}
+
+// Read the gyro and update the angle.  This should be called as
+// frequently as possible while using the gyro to do turns.
+void turnSensorUpdate()
+{
+  // Read the measurements from the gyro.
+  gyro.read();
+  turnRate = gyro.g.z - gyroOffset;
+
+  // Figure out how much time has passed since the last update (dt)
+  uint16_t m = micros();
+  uint16_t dt = m - gyroLastUpdate;
+  gyroLastUpdate = m;
+
+  // Multiply dt by turnRate in order to get an estimation of how
+  // much the robot has turned since the last update.
+  // (angular change = angular velocity * time)
+  int32_t d = (int32_t)turnRate * dt;
+
+  // The units of d are gyro digits times microseconds.  We need
+  // to convert those to the units of turnAngle, where 2^29 units
+  // represents 45 degrees.  The conversion from gyro digits to
+  // degrees per second (dps) is determined by the sensitivity of
+  // the gyro: 0.07 degrees per second per digit.
+  //
+  // (0.07 dps/digit) * (1/1000000 s/us) * (2^29/45 unit/degree)
+  // = 14680064/17578125 unit/(digit*us)
+  turnAngle += (int64_t)d * 14680064 / 17578125;
+}
+
+/home/weblab/experiments/unmanaged/ardulab/app/static/uploads/409202a6-ee3b-4540-8788-f95d46fe6c35/RotationResist.ino
+RotationResist.ino
+False
+/* This demo shows how the Zumo can use its gyroscope to detect
+when it is being rotated, and use the motors to resist that
+rotation.
+
+This code was tested on a Zumo with 4 NiMH batteries and two 75:1
+HP micro metal gearmotors.  If you have different batteries or
+motors, you might need to adjust the PID constants.
+
+Be careful to not move the robot for a few seconds after starting
+it while the gyro is being calibrated.  During the gyro
+calibration, the yellow LED is on and the words "Gyro cal" are
+displayed on the LCD.
+
+After the gyro calibration is done, press button A to start the
+demo.  If you try to turn the Zumo, or put it on a surface that
+is turning, it will drive its motors to counteract the turning.
+
+This demo only uses the Z axis of the gyro, so it is possible to
+pick up the Zumo, rotate it about its X and Y axes, and then put
+it down facing in a new position. */
+
+#include <Wire.h>
+#include <Zumo32U4.h>
+#include "TurnSensor.h"
+
+// This is the maximum speed the motors will be allowed to turn.
+// A maxSpeed of 400 lets the motors go at top speed.  Decrease
+// this value to impose a speed limit.
+const int16_t maxSpeed = 400;
+
+Zumo32U4LCD lcd;
+Zumo32U4ButtonA buttonA;
+Zumo32U4Motors motors;
+L3G gyro;
+
+void setup()
+{
+  turnSensorSetup();
+  delay(500);
+  turnSensorReset();
+
+  lcd.clear();
+  lcd.print(F("Try to"));
+  lcd.gotoXY(0, 1);
+  lcd.print(F("turn me!"));
+}
+
+void loop()
+{
+  // Read the gyro to update turnAngle, the estimation of how far
+  // the robot has turned, and turnRate, the estimation of how
+  // fast it is turning.
+  turnSensorUpdate();
+
+  // Calculate the motor turn speed using proportional and
+  // derivative PID terms.  Here we are a using a proportional
+  // constant of 56 and a derivative constant of 1/20.
+  int32_t turnSpeed = -(int32_t)turnAngle / (turnAngle1 / 56)
+    - turnRate / 20;
+
+  // Constrain our motor speeds to be between
+  // -maxSpeed and maxSpeed.
+  turnSpeed = constrain(turnSpeed, -maxSpeed, maxSpeed);
+
+  motors.setSpeeds(-turnSpeed, turnSpeed);
+}
+
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 578 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 573 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 568 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 563 seconds
+polled
+Weblab status check
+polled
+Did not poll in 0 seconds
+User gabi still has 557 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 552 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 547 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 542 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 537 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 532 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 527 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 522 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 517 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 512 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 507 seconds
+polled
+Weblab status check
+polled
+Did not poll in 0 seconds
+User gabi still has 501 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 496 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 491 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 486 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 481 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 476 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 471 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 466 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 461 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 456 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 451 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 446 seconds
+polled
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 441 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 436 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 431 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 425 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 420 seconds
+polled
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 412 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 407 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 402 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 397 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 392 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 387 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 382 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 377 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 372 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 367 seconds
+polled
+Weblab status check
+polled
+Did not poll in 0 seconds
+User gabi still has 362 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 356 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 351 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 346 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 341 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 336 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 331 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 326 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 321 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 316 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 311 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 306 seconds
+polled
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 301 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 296 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 290 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 285 seconds
+polled
+Weblab status check
+Did not poll in 1 seconds
+User gabi still has 280 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 275 seconds
+polled
+Weblab status check
+Did not poll in 3 seconds
+User gabi still has 270 seconds
+polled
+polled
+Weblab status check
+Did not poll in 0 seconds
+User gabi still has 265 seconds
+polled
+Weblab status check
+Did not poll in 2 seconds
+User gabi still has 260 seconds
+Weblab status check
+Did not poll in 7 seconds
+User gabi still has 255 seconds
+Weblab status check
+Did not poll in 12 seconds
+User gabi still has 249 seconds
+Weblab status check
+Did not poll in 17 seconds
+User gabi still has 244 seconds
+Weblab status check
+Did not poll in 22 seconds
+User gabi still has 239 seconds
+Weblab status check
+Did not poll in 27 seconds
+User gabi still has 234 seconds
+Weblab status check
+Did not poll in 32 seconds
+User gabi still has 229 seconds
+Weblab status check
+Did not poll in 37 seconds
+User gabi still has 224 seconds
+Weblab status check
+Did not poll in 42 seconds

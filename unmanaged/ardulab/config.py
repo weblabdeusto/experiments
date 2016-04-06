@@ -21,6 +21,7 @@ IGNORED_FILES = ['.gitignore']
 CELERY_BROKER_URL = 'redis://localhost:6379/3'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/3'
 
+
 #compiler config
 BINARY_FOLDER = basedir+'/app/static/binaries/'
 

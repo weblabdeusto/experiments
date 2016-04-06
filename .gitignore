@@ -1,11 +1,11 @@
 #Ignore logs
 
-*.log
-
-
+*.log*
+*.save*
+*.pid
 #ignore build directory
 .build/
-
+*.txt
 #ignore user files
 #src/
 
@@ -17,3 +17,4 @@ nohup.out
 
 #Ignore compiled files
 *.pyc
+uploads/

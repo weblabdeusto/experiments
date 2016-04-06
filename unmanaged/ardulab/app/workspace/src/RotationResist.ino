@@ -18,7 +18,7 @@ is turning, it will drive its motors to counteract the turning.
 This demo only uses the Z axis of the gyro, so it is possible to
 pick up the Zumo, rotate it about its X and Y axes, and then put
 it down facing in a new position. */
-#include "pins.h"
+
 #include <Wire.h>
 #include <Zumo32U4.h>
 #include "TurnSensor.h"

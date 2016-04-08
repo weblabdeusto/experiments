@@ -1,7 +1,7 @@
 #!/bin/bash
 
 user_folder=$2
-binary_folder="/home/gabi/proyectos/web/test/ardulab/app/static/binaries/"
+binary_folder="$4/app/static/binaries/"
 
 ruta="$binary_folder$user_folder/"
 echo $ruta

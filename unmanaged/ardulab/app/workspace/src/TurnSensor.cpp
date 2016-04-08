@@ -81,13 +81,12 @@ void turnSensorSetup()
   // user presses A.
   lcd.clear();
   turnSensorReset();
-  while (!buttonA.getSingleDebouncedRelease())
-  {
-    turnSensorUpdate();
-    lcd.gotoXY(0, 0);
-    lcd.print((((int32_t)turnAngle >> 16) * 360) >> 16);
-    lcd.print(F("   "));
-  }
+
+  turnSensorUpdate();
+  lcd.gotoXY(0, 0);
+  lcd.print((((int32_t)turnAngle >> 16) * 360) >> 16);
+  lcd.print(F("   "));
+
   lcd.clear();
 }
 

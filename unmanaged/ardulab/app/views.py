@@ -107,7 +107,6 @@ def compile_project(self,user_folder,board):
 
     #user_folder = "3037b2d4-bb35-4ad6-a9c8-daa2f489ae69"
     #board="leonardo"
-
     self.update_state(state='PROGRESS',
                       meta={'current': 0, 'total': 100,
                             'status': "Preparing files"})
@@ -187,6 +186,8 @@ def compile_project(self,user_folder,board):
 @check_permission
 @login_required
 def compile():
+    if not os.path.exists(basedir+'/app/static/binaries/'+g.user.folder_id):
+        os.makedirs(basedir+'/app/static/binaries/'+g.user.folder_id)
     task = compile_project.apply_async(args=[g.user.folder_id, "leonardo"])
     return jsonify({}), 202, {'Location': url_for('taskstatus',
                                                   task_id=task.id)}

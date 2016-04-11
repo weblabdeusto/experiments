@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">User Code: </div>
+                <div class="panel-body">
+                {% if g.user.sketch != "None" %}
+                    <p class="file" id="{{ g.user.sketch }}">{{ g.user.sketch }}</p>
+                {% else %}
+                     <p>No user code available</p>
+                {% endif %}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Demo Code: </div>
+                <div class="panel-body">
+                {% for file in demo_files %}
+                    <p class="file" id="{{ file }}">{{ file }}</p>
+                    <hr>
+                {% endfor %}
+                </div>
+            </div>
+            <div style="margin-top: 2%;text-align: center">
+                <span class="btn btn-default" id="launch-btn">
+                    <i class="glyphicon glyphicon-save"></i>
+                    <span>Load</span>
+                </span>
+                <span class="btn btn-danger" id="launch-btn">
+                    <i class="glyphicon glyphicon-stop"></i>
+                    <span>Stop</span>
+                </span>
+            </div>
+        <br>
+            <div id="output" style="text-align: center">
+
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <img src="http://cams.weblab.deusto.es/webcam/proxied.py/romie_top" width="100%">
+        </div>
+        <div class="col-lg-4">
+            <div class="panel" id="controls">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Ardulab-LineFollower</title>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/weblabcommons.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/zumo1.css')}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4" style="text-align:center">
+                <h1><b>Ardulab Line Follower</b></h1>
+            </div>
+            <div class="col-lg-4">
+                <div style="text-align:right;margin-right: 10%" >
+                    <h2>
+                        <span class="timer" id="timer"></span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div>
+            {% block content %}{% endblock %}
+        </div>
+        <div id="bfinish" class="text-center">
+            <br>
+            <button id="button_finish" type="button" class="btn btn-default btn-lg">Finish</button>
+        </div>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/widgets.js') }}"></script>
+        <script>
+
+            var BACK_URL = "{{g.user.back}}";
+            var TIME_LEFT = {{timeleft-1}};
+            var BASE_URL = "{{base_url}}";
+            var CAM_URL = "{{ cam_url }}";
+
+        </script>
+        <script>
+            var USER_FILE = "";
+            var DEMO_FILES = [];
+
+            {% if g.user.sketch != None %}
+                USER_FILE = "{{g.user.sketch}}";
+            {% else %}
+                USER_FILE = "None";
+            {% endif %}
+            {% for file in demo_files %}
+                DEMO_FILES.push("{{ file }}");
+            {% endfor %}
+
+        </script>
+        <script type="text/javascript"  src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{{ url_for('.static', filename='js/iframeResizer.contentWindow.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('.static', filename='js/iframeResizer.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/weblabcommons.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/zumo1.js') }}"></script>
+    </body>
+</html>

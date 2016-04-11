@@ -56,7 +56,7 @@ def before_request():
 
 @app.route('/home')
 @login_required
-@check_permission
+#@check_permission
 def home():
     if g.user.max_date > datetime.now():
         time = (g.user.max_date - datetime.now()).seconds
@@ -87,7 +87,7 @@ def logout():
 
 
 @app.route('/poll')
-@check_permission
+#@check_permission
 @login_required
 def poll():
     g.user.last_poll = datetime.now()
@@ -183,7 +183,7 @@ def compile_project(self,user_folder,board):
             'result': result}
 
 @app.route('/compile', methods=['POST'])
-@check_permission
+#@check_permission
 @login_required
 def compile():
     if not os.path.exists(basedir+'/app/static/binaries/'+g.user.folder_id):
@@ -507,7 +507,7 @@ def status(session_id):
             print "Time expired"
             return json.dumps({'should_finish' : -1})
         
-        return json.dumps({'should_finish' : 5})
+        return json.dumps({'should_finish' : 0})
     print "User not found"
     # 
     # If the user is considered expired here, we can return -1 instead of 10. 

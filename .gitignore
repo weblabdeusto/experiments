@@ -1,5 +1,5 @@
 #Ignore logs
-
+workspace.xml
 *.log*
 *.save*
 *.pid

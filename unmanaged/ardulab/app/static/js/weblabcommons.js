@@ -35,5 +35,5 @@ $(document).ready(function(){
         });
 
     });
-    var polling = setInterval(poll, 4000);
+    //var polling = setInterval(poll, 4000);
 });

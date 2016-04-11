@@ -3,30 +3,6 @@
 *  FILE LOADER
  */
 
-function launchBinary() {
-    // add task status elements
-    $("#launch-btn").prop( "disabled", true );
-    var status_div = $("#output");
-
-    status_div.html("<p>Starting validation</p>");
-
-
-
-    // send ajax POST request to start background job
-    $.ajax({
-        type: 'POST',
-        url: '/loadbinary',
-        success: function(data, status, request) {
-            status_url = request.getResponseHeader('Location');
-            console.log('HELLOOOO');
-            console.log(status_url);
-            update_progress(status_url, status_div);
-        },
-        error: function() {
-            alert('Unexpected error');
-        }
-    });
-}
 
 function update_progress(status_url, status_div) {
     var _this = this;
@@ -51,6 +27,7 @@ function update_progress(status_url, status_div) {
                 }
 
                 $("#launch-btn").prop( "disabled", false );
+                $("#stop-btn").prop( "disabled", false );
             }
             else {
                 // something unexpected happened
@@ -137,6 +114,7 @@ function FileManager(){
         console.log(file);
 
         $("#launch-btn").prop( "disabled", true );
+        $("#stop-btn").prop( "disabled", true );
         var status_div = $("#output");
 
         status_div.html("<p>Starting validation</p>");
@@ -161,7 +139,33 @@ function FileManager(){
             datatype: 'application/json;charset=UTF-8',
             success: callback
         });
-    }
+    };
+
+    this.eraseMemory = function(){
+
+
+
+        $("#stop-btn").prop( "disabled", true );
+        $("#launch-btn").prop( "disabled", true );
+        var status_div = $("#output");
+
+        status_div.html("<p>Starting validation</p>");
+
+
+        var callback = function(data, status, request){
+            console.log(data);
+            status_url = request.getResponseHeader('Location');
+            console.log(status_url);
+            update_progress(status_url, status_div);
+        };
+
+        $.ajax({
+            url:"/erasebinary",
+            type: "POST",
+            datatype: 'application/json;charset=UTF-8',
+            success: callback
+        });
+    };
 }
 
 $(document).ready(function(){

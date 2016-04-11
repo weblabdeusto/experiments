@@ -87,6 +87,50 @@ def home():
                            timeleft=time,
                            demo_files=demo_files)
 
+@app.route("/erasebinary", methods=['POST'])
+@login_required
+def erase():
+    task = stop.apply_async()
+    return jsonify({}), 202, {'Location': url_for('taskstatus',
+                                                  task_id=task.id)}
+@celery.task(bind=True)
+def stop(self):
+    self.update_state(state='PROGRESS',
+                      meta={'current': 0, 'total': 100,
+                            'status': 'Starting'})
+    try:
+        f = open("/sys/class/gpio/gpio21/value","w")
+        f.write("0")
+        f.seek(0)
+        f.write("1")
+        f.seek(0)
+        time.sleep(0.1)
+        f.write("0")
+        f.seek(0)
+        f.write("1")
+        print "done"
+        self.update_state(state='PROGRESS',
+                          meta={'current': 0, 'total': 100,
+                            'status': 'Bootloader enabled'})
+    except:
+        print "Error enabling bootloader"
+        self.update_state(state='PROGRESS',
+                          meta={'current': 0, 'total': 100,
+                            'status': 'Error activating bootloader'})
+    try:
+        result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
+        print "Success!"
+        self.update_state(state='PROGRESS',
+                  meta={'current': 100, 'total': 100,
+                        'status': 'Stopped'})
+    except subprocess.CalledProcessError, ex:
+        # error code <> 0
+        print "Error loading file"
+        return {'current': 100, 'total': 100, 'status': 'Task completed!',
+            'result': "Error erasing memory"}
+    return {'current': 100, 'total': 100, 'status': 'Task completed!',
+            'result': "Memory erased"}
+
 @app.route("/loadbinary", methods=['POST'])
 @login_required
 def load():

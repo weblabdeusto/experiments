@@ -47,7 +47,7 @@ function update_progress(status_url, status_div) {
                     status_div.html("<p>" + result+"</p>");
                 }
                 if(i>1){
-                    status_div.html("<p style='color:red'>Error Compiling!</p>");
+                    status_div.html("<p style='color:red'>Error loading binary!</p>");
                 }
 
                 $("#launch-btn").prop( "disabled", false );

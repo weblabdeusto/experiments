@@ -125,6 +125,7 @@ def launch_binary(self,file_name,demo,board):
                             'status': 'Error activating bootloader'})
     if(demo):
         try:
+            print file_name
             result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             print "Success!"
             self.update_state(state='PROGRESS',
@@ -137,6 +138,7 @@ def launch_binary(self,file_name,demo,board):
                 'result': "Error loading binary"}
     else:
         try:
+            print file_name
             result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             print "Success!"
             self.update_state(state='PROGRESS',

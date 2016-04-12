@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">User Code: </div>
                 <div class="panel-body">
@@ -41,9 +41,27 @@
         <div class="col-lg-6">
             <img src="http://cams.weblab.deusto.es/webcam/proxied.py/romie_top" width="100%">
         </div>
-        <div class="col-lg-4">
-            <div class="panel" id="controls">
+        <div class="col-lg-3">
+            <div class="panel panel-default" style="margin-top: 5%">
+                <div class="panel-heading">
+                    Serial Monitor
+                </div>
+                <div class="panel-body" id="serial-monitor">
 
+                </div>
+                <div class="panel-footer">
+                    <span>
+                        Data to send:
+                    </span>
+                    <span>
+                        <input type="text" name="data-to-send">
+                    </span>
+                    <span>
+                        <button>
+                            <i class="glyphicon glyphicon-arrow-up"></i>
+                        </button>
+                    </span>
+                </div>
             </div>
         </div>
     </div>

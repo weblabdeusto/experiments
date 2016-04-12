@@ -8,7 +8,7 @@
                 <div class="panel-heading">User Code: </div>
                 <div class="panel-body">
                 {% if g.user.sketch != "None" %}
-                    <p class="file" id="{{ g.user.sketch }}">{{ g.user.sketch }}</p>
+                    <p class="file" id="user-{{ g.user.sketch }}">{{ g.user.sketch }}</p>
                 {% else %}
                      <p>No user code available</p>
                 {% endif %}

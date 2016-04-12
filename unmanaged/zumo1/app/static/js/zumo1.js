@@ -54,6 +54,7 @@ function File(name,demo){
     this.div = $("#"+name);
 
     this.div.click(function(){
+        console.log(name + " setting active");
         file_manager.setActive(name);
     });
 

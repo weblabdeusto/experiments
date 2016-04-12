@@ -32,6 +32,8 @@ function update_progress(status_url, status_div) {
             else {
                 // something unexpected happened
                 status_div.html("<p>" + data['state']+"</p>");
+                $("#launch-btn").prop( "disabled", false );
+                $("#stop-btn").prop( "disabled", false );
             }
         }
         else {
@@ -54,7 +56,7 @@ function File(name,demo){
     this.div = $("#"+name);
 
     this.div.click(function(){
-        file_manager.setActive(name);
+        manager.setActive(name);
     });
 
     this.div.mouseover(function(){
@@ -66,7 +68,7 @@ function File(name,demo){
     });
 }
 
-function FileManager(){
+function Manager(){
 
     this.demo_files = [];
     this.user_file = null;
@@ -117,7 +119,7 @@ function FileManager(){
         $("#stop-btn").prop( "disabled", true );
         var status_div = $("#output");
 
-        status_div.html("<p>Starting validation</p>");
+        status_div.html("<p>Loading binary</p>");
 
         var file_data = {
             'name': file.name,
@@ -143,13 +145,11 @@ function FileManager(){
 
     this.eraseMemory = function(){
 
-
-
         $("#stop-btn").prop( "disabled", true );
         $("#launch-btn").prop( "disabled", true );
         var status_div = $("#output");
 
-        status_div.html("<p>Starting validation</p>");
+        status_div.html("<p>Stopping</p>");
 
 
         var callback = function(data, status, request){
@@ -170,24 +170,27 @@ function FileManager(){
 
 $(document).ready(function(){
 
-    file_manager = new FileManager();
-    file_manager.init();
+    manager = new Manager();
+    manager.init();
 
     $("#launch-btn").click(function(){
-        if(file_manager.user_file!=null){
-            if(file_manager.user_file.active){
-                file_manager.loadFile(file_manager.user_file);
+        if(manager.user_file!=null){
+            if(manager.user_file.active){
+                manager.loadFile(manager.user_file);
                 return;
             }
         }
 
-        for(var i=0;i<file_manager.demo_files.length;i++) {
-            if (file_manager.demo_files[i].active) {
-                file_manager.loadFile(file_manager.demo_files[i]);
+        for(var i=0;i<manager.demo_files.length;i++) {
+            if (manager.demo_files[i].active) {
+                manager.loadFile(manager.demo_files[i]);
                 break;
             }
         }
 
+    });
+    $("#stop-btn").click(function(){
+        manager.eraseMemory();
     });
 
 });

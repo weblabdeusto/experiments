@@ -70,7 +70,8 @@ def home():
             files = os.listdir(basedir+'/binaries/user')
             for f in files:
                 os.remove(basedir+'/binaries/user/'+f)
-            response = requests.get('https://'+ideIP+'/static/binaries/'+g.user.folder_id+'/'+g.user.sketch+'.hex',timeout=3)
+            print g.user.folder_id
+            response = requests.get('https://'+ideIP+'/static/binaries/'+g.user.folder_id+'/'+g.user.sketch+'.hex',timeout=10)
             f=open(basedir+'/binaries/user/'+g.user.sketch+'.hex','a')
             f.write(response.content)
             f.close()

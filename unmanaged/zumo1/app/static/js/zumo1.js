@@ -51,11 +51,17 @@ function File(name,demo){
     this.name = name;
     this.active = false;
     this.demo = demo;
-    this.div = $("#"+name);
+
+    if(demo){
+        this.div = $("#"+name);
+    }
+    else{
+        this.div = $("#user-"+name);
+    }
 
     this.div.click(function(){
         console.log(name + " setting active");
-        file_manager.setActive(name);
+        file_manager.setActive(name,demo);
     });
 
     this.div.mouseover(function(){
@@ -87,7 +93,7 @@ function FileManager(){
         }
     };
 
-    this.setActive = function(name){
+    this.setActive = function(name,demo){
         for(var i=0;i<this.demo_files.length;i++){
             if(this.demo_files[i].active==true){
                 this.demo_files[i].active=false;
@@ -97,14 +103,18 @@ function FileManager(){
                 this.user_file.active = false;
                 this.user_file.div.css("font-size", "100%");
             }
-            if(this.demo_files[i].name==name){
-                this.demo_files[i].active=true;
-                this.demo_files[i].div.css("font-size", "150%");
+            if(demo){
+                if(this.demo_files[i].name==name){
+                    this.demo_files[i].active=true;
+                    this.demo_files[i].div.css("font-size", "150%");
+                }
             }
-            if(this.user_file != null){
-                if(this.user_file.name==name){
-                    this.user_file.active = true;
-                    this.user_file.div.css("font-size", "150%");
+            else{
+                if(this.user_file != null){
+                    if(this.user_file.name==name){
+                        this.user_file.active = true;
+                        this.user_file.div.css("font-size", "150%");
+                    }
                 }
             }
         }

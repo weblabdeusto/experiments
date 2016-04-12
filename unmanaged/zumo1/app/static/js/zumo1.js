@@ -84,11 +84,11 @@ function FileManager(){
         }
         if(USER_FILE!="None"){
             this.user_file = new File(USER_FILE,false);
-            this.setActive(USER_FILE);
+            this.setActive(USER_FILE,false);
         }
         else{
             if(this.demo_files.length>=1){
-                this.setActive(this.demo_files[0].name);
+                this.setActive(this.demo_files[0].name,true);
             }
         }
     };

@@ -108,7 +108,8 @@ def stop(self):
         f.write("0")
         f.seek(0)
         f.write("1")
-        print "done"
+        f.close()
+        print "reset done"
         self.update_state(state='PROGRESS',
                           meta={'current': 0, 'total': 100,
                             'status': 'Bootloader enabled'})
@@ -117,8 +118,10 @@ def stop(self):
         self.update_state(state='PROGRESS',
                           meta={'current': 0, 'total': 100,
                             'status': 'Error activating bootloader'})
+    time.sleep(0.5)    
     try:
-        result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
+        #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
+        result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
         print "Success!"
         self.update_state(state='PROGRESS',
                   meta={'current': 100, 'total': 100,
@@ -138,13 +141,15 @@ def load():
     demo = request.form['demo']
     print name
     print demo
-    task = launch_binary.apply_async(args=[name, demo=='true',"leonardo"])
+    task = launch_binary.apply_async(args=[basedir,name, demo=='true',"leonardo"])
     return jsonify({}), 202, {'Location': url_for('taskstatus',
                                                   task_id=task.id)}
 
 @celery.task(bind=True)
-def launch_binary(self,file_name,demo,board):
-
+def launch_binary(self,basedir,file_name,demo,board):
+    print demo
+    print file_name
+    
     self.update_state(state='PROGRESS',
                       meta={'current': 0, 'total': 100,
                             'status': 'Starting'})
@@ -158,7 +163,8 @@ def launch_binary(self,file_name,demo,board):
         f.write("0")
         f.seek(0)
         f.write("1")
-        print "done"
+        f.close()
+        print "reset done"
         self.update_state(state='PROGRESS',
                           meta={'current': 0, 'total': 100,
                             'status': 'Bootloader enabled'})
@@ -167,19 +173,25 @@ def launch_binary(self,file_name,demo,board):
         self.update_state(state='PROGRESS',
                           meta={'current': 0, 'total': 100,
                             'status': 'Error activating bootloader'})
+    print 'Loading code'
+    time.sleep(1)
     if(demo):
-        try:
+        #try:
             print file_name
-            result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex'], stderr=subprocess.STDOUT)
+            print 'flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex'
+            #subprocess.call('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
+            res = os.system('ls /dev/tty* -all')
+            print res
+            result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             print "Success!"
             self.update_state(state='PROGRESS',
                       meta={'current': 0, 'total': 100,
                             'status': result})
-        except subprocess.CalledProcessError, ex:
+        #except subprocess.CalledProcessError, ex:
             # error code <> 0
-            print "Error loading file"
-            return {'current': 100, 'total': 100, 'status': 'Task completed!',
-                'result': "Error loading binary"}
+        #    print "Error loading file"
+        #    return {'current': 100, 'total': 100, 'status': 'Task completed!',
+        #        'result': "Error loading binary"}
     else:
         try:
             print file_name

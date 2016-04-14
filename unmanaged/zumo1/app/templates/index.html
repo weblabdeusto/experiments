@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-3">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="margin-top: 5%">
                 <div class="panel-heading">User Code: </div>
                 <div class="panel-body">
                 {% if g.user.sketch != "None" %}
@@ -16,7 +16,7 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Demo Code: </div>
-                <div class="panel-body">
+                <div class="panel-body" id="demo-files">
                 {% for file in demo_files %}
                     <p class="file" id="{{ file }}">{{ file }}</p>
                     <hr>
@@ -49,12 +49,12 @@
                 <div class="panel-body" id="serial-monitor">
 
                 </div>
-                <div class="panel-footer">
-                    <span>
-                        Data to send:
+                <div class="panel-footer" style="text-align: center">
+                    <span style="margin-right: 2%">
+                        Send:
                     </span>
                     <span>
-                        <input type="text" name="data-to-send">
+                        <input type="text" name="data-to-send" style="width: 60%">
                     </span>
                     <span>
                         <button>

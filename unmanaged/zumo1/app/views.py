@@ -324,8 +324,7 @@ def load():
 
     name = request.form['name']
     demo = request.form['demo']
-    print name
-    print demo
+
     try:
         time.sleep(0.5)
     except:
@@ -334,6 +333,11 @@ def load():
         loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
         loadThread.daemon = False
         loadThread.start()
+    else:
+        if loadThread.isAlive():
+            "Loading thread still runing"
+        else:
+            loadThread.start()
     return jsonify(success=True)
 
 def launch_binary(basedir,file_name,demo,board):

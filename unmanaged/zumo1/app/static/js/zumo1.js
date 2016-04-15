@@ -110,8 +110,6 @@ function FileManager(){
 
     this.eraseMemory = function(){
 
-
-
         $("#stop-btn").prop( "disabled", true );
         $("#launch-btn").prop( "disabled", true );
         var status_div = $("#output");

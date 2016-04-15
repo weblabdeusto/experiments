@@ -281,6 +281,14 @@ def erase():
     return jsonify(success=True)
 
 def eraseThread(self):
+    global serialArdu
+    try:
+        closeSerial()
+        if serialArdu.isOpen():
+            print "ERROR CLOSING SERIAL"
+    except:
+        print "ERROR CLOSING SERIAL"
+
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -293,6 +301,7 @@ def eraseThread(self):
         f.write("1")
         f.close()
         print "reset done"
+        test_connect()
 
     except:
         print "Error enabling bootloader"
@@ -328,9 +337,11 @@ def load():
     return jsonify(success=True)
 
 def launch_binary(basedir,file_name,demo,board):
+    global serialArdu
     print demo
     print file_name
-    
+
+    closeSerial()
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -366,6 +377,7 @@ def launch_binary(basedir,file_name,demo,board):
             print file_name
             result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             print "Success!"
+            test_connect()
             time.sleep(0.5)
         except subprocess.CalledProcessError, ex:
             # error code <> 0

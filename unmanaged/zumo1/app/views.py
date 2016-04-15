@@ -380,7 +380,7 @@ def launch_binary(basedir,file_name,demo,board):
             print file_name
             result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             print "Success!"
-            socketio.emit('General', {'data': 'Connected', 'count': 0})
+            socketio.emit('General', {'data': 'Connected', 'count': 0},namespace='/zumo_backend')
 
         except subprocess.CalledProcessError, ex:
             # error code <> 0

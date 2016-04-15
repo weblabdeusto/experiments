@@ -68,6 +68,7 @@ def background_thread():
                     time.sleep(0.5)
 
             else:
+                print 'Waiting for init serial'
                 time.sleep(0.5)
     except:
         run = False

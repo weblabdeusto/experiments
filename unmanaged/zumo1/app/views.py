@@ -291,7 +291,7 @@ def erase():
     global loadThread
 
     if loadThread is None:
-        loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
+        loadThread = Thread(target=launch_binary, args=(basedir,"leonardo",))
         loadThread.daemon = False
         loadThread.start()
     else:
@@ -299,7 +299,7 @@ def erase():
             print "Loading thread still runing"
             return jsonify(success=False)
         else:
-            loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
+            loadThread = Thread(target=eraseThread)
             loadThread.start()
 
     return jsonify(success=True)

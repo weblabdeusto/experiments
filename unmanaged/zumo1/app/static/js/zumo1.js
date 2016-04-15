@@ -154,10 +154,13 @@ $(document).ready(function(){
     socket.on('General', function(msg) {
         var serialDiv = $('#serial-monitor');
         if(msg.data=="start"){
+            status_div.html("<p>Ready</p>");
             socket.emit('Serial start');
         }
-        serialDiv.append('<p>General: ' + msg.data+'</p>');
-        serialDiv.scrollTop(serialDiv.children().length*1000)
+        else{
+            serialDiv.append('<p>General: ' + msg.data+'</p>');
+            serialDiv.scrollTop(serialDiv.children().length*1000)
+        }
     });
     // event handler for new connections
 

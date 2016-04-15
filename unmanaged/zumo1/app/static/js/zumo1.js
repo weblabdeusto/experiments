@@ -155,10 +155,15 @@ $(document).ready(function(){
         var serialDiv = $('#serial-monitor');
         var status_div = $("#output");
         if(msg.data=="startSerial"){
+            $("#stop-btn").prop( "disabled", false );
+            $("#launch-btn").prop( "disabled", false );
             socket.emit('Serial start');
             status_div.html("<p>Ready</p>");
+
         }
         else if(msg.data=="stopSerial"){
+            $("#stop-btn").prop( "disabled", true );
+            $("#launch-btn").prop( "disabled", true );
             socket.emit('close');
         }
         else{

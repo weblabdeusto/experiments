@@ -209,7 +209,13 @@ def test_connect():
         serialThread.daemon = False
         serialThread.start()
     else:
-        print 'Thread running'
+        if serialThread.isAlive():
+            print 'serial thread running'
+        else:
+            print 'serial thread is stoped'
+            serialThread = Thread(target=background_thread)
+            serialThread.daemon = False
+            serialThread.start()
 
     print("helloooo")
     count = 0

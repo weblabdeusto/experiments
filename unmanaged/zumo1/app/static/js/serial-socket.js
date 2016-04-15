@@ -29,6 +29,7 @@ $(document).ready(function(){
     });
 
     $('#send-data').click(function(event) {
+        console.log($('#serial-data').val());
         socket.emit('Serial event', {room: 'Serial', data: $('#serial-data').val()});
         return false;
     });

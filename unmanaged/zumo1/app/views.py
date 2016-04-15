@@ -190,6 +190,7 @@ def test_connect():
 @socketio.on('Serial event', namespace='/zumo_backend')
 def send_room_message(message):
     global serialArdu
+    print message['data']
 
     session['receive_count'] = session.get('receive_count', 0) + 1
     if serialArdu.isOpen():

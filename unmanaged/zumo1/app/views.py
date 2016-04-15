@@ -277,6 +277,7 @@ def test_disconnect():
     if serialArdu.isOpen():
         print 'SERIAL NOT CLOSED!!'
     close_room('Serial')
+    erase()
     print('Client disconnected', request.sid)
 
 
@@ -284,24 +285,30 @@ def test_disconnect():
 ### --------> BOOTLOADER <------------#######
 #############################################
 
-@app.route("/erasebinary", methods=['POST'])
+@app.route("/eraseflash", methods=['POST'])
 @login_required
 def erase():
     global loadThread
+
     if loadThread is None:
-        loadThread = Thread(target=eraseThread)
+        loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
         loadThread.daemon = False
         loadThread.start()
+    else:
+        if loadThread.isAlive():
+            print "Loading thread still runing"
+            return jsonify(success=False)
+        else:
+            loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
+            loadThread.start()
+
     return jsonify(success=True)
 
 def eraseThread(self):
     global serialArdu
-    try:
-        closeSerial()
-        if serialArdu.isOpen():
-            print "ERROR CLOSING SERIAL"
-    except:
-        print "ERROR CLOSING SERIAL"
+
+    socketio.emit('General', {'data': 'stopSerial'},namespace='/zumo_backend')
+    time.sleep(3)
 
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
@@ -339,17 +346,14 @@ def load():
     name = request.form['name']
     demo = request.form['demo']
 
-    try:
-        time.sleep(0.5)
-    except:
-        print 'Error closing serial'
     if loadThread is None:
         loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
         loadThread.daemon = False
         loadThread.start()
     else:
         if loadThread.isAlive():
-            "Loading thread still runing"
+            print "Loading thread still runing"
+            return jsonify(success=False)
         else:
             loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
             loadThread.start()

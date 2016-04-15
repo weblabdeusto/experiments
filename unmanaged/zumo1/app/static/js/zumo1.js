@@ -1,10 +1,4 @@
 
-/*
-*  FILE LOADER
- */
-
-
-
 /**
  * FILE MANAGER
  */
@@ -123,7 +117,7 @@ function FileManager(){
         };
 
         $.ajax({
-            url:"/erasebinary",
+            url:"/eraseflash",
             type: "POST",
             datatype: 'application/json;charset=UTF-8',
             success: callback

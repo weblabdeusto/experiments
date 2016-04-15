@@ -322,7 +322,6 @@ def eraseThread():
         f.write("1")
         f.close()
         print "reset done"
-        test_connect()
 
     except:
         print "Error enabling bootloader"

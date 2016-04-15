@@ -304,7 +304,7 @@ def erase():
 
     return jsonify(success=True)
 
-def eraseThread(self):
+def eraseThread():
     global serialArdu
 
     socketio.emit('General', {'data': 'stopSerial'},namespace='/zumo_backend')

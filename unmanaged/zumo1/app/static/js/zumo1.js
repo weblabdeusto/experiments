@@ -162,6 +162,7 @@ $(document).ready(function(){
 
         }
         else if(msg.data=="stopSerial"){
+            status_div.html("<p>Loading binary...</p>");
             $("#stop-btn").prop( "disabled", true );
             $("#launch-btn").prop( "disabled", true );
             socket.emit('close');

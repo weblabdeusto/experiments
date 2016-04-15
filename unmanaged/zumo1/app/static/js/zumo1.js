@@ -88,7 +88,7 @@ function FileManager(){
 
         var status_div = $("#output");
 
-        status_div.html("<p>Starting validation</p>");
+        status_div.html("<p>Preparing...</p>");
 
         var file_data = {
             'name': file.name,

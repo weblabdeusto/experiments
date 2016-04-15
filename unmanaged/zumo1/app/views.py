@@ -187,7 +187,8 @@ def disconnect_request():
 
 @socketio.on('connect', namespace='/zumo_backend')
 def test_connect():
-    emit('General', {'data': 'Connected', 'count': 0})
+    print 'Conected to general channel'
+    #emit('General', {'data': 'Connected', 'count': 0})
 
 
 @socketio.on('Serial event', namespace='/zumo_backend')
@@ -240,9 +241,9 @@ def test_connect():
                 opened = True
                 print 'serial opened'
                 join_room('Serial')
-                emit('Serial data',
-                     {'data': 'Serial connected', 'count': 1},
-                     room='Serial')
+                #emit('Serial data',
+                #     {'data': 'Serial connected', 'count': 1},
+                #     room='Serial')
             else:
                 print('CANT OPEN RETRY...')
         except:
@@ -262,9 +263,10 @@ def closeSerial():
 
     serialArdu.close()
     if not serialArdu.isOpen():
-        emit('Serial data', {'data': 'Serial is closing.',
-                             'count': session['receive_count']},
-             room='Serial')
+        print 'Serial closed'
+        #emit('Serial data', {'data': 'Serial is closing.',
+        #                     'count': session['receive_count']},
+        #     room='Serial')
 
     close_room('Serial')
 
@@ -275,7 +277,7 @@ def test_disconnect():
     serialArdu.close()
     if serialArdu.isOpen():
         print 'SERIAL NOT CLOSED!!'
-    leave_room('Serial')
+    close_room('Serial')
     print('Client disconnected', request.sid)
 
 

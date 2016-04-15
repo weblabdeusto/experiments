@@ -158,7 +158,7 @@ $(document).ready(function(){
             socket.emit('Serial start');
             status_div.html("<p>Ready</p>");
         }
-        else if(msg.data=="stopSerialt"){
+        else if(msg.data=="stopSerial"){
             socket.emit('close');
         }
         else{

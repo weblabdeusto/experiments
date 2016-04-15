@@ -193,9 +193,12 @@ def send_room_message(message):
     print message['data']
 
     session['receive_count'] = session.get('receive_count', 0) + 1
-    if serialArdu.isOpen():
-        print 'Sending'
-        serialArdu.write(message['data'].encode())
+    try:
+        if serialArdu.isOpen():
+            print 'Sending'
+            serialArdu.write(message['data'].encode())
+    except:
+        print "Error sending data"
 
 
 @socketio.on('Serial start', namespace='/zumo_backend')

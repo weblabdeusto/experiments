@@ -291,7 +291,7 @@ def erase():
     global loadThread
 
     if loadThread is None:
-        loadThread = Thread(target=launch_binary, args=(basedir,"leonardo",))
+        loadThread = Thread(target=eraseThread)
         loadThread.daemon = False
         loadThread.start()
     else:

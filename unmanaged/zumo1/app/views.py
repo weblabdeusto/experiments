@@ -48,7 +48,7 @@ def background_thread():
                 try:
                     print 'trying...'
                     if serialArdu.isOpen():
-                        print 'Serial waiting for data'
+                        #print 'Serial waiting for data'
                         out=""
                         if serialArdu.inWaiting()>0:
                             print('Serial data....Reading')

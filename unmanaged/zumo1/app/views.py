@@ -279,11 +279,6 @@ def stop(self):
     self.update_state(state='PROGRESS',
                       meta={'current': 0, 'total': 100,
                             'status': 'Starting'})
-    try:
-        closeSerial()
-        time.sleep(0.5)
-    except:
-        print 'Error closing serial'
 
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
@@ -310,8 +305,6 @@ def stop(self):
         #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
         result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
         print "Success!"
-        time.sleep(0.5)
-        test_connect()
         self.update_state(state='PROGRESS',
                   meta={'current': 100, 'total': 100,
                         'status': 'Stopped'})
@@ -330,6 +323,11 @@ def load():
     demo = request.form['demo']
     print name
     print demo
+    try:
+        closeSerial()
+        time.sleep(0.5)
+    except:
+        print 'Error closing serial'
     task = launch_binary.apply_async(args=[basedir,name, demo=='true',"leonardo"])
     return jsonify({}), 202, {'Location': url_for('taskstatus',
                                                   task_id=task.id)}
@@ -342,11 +340,6 @@ def launch_binary(self,basedir,file_name,demo,board):
     self.update_state(state='PROGRESS',
                       meta={'current': 0, 'total': 100,
                             'status': 'Starting'})
-    try:
-        closeSerial()
-        time.sleep(0.5)
-    except:
-        print 'Error closing serial'
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -392,10 +385,9 @@ def launch_binary(self,basedir,file_name,demo,board):
             result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             print "Success!"
             time.sleep(0.5)
-            test_connect()
             self.update_state(state='PROGRESS',
-                      meta={'current': 0, 'total': 100,
-                            'status': result})
+                      meta={'current': 100, 'total': 100,
+                            'status': 'DONE'})
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"
@@ -408,7 +400,9 @@ def launch_binary(self,basedir,file_name,demo,board):
 @app.route('/status/<task_id>')
 def taskstatus(task_id):
     task = launch_binary.AsyncResult(task_id)
-    if task.state == 'PENDING':
+    if task.state == 'DONE':
+        test_connect()
+    elif task.state == 'PENDING':
         response = {
             'state': task.state,
             'current': 0,

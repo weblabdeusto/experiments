@@ -399,7 +399,7 @@ def launch_binary(basedir,file_name,demo,board):
             result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             print "Success!"
             time.sleep(3)
-            socketio.emit('General', {'data': 'start'},namespace='/zumo_backend')
+            socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
 
         except subprocess.CalledProcessError, ex:
             # error code <> 0

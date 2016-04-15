@@ -5,7 +5,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
 
 from datetime import datetime, timedelta
-from app import app, db, lm, celery, socketio
+from app import app, db, lm, socketio
 from config import basedir, ideIP
 from .models import User
 from functools import wraps
@@ -20,6 +20,7 @@ import serial
 from threading import Thread
 
 serialThread = None
+loadThread = None
 
 try:
     serialArdu = serial.Serial()
@@ -271,15 +272,14 @@ def test_disconnect():
 @app.route("/erasebinary", methods=['POST'])
 @login_required
 def erase():
-    task = stop.apply_async()
-    return jsonify({}), 202, {'Location': url_for('taskstatus',
-                                                  task_id=task.id)}
-@celery.task(bind=True)
-def stop(self):
-    self.update_state(state='PROGRESS',
-                      meta={'current': 0, 'total': 100,
-                            'status': 'Starting'})
+    global loadThread
+    if loadThread is None:
+        loadThread = Thread(target=eraseThread)
+        loadThread.daemon = False
+        loadThread.start()
+    return jsonify(success=True)
 
+def eraseThread(self):
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -292,54 +292,44 @@ def stop(self):
         f.write("1")
         f.close()
         print "reset done"
-        self.update_state(state='PROGRESS',
-                          meta={'current': 0, 'total': 100,
-                            'status': 'Bootloader enabled'})
+
     except:
         print "Error enabling bootloader"
-        self.update_state(state='PROGRESS',
-                          meta={'current': 0, 'total': 100,
-                            'status': 'Error activating bootloader'})
     time.sleep(0.5)    
     try:
         #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
         result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
         print "Success!"
-        self.update_state(state='PROGRESS',
-                  meta={'current': 100, 'total': 100,
-                        'status': 'Stopped'})
+
     except subprocess.CalledProcessError, ex:
         # error code <> 0
         print "Error loading file"
-        return {'current': 100, 'total': 100, 'status': 'Task completed!',
-            'result': "Error erasing memory"}
-    return {'current': 100, 'total': 100, 'status': 'Task completed!',
-            'result': "Memory erased"}
+
+
 
 @app.route("/loadbinary", methods=['POST'])
 @login_required
 def load():
+    global loadThread
+
     name = request.form['name']
     demo = request.form['demo']
     print name
     print demo
     try:
-        closeSerial()
         time.sleep(0.5)
     except:
         print 'Error closing serial'
-    task = launch_binary.apply_async(args=[basedir,name, demo=='true',"leonardo"])
-    return jsonify({}), 202, {'Location': url_for('taskstatus',
-                                                  task_id=task.id)}
+    if loadThread is None:
+        loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
+        loadThread.daemon = False
+        loadThread.start()
+    return jsonify(success=True)
 
-@celery.task(bind=True)
 def launch_binary(self,basedir,file_name,demo,board):
     print demo
     print file_name
     
-    self.update_state(state='PROGRESS',
-                      meta={'current': 0, 'total': 100,
-                            'status': 'Starting'})
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -352,14 +342,8 @@ def launch_binary(self,basedir,file_name,demo,board):
         f.write("1")
         f.close()
         print "reset done"
-        self.update_state(state='PROGRESS',
-                          meta={'current': 0, 'total': 100,
-                            'status': 'Bootloader enabled'})
     except:
         print "Error enabling bootloader"
-        self.update_state(state='PROGRESS',
-                          meta={'current': 0, 'total': 100,
-                            'status': 'Error activating bootloader'})
     print 'Loading code'
     time.sleep(1)
     if(demo):
@@ -371,9 +355,6 @@ def launch_binary(self,basedir,file_name,demo,board):
             print res
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             print "Success!"
-            self.update_state(state='PROGRESS',
-                      meta={'current': 0, 'total': 100,
-                            'status': result})
         #except subprocess.CalledProcessError, ex:
             # error code <> 0
         #    print "Error loading file"
@@ -385,48 +366,10 @@ def launch_binary(self,basedir,file_name,demo,board):
             result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             print "Success!"
             time.sleep(0.5)
-            self.update_state(state='PROGRESS',
-                      meta={'current': 100, 'total': 100,
-                            'status': 'DONE'})
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"
-            return {'current': 100, 'total': 100, 'status': 'Task completed!',
-                'result': "Error preparing files"}
 
-    return {'current': 100, 'total': 100, 'status': 'Task completed!',
-            'result': 42}
-
-@app.route('/status/<task_id>')
-def taskstatus(task_id):
-    task = launch_binary.AsyncResult(task_id)
-    if task.state == 'DONE':
-        test_connect()
-    elif task.state == 'PENDING':
-        response = {
-            'state': task.state,
-            'current': 0,
-            'total': 1,
-            'status': 'Pending...'
-        }
-    elif task.state != 'FAILURE':
-        response = {
-            'state': task.state,
-            'current': task.info.get('current', 0),
-            'total': task.info.get('total', 1),
-            'status': task.info.get('status', '')
-        }
-        if 'result' in task.info:
-            response['result'] = task.info['result']
-    else:
-        # something went wrong in the background job
-        response = {
-            'state': task.state,
-            'current': 1,
-            'total': 1,
-            'status': str(task.info),  # this is the exception raised
-        }
-    return jsonify(response)
 
 #############################################
 ### ------------> WEBLAB <------------#######

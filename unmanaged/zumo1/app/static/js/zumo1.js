@@ -4,44 +4,6 @@
  */
 
 
-function update_progress(status_url, status_div) {
-    var _this = this;
-    // send GET request to status URL
-    $.getJSON(status_url, function(data) {
-
-        // update UI
-        percent = parseInt(data['current'] * 100 / data['total']);
-        if(_this.last_status!=data['status']){
-            status_div.html("<p>" + data['status']+"</p>");
-            _this.last_status = data['status'];
-        }
-        if (data['state'] != 'PENDING' && data['state'] != 'PROGRESS') {
-            if ('result' in data) {
-                var result = data['result']
-                // show result
-                for(var i=0;i<result.length;i++){
-                    status_div.html("<p>" + result+"</p>");
-                }
-                if(i>1){
-                    status_div.html("<p style='color:red'>Error loading binary!</p>");
-                }
-
-                $("#launch-btn").prop( "disabled", false );
-                $("#stop-btn").prop( "disabled", false );
-            }
-            else {
-                // something unexpected happened
-                status_div.html("<p>" + data['state']+"</p>");
-            }
-        }
-        else {
-            // rerun in 2 seconds
-            setTimeout(function() {
-                update_progress(status_url, status_div);
-            }, 500);
-        }
-    });
-}
 
 /**
  * FILE MANAGER
@@ -137,10 +99,6 @@ function FileManager(){
 
         var callback = function(data, status, request){
             console.log(data);
-            status_url = request.getResponseHeader('Location');
-            console.log('HELLOOOO');
-            console.log(status_url);
-            update_progress(status_url, status_div);
         };
 
         $.ajax({
@@ -165,9 +123,7 @@ function FileManager(){
 
         var callback = function(data, status, request){
             console.log(data);
-            status_url = request.getResponseHeader('Location');
-            console.log(status_url);
-            update_progress(status_url, status_div);
+
         };
 
         $.ajax({

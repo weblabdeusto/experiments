@@ -370,6 +370,7 @@ def launch_binary(basedir,file_name,demo,board):
             print res
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             print "Success!"
+            socketio.emit('General', {'data': 'Connected', 'count': 0},namespace='/zumo_backend')
         #except subprocess.CalledProcessError, ex:
             # error code <> 0
         #    print "Error loading file"

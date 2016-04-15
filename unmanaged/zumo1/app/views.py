@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for, request, g, jsonify,session
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
-from flask_socketio import SocketIO, emit, join_room, leave_room, \
-    close_room, rooms, disconnect
+from flask_socketio import  emit, join_room, leave_room, \
+    close_room, disconnect
 
 from datetime import datetime, timedelta
 from app import app, db, lm, socketio
@@ -325,6 +325,7 @@ def eraseThread():
 
     except:
         print "Error enabling bootloader"
+
     time.sleep(0.5)    
     try:
         #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
@@ -333,7 +334,7 @@ def eraseThread():
 
     except subprocess.CalledProcessError, ex:
         # error code <> 0
-        print "Error loading file"
+        print "Error erashing memory"
 
 
 

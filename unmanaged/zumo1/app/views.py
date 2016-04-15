@@ -1,9 +1,11 @@
-from flask import render_template, redirect, url_for, request, g, jsonify
+from flask import render_template, redirect, url_for, request, g, jsonify,session
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
+from flask_socketio import SocketIO, emit, join_room, leave_room, \
+    close_room, rooms, disconnect
 
 from datetime import datetime, timedelta
-from app import app, db, lm, celery
+from app import app, db, lm, celery, socketio
 from config import basedir, ideIP
 from .models import User
 from functools import wraps
@@ -14,9 +16,66 @@ import os
 import time
 import subprocess
 
+import serial
+from threading import Thread
+
+serialThread = None
+
+try:
+    serialArdu = serial.Serial()
+except:
+    print 'Zumo is not connected'
+
 @app.route('/test')
 def test():
     return 'SUCCESS!!'
+
+##################################
+#####------->BACK<----------######
+##################################
+def background_thread():
+
+    """Example of how to send server generated events to clients."""
+    global serialArdu
+    count = 0
+    run=True
+    print 'Thread launched'
+    try:
+        while run:
+            count += 1
+            if serialArdu!=None:
+                try:
+                    if serialArdu.isOpen():
+                        out=""
+                        if serialArdu.inWaiting()>0:
+                            print('Serial data....Reading')
+                            while serialArdu.inWaiting() > 0:
+                                out += serialArdu.read(1)
+                            for line in out.split('\r\n'):
+                                if line != "":
+                                    socketio.emit('Serial data',
+                                          {'data':line, 'count': count},
+                                          room= 'Serial',
+                                          namespace='/zumo_backend')
+                        time.sleep(0.1)
+                    else:
+                        time.sleep(0.5)
+                except:
+                    serialArdu.close()
+                    print 'Port changed...Wait...'
+                    time.sleep(0.5)
+
+            else:
+                time.sleep(0.5)
+    except:
+        run = False
+        print 'Something unusual happend.....'
+        time.sleep(1)
+
+
+##################################
+#######------>WEBLAB<-------######
+##################################
 
 def check_permission(func):
     @wraps(func)
@@ -53,6 +112,18 @@ def before_request():
 @check_permission
 @login_required
 def home():
+    global serialThread
+    global serialArdu
+
+    if serialArdu.isOpen():
+        serialArdu.close()
+    if serialArdu.isOpen():
+        print 'Serial not closed'
+
+    if serialThread is None:
+        serialThread = Thread(target=background_thread)
+        serialThread.daemon = False
+        serialThread.start()
 
     if g.user.max_date > datetime.now():
         time = (g.user.max_date - datetime.now()).seconds
@@ -81,12 +152,121 @@ def home():
             db.session.add(g.user)
             db.session.commit()
 
-
     return render_template('index.html',
                            title='Home',
                            user=g.user,
                            timeleft=time,
                            demo_files=demo_files)
+
+#############################################
+### --------> SERIAL-SOCKET <---------#######
+#############################################
+
+
+
+@socketio.on('disconnect request', namespace='/zumo_backend')
+def disconnect_request():
+
+    global serialArdu
+
+    #TODO:CLose serial
+    if serialArdu.isOpen():
+        serialArdu.close()
+
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    leave_room('Serial')
+    close_room('Serial')
+    emit('General',
+         {'data': 'Disconnected!', 'count': session['receive_count']})
+    disconnect()
+
+
+@socketio.on('connect', namespace='/zumo_backend')
+def test_connect():
+    emit('General', {'data': 'Connected', 'count': 0})
+
+
+@socketio.on('Serial event', namespace='/zumo_backend')
+def send_room_message(message):
+    global serialArdu
+
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    if serialArdu.isOpen():
+        serialArdu.write(message['data'].encode())
+
+
+@socketio.on('Serial start', namespace='/zumo_backend')
+def test_connect():
+    global serialThread
+    global serialArdu
+
+    if serialThread is None:
+        print 'Thread not running...launching'
+        serialThread = Thread(target=background_thread)
+        serialThread.daemon = False
+        serialThread.start()
+    else:
+        print 'Thread running'
+
+    print("helloooo")
+    count = 0
+    opened = False
+    while not opened:
+        try:
+            serialArdu.port='/dev/ttyACM'+str(count)
+            print serialArdu.port
+            serialArdu.baudrate=9600
+            serialArdu.parity="N"
+            serialArdu.bytesize=8
+            serialArdu.timeout=1
+
+            serialArdu.open()
+            if serialArdu.isOpen():
+                opened = True
+                print 'serial opened'
+                join_room('Serial')
+                emit('Serial data',
+                     {'data': 'Serial connected', 'count': 1},
+                     room='Serial')
+            else:
+                print('CANT OPEN RETRY...')
+        except:
+            count=count+1
+            if count == 5:
+                count = 0
+            print('Cant open serial...retry on /dev/ttyACM'+str(count))
+            time.sleep(0.1)
+
+
+
+@socketio.on('close', namespace='/zumo_backend')
+def closeSerial():
+    global serialArdu
+
+    session['receive_count'] = session.get('receive_count', 0) + 1
+
+    serialArdu.close()
+    if not serialArdu.isOpen():
+        emit('Serial data', {'data': 'Serial is closing.',
+                             'count': session['receive_count']},
+             room='Serial')
+
+    close_room('Serial')
+
+@socketio.on('disconnect', namespace='/zumo_backend')
+def test_disconnect():
+    global serialArdu
+
+    serialArdu.close()
+    if serialArdu.isOpen():
+        print 'SERIAL NOT CLOSED!!'
+    leave_room('Serial')
+    print('Client disconnected', request.sid)
+
+
+#############################################
+### --------> BOOTLOADER <------------#######
+#############################################
 
 @app.route("/erasebinary", methods=['POST'])
 @login_required
@@ -99,6 +279,12 @@ def stop(self):
     self.update_state(state='PROGRESS',
                       meta={'current': 0, 'total': 100,
                             'status': 'Starting'})
+    try:
+        closeSerial()
+        time.sleep(0.5)
+    except:
+        print 'Error closing serial'
+
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -124,6 +310,8 @@ def stop(self):
         #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
         result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
         print "Success!"
+        time.sleep(0.5)
+        test_connect()
         self.update_state(state='PROGRESS',
                   meta={'current': 100, 'total': 100,
                         'status': 'Stopped'})
@@ -154,6 +342,11 @@ def launch_binary(self,basedir,file_name,demo,board):
     self.update_state(state='PROGRESS',
                       meta={'current': 0, 'total': 100,
                             'status': 'Starting'})
+    try:
+        closeSerial()
+        time.sleep(0.5)
+    except:
+        print 'Error closing serial'
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -198,6 +391,8 @@ def launch_binary(self,basedir,file_name,demo,board):
             print file_name
             result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             print "Success!"
+            time.sleep(0.5)
+            test_connect()
             self.update_state(state='PROGRESS',
                       meta={'current': 0, 'total': 100,
                             'status': result})
@@ -238,6 +433,10 @@ def taskstatus(task_id):
             'status': str(task.info),  # this is the exception raised
         }
     return jsonify(response)
+
+#############################################
+### ------------> WEBLAB <------------#######
+#############################################
 
 
 @app.route('/logout')

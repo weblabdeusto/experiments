@@ -1,6 +1,15 @@
+async_mode = 'eventlet'
+if async_mode == 'eventlet':
+    import eventlet
+    eventlet.monkey_patch()
+elif async_mode == 'gevent':
+    from gevent import monkey
+    monkey.patch_all()
+
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
+from flask_socketio import SocketIO
 from celery import Celery
 
 app = Flask(__name__)
@@ -12,7 +21,7 @@ lm.init_app(app)
 # Initialize Celery
 celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
 celery.conf.update(app.config)
-
+socketio = SocketIO(app, async_mode=async_mode)
 
 if not app.debug:
     import logging

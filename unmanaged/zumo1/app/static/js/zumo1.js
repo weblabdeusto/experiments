@@ -86,8 +86,6 @@ function FileManager(){
 
         console.log(file);
 
-        $("#launch-btn").prop( "disabled", true );
-        $("#stop-btn").prop( "disabled", true );
         var status_div = $("#output");
 
         status_div.html("<p>Starting validation</p>");

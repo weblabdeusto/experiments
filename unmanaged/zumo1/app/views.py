@@ -231,7 +231,7 @@ def test_connect():
         try:
             serialArdu.port='/dev/ttyACM'+str(count)
             print serialArdu.port
-            serialArdu.baudrate=9600
+            serialArdu.baudrate=115200
             serialArdu.parity="N"
             serialArdu.bytesize=8
 

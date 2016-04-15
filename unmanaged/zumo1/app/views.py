@@ -194,6 +194,7 @@ def send_room_message(message):
 
     session['receive_count'] = session.get('receive_count', 0) + 1
     if serialArdu.isOpen():
+        print 'Sending'
         serialArdu.write(message['data'].encode())
 
 
@@ -337,6 +338,7 @@ def load():
         if loadThread.isAlive():
             "Loading thread still runing"
         else:
+            loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
             loadThread.start()
     return jsonify(success=True)
 

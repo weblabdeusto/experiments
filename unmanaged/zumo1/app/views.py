@@ -234,7 +234,6 @@ def test_connect():
             serialArdu.baudrate=9600
             serialArdu.parity="N"
             serialArdu.bytesize=8
-            serialArdu.timeout=1
 
             serialArdu.open()
             if serialArdu.isOpen():

@@ -386,7 +386,7 @@ def launch_binary(basedir,file_name,demo,board):
             print "Success!"
 
             time.sleep(0.5)
-            test_connect()
+
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"

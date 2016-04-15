@@ -153,6 +153,9 @@ $(document).ready(function(){
 
     socket.on('General', function(msg) {
         var serialDiv = $('#serial-monitor');
+        if(msg.data=="start"){
+            socket.emit('Serial start');
+        }
         serialDiv.append('<p>General: ' + msg.data+'</p>');
         serialDiv.scrollTop(serialDiv.children().length*1000)
     });

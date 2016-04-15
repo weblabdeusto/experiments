@@ -154,9 +154,12 @@ $(document).ready(function(){
     socket.on('General', function(msg) {
         var serialDiv = $('#serial-monitor');
         var status_div = $("#output");
-        if(msg.data=="start"){
+        if(msg.data=="startSerial"){
             socket.emit('Serial start');
             status_div.html("<p>Ready</p>");
+        }
+        else if(msg.data=="stopSerialt"){
+            socket.emit('close');
         }
         else{
             serialDiv.append('<p>General: ' + msg.data+'</p>');
@@ -183,7 +186,7 @@ $(document).ready(function(){
     });
 
     $("#launch-btn").click(function(){
-        socket.emit('close');
+
         if(file_manager.user_file!=null){
             if(file_manager.user_file.active){
                 file_manager.loadFile(file_manager.user_file);

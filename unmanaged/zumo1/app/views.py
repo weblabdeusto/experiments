@@ -359,6 +359,8 @@ def launch_binary(basedir,file_name,demo,board):
     global socketio
     print demo
     print file_name
+    socketio.emit('General', {'data': 'stopSerial'},namespace='/zumo_backend')
+    time.sleep(3)
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -385,7 +387,7 @@ def launch_binary(basedir,file_name,demo,board):
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             print "Success!"
             time.sleep(3)
-            socketio.emit('General', {'data': 'start'},namespace='/zumo_backend')
+            socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
         #except subprocess.CalledProcessError, ex:
             # error code <> 0
         #    print "Error loading file"

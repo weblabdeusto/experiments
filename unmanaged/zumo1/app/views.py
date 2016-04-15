@@ -340,8 +340,15 @@ def launch_binary(basedir,file_name,demo,board):
     global serialArdu
     print demo
     print file_name
-
-    closeSerial()
+    try:
+        serialArdu.close()
+        if serialArdu.isOpen():
+            print "cant close serial"
+    except:
+        if serialArdu is None:
+            print 'No serial conection'
+        else:
+            print 'Serial error'
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -377,8 +384,9 @@ def launch_binary(basedir,file_name,demo,board):
             print file_name
             result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             print "Success!"
-            test_connect()
+
             time.sleep(0.5)
+            test_connect()
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"

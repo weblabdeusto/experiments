@@ -326,7 +326,7 @@ def load():
         loadThread.start()
     return jsonify(success=True)
 
-def launch_binary(self,basedir,file_name,demo,board):
+def launch_binary(basedir,file_name,demo,board):
     print demo
     print file_name
     

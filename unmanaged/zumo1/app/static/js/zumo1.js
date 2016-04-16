@@ -130,7 +130,7 @@ $(document).ready(function(){
     file_manager = new FileManager();
     file_manager.init();
 
-    //socketsss
+    //SOCKET MANAGEMENT
     namespace = '/zumo_backend'; // change to an empty string to use the global namespace
 
     // the socket.io documentation recommends sending an explicit package upon connection

@@ -87,6 +87,7 @@ File = function(name,content,session){
     this.session = session;
     this.active_file = false;
     this.saved = true;
+    this.div = $("#"+name);
 
     var name = this.name;
 
@@ -158,10 +159,18 @@ fileManager = function(user_path){
                 this.files[i].saved = true;
                 for(var j=0;j<this.file_cont;j++){
                     if(files[j].innerHTML==this.files[i].name){
-                        if(this.files[i].active_file)
-                            files[j].style = "color:#333;font-size: 150%";
-                        else
-                            files[j].style = "color:#333;font-size: 100%";
+                        if(this.files[i].active_file){
+                            //files[j].style = "color:#333;font-size: 150%";
+                            files[j].style.color = "#333";
+                            files[j].style.fontSize = "150%";
+                        }
+
+                        else{
+                            //files[j].style = "color:#333;font-size: 100%";
+                            files[j].style.color = "#333";
+                            files[j].style.fontSize = "100%";
+                        }
+
                         break;
                     }
                 }
@@ -180,10 +189,17 @@ fileManager = function(user_path){
                 this.files[i].saved = false;
                 for(var j=0;j<this.file_cont;j++){
                     if(files[j].innerHTML==this.files[i].name){
-                        if(this.files[i].active_file)
-                            files[j].style = "color:#F00;font-size: 150%";
-                        else
-                            files[j].style = "color:#F00;font-size: 100%";
+                        if(this.files[i].active_file){
+                            //files[j].style = "color:#F00;font-size: 150%";
+                            files[j].style.color = "#F00";
+                            files[j].style.fontSize = "150%";
+                        }
+
+                        else{
+                            //files[j].style = "color:#F00;font-size: 100%";
+                            files[j].style.color = "#F00";
+                            files[j].style.fontSize = "100%";
+                        }
                         break;
                     }
                 }
@@ -206,10 +222,16 @@ fileManager = function(user_path){
                 this.files[i].active_file = false;
                 for(var j=0;j<this.file_cont;j++){
                     if(files[j].innerHTML==this.files[i].name){
-                        if(this.files[i].saved)
-                            files[j].style = "color: #333;font-size: 100%";
+                        if(this.files[i].saved){
+                            //files[j].style = "color: #333;font-size: 100%";
+                            files[j].style.color = "#333";
+                            files[j].style.fontSize = "100%";
+                        }
+
                         else
-                            files[j].style = "color: #F00;font-size: 100%";
+                            //files[j].style = "color: #F00;font-size: 100%";
+                            files[j].style.color = "#F00";
+                            files[j].style.fontSize = "100%";
                         break;
                     }
                 }
@@ -224,10 +246,15 @@ fileManager = function(user_path){
                 this.files[i].active_file = true;
                 for (j = 0; j < this.file_cont; j++) {
                     if (files[j].innerHTML == this.files[i].name) {
-                        if (this.files[i].saved)
-                            files[j].style = "color: #333;font-size: 150%";
+                        if (this.files[i].saved){
+                            //files[j].style = "color: #333;font-size: 150%";
+                            files[j].style.color = "#333";
+                            files[j].style.fontSize = "150%";
+                        }
                         else
-                            files[j].style = "color: #F00;font-size: 150%";
+                            //files[j].style = "color: #F00;font-size: 150%";
+                            files[j].style.color = "#F00";
+                            files[j].style.fontSize = "150%";
                     break;
                     }
                 }
@@ -253,7 +280,6 @@ fileManager = function(user_path){
         var callback = function(data) {
             var response = data;
             _this.files.push(new File(response.name ,response.content, ace.createEditSession(response.content, "ace/mode/c_cpp")));
-
 
             if(_this.files.length==1){
 

@@ -90,8 +90,8 @@ def logout():
 #@check_permission
 @login_required
 def poll():
+    g.user.last_poll = datetime.now()
     #g.user.last_poll = datetime.now()
-    g.user.last_poll = datetime.now()+timedelta(seconds=60)
     db.session.add(g.user)
     db.session.commit()
     print 'polled'
@@ -502,7 +502,8 @@ def status(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is not None: 
         print "Did not poll in", (datetime.now() - user.last_poll).seconds, "seconds"
-        if (datetime.now() - user.last_poll).seconds >= 40:
+#        if (datetime.now() - user.last_poll).seconds >= 40:
+        if (datetime.now() - user.last_poll).seconds >= 3:
             return json.dumps({'should_finish' : -1})
         if user.max_date<=datetime.now():
             print "Time expired"

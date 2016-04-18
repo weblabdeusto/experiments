@@ -211,22 +211,35 @@ $(document).ready(function(){
     btn_A_div.mousedown(function(){
        $(this).attr("src", "/static/img/A-on.png");
     });
+    btn_A_div.mouseup(function(){
+       $(this).attr("src", "/static/img/A-off.png");
+    });
+     btn_A_div.mouseout(function(){
+       $(this).attr("src", "/static/img/A-off.png");
+    });
 
     btn_B_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_B_div.mousedown(function(){
        $(this).attr("src", "/static/img/B-on.png");
+    });
+    btn_B_div.mouseup(function(){
+       $(this).attr("src", "/static/img/B-off.png");
+    });
+    btn_B_div.mouseout(function(){
+       $(this).attr("src", "/static/img/B-off.png");
     });
 
     btn_C_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_C_div.mousedown(function(){
        $(this).attr("src", "/static/img/C-on.png");
     });
-
-    $(document).mouseup(function(){
-        $("#btn-A").attr("src", "/static/img/A-off.png");
-        $("#btn-B").attr("src", "/static/img/B-off.png");
-        $("#btn-C").attr("src", "/static/img/C-off.png");
+    btn_C_div.mouseup(function(){
+       $(this).attr("src", "/static/img/C-off.png");
     });
+    btn_C_div.mouseout(function(){
+       $(this).attr("src", "/static/img/C-off.png");
+    });
+
 
 });
 

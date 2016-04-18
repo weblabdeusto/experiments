@@ -48,12 +48,12 @@
                         </td>
                         <td width="35%">
                             {% if (!i && !o.options.autoUpload) { %}
-                                <button class="btn btn-sm-primary start" disabled>
+                                <button class="btn btn-primary start" disabled>
                                     <i class="glyphicon glyphicon-upload"></i>
                                 </button>
                             {% } %}
                             {% if (!i) { %}
-                                <button class="btn btn-sm-warning cancel">
+                                <button class="btn btn-warning cancel">
                                     <i class="glyphicon glyphicon-ban-circle"></i>
                                 </button>
                             {% } %}
@@ -76,11 +76,11 @@
                                 {% } %}
                             </td>
                             <td width="35%">
-                                <a class="btn btn-sm-success"href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" >
+                                <a class="btn btn-success"href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" >
                                      <i class="glyphicon glyphicon-download"></i>
                                 </a>
                                 {% if (file.deleteUrl) { %}
-                                    <button class="btn btn-sm-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                                    <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                                         <i class="glyphicon glyphicon-trash"></i>
                                     </button>
                                 {% } else { %}

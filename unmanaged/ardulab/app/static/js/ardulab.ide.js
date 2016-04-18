@@ -372,10 +372,10 @@ fileManager = function(user_path){
                     "</p>"+
                 "</td>"+
                 "<td width='35%'>"+
-                    "<a class='btn btn-sm-success' href='data/"+ filename + "' title='"+ filename +"' download='"+ filename +"'>"+
+                    "<a class='btn btn-success' href='data/"+ filename + "' title='"+ filename +"' download='"+ filename +"'>"+
                         "<i class='glyphicon glyphicon-download'></i>"+
                     "</a>"+
-                    "<button class='btn btn-sm-danger delete' style='margin-left:4%' data-type='DELETE' data-url='delete/"+filename+"'>"+
+                    "<button class='btn btn-danger delete' style='margin-left:4%' data-type='DELETE' data-url='delete/"+filename+"'>"+
                         "<i class='glyphicon glyphicon-trash'></i>"+
                     "</button>"+
                 "</td>"+

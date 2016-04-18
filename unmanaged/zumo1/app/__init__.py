@@ -18,9 +18,6 @@ db = SQLAlchemy(app)
 lm = LoginManager()
 lm.init_app(app)
 
-# Initialize Celery
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-celery.conf.update(app.config)
 socketio = SocketIO(app, async_mode=async_mode)
 
 if not app.debug:

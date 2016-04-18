@@ -507,8 +507,8 @@ def start_experiment():
 
     try:
         print "doing request to "+ ideIP
-        resp = requests.get('http://'+ ideIP +'/binary/'+server_initial_data['request.username'],timeout=2)
-
+        resp = requests.get('http://'+ ideIP +'/binary/'+server_initial_data['request.username'],timeout=4)
+        print resp.content
         data= json.loads(resp.content)
         folder_id =  data["folder"]
         sketch = data["sketch"]

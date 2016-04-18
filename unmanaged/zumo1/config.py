@@ -14,9 +14,6 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 #Ardulab config
 ideIP = "weblab.deusto.es/labs/ardulab"
 
-# Celery configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/3'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/3'
 
 #Weblab
 LOGIN_URL = ""

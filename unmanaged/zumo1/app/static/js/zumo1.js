@@ -203,5 +203,30 @@ $(document).ready(function(){
         }
     });
 
+    var btn_A_div =  $("#btn-A");
+    var btn_B_div =  $("#btn-B");
+    var btn_C_div =  $("#btn-C");
+
+    btn_A_div.on('dragstart', function(event) { event.preventDefault(); });
+    btn_A_div.mousedown(function(){
+       $(this).attr("src", "/static/img/A-on.png");
+    });
+
+    btn_B_div.on('dragstart', function(event) { event.preventDefault(); });
+    btn_B_div.mousedown(function(){
+       $(this).attr("src", "/static/img/B-on.png");
+    });
+
+    btn_C_div.on('dragstart', function(event) { event.preventDefault(); });
+    btn_C_div.mousedown(function(){
+       $(this).attr("src", "/static/img/C-on.png");
+    });
+
+    $(document).mouseup(function(){
+        $("#btn-A").attr("src", "/static/img/A-off.png");
+        $("#btn-B").attr("src", "/static/img/B-off.png");
+        $("#btn-C").attr("src", "/static/img/C-off.png");
+    });
+
 });
 

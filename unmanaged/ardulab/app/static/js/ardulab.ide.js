@@ -366,16 +366,16 @@ fileManager = function(user_path){
         var quote = '"';
         var row_content =
             "<tr class='template-download fade in'>"+
-                "<td id='"+filename+"' width='70%' class='file' onclick='loadFile("+ quote.concat(filename.concat(quote)) +")'>"+
+                "<td id='"+filename+"' width='65%' class='file' onclick='loadFile("+ quote.concat(filename.concat(quote)) +")'>"+
                     "<p class='name'>"+
                         "<span class='file-name'>"+ filename +"</span>"+
                     "</p>"+
                 "</td>"+
-                "<td width='30%'>"+
-                    "<a class='btn btn-success' href='data/"+ filename + "' title='"+ filename +"' download='"+ filename +"'>"+
+                "<td width='35%'>"+
+                    "<a class='btn btn-sm-success' href='data/"+ filename + "' title='"+ filename +"' download='"+ filename +"'>"+
                         "<i class='glyphicon glyphicon-download'></i>"+
                     "</a>"+
-                    "<button class='btn btn-danger delete' style='margin-left:4%' data-type='DELETE' data-url='delete/"+filename+"'>"+
+                    "<button class='btn btn-sm-danger delete' style='margin-left:4%' data-type='DELETE' data-url='delete/"+filename+"'>"+
                         "<i class='glyphicon glyphicon-trash'></i>"+
                     "</button>"+
                 "</td>"+

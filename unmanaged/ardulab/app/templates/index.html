@@ -42,18 +42,18 @@
                 <script id="template-upload" type="text/x-tmpl">
                 {% for (var i=0, file; file=o.files[i]; i++) { %}
                     <tr class="template-upload fade">
-                        <td width="70%" class="file" id="{%=file.name%}">
+                        <td width="65%" class="file" id="{%=file.name%}">
                             <p class="name">{%=file.name%}</p>
                             <strong class="error text-danger"></strong>
                         </td>
-                        <td width="30%">
+                        <td width="35%">
                             {% if (!i && !o.options.autoUpload) { %}
-                                <button class="btn btn-primary start" disabled>
+                                <button class="btn btn-sm-primary start" disabled>
                                     <i class="glyphicon glyphicon-upload"></i>
                                 </button>
                             {% } %}
                             {% if (!i) { %}
-                                <button class="btn btn-warning cancel">
+                                <button class="btn btn-sm-warning cancel">
                                     <i class="glyphicon glyphicon-ban-circle"></i>
                                 </button>
                             {% } %}
@@ -67,7 +67,7 @@
                 {% for (var i=0, file; file=o.files[i]; i++) { %}
                     {% if (file.error != 'Empty file upload result') { %}
                         <tr class="template-download fade">
-                            <td id="{%=file.name%}" width="70%" class="file" onclick="loadFile('{%=file.name%}')">
+                            <td id="{%=file.name%}" width="65%" class="file" onclick="loadFile('{%=file.name%}')">
                                 <p class="name">
                                         <span class="file-name">{%=file.name%}</span>
                                 </p>
@@ -75,12 +75,12 @@
                                     <p><span class="label label-danger">Error</span> {%=file.error%}</span></p>
                                 {% } %}
                             </td>
-                            <td width="30%">
-                                <a class="btn btn-success"href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" >
+                            <td width="35%">
+                                <a class="btn btn-sm-success"href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" >
                                      <i class="glyphicon glyphicon-download"></i>
                                 </a>
                                 {% if (file.deleteUrl) { %}
-                                    <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                                    <button class="btn btn-sm-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                                         <i class="glyphicon glyphicon-trash"></i>
                                     </button>
                                 {% } else { %}

@@ -90,7 +90,8 @@ def logout():
 #@check_permission
 @login_required
 def poll():
-    g.user.last_poll = datetime.now()
+    #g.user.last_poll = datetime.now()
+    g.user.last_poll = datetime.now()+timedelta(seconds=60)
     db.session.add(g.user)
     db.session.commit()
     print 'polled'
@@ -508,7 +509,7 @@ def status(session_id):
             return json.dumps({'should_finish' : -1})
 
         print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
-        return json.dumps({'should_finish' : -1})
+        return json.dumps({'should_finish' : 5})
     print "User not found"
     # 
     # If the user is considered expired here, we can return -1 instead of 10. 

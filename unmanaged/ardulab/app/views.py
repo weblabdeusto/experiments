@@ -507,7 +507,7 @@ def status(session_id):
             print "Time expired"
             return json.dumps({'should_finish' : -1})
         
-        return json.dumps({'should_finish' : 0})
+        return json.dumps({'should_finish' : 5})
     print "User not found"
     # 
     # If the user is considered expired here, we can return -1 instead of 10. 

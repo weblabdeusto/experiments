@@ -502,11 +502,11 @@ def status(session_id):
         print "Did not poll in", (datetime.now() - user.last_poll).seconds, "seconds"
         if (datetime.now() - user.last_poll).seconds >= 40:
             return json.dumps({'should_finish' : -1})
-        print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
         if user.max_date<=datetime.now():
             print "Time expired"
             return json.dumps({'should_finish' : -1})
-        
+
+        print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
         return json.dumps({'should_finish' : 5})
     print "User not found"
     # 
@@ -530,6 +530,7 @@ def dispose_experiment(session_id):
     if 'action' in request_data and request_data['action'] == 'delete':
         user=User.query.filter_by(session_id=session_id).first()
         if user is not None:
+            print 'user ' + user.nickname + ' deleted'
             #user.permission = False
             #db.session.add(user)
             #db.session.commit()

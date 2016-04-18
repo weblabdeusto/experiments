@@ -364,7 +364,7 @@ def get_content(filename):
             f = open(file_path,"r")
             cont = f.read()
             f.close()
-            print cont
+            #print cont
             return jsonify(name=filename,content=cont)
         except:
             return jsonify(name="error",content="")
@@ -429,6 +429,7 @@ def index(session_id):
     db.session.add(user)
     db.session.commit()
     login_user(user)
+    print 'Redirecting user to home'
     return redirect(url_for('home'))
 
 def get_json():
@@ -507,7 +508,7 @@ def status(session_id):
             return json.dumps({'should_finish' : -1})
 
         print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
-        return json.dumps({'should_finish' : 5})
+        return json.dumps({'should_finish' : -1})
     print "User not found"
     # 
     # If the user is considered expired here, we can return -1 instead of 10. 
@@ -530,7 +531,7 @@ def dispose_experiment(session_id):
     if 'action' in request_data and request_data['action'] == 'delete':
         user=User.query.filter_by(session_id=session_id).first()
         if user is not None:
-            print 'user ' + user.nickname + ' deleted'
+            print 'user ' + user.nickname + ' deleted by weblab but permissions not removed'
             #user.permission = False
             #db.session.add(user)
             #db.session.commit()

@@ -530,9 +530,9 @@ def dispose_experiment(session_id):
     if 'action' in request_data and request_data['action'] == 'delete':
         user=User.query.filter_by(session_id=session_id).first()
         if user is not None:
-            user.permission = False
-            db.session.add(user)
-            db.session.commit()
+            #user.permission = False
+            #db.session.add(user)
+            #db.session.commit()
             return 'deleted'
         return 'not found'
     return 'unknown op'

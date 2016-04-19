@@ -286,7 +286,7 @@ def test_disconnect():
 #############################################
 
 @app.route("/buttonon/<button>",methods=['GET'])
-def binary(button):
+def turnOn(button):
     try:
         if button == 'A':
             f=open('/sys/class/gpio/gpio20/value')
@@ -308,7 +308,7 @@ def binary(button):
          return jsonify(success=False)
 
 @app.route("/buttonoff/<button>",methods=['GET'])
-def binary(button):
+def turnOff(button):
     try:
         if button == 'A':
             f=open('/sys/class/gpio/gpio20/value')

@@ -631,10 +631,11 @@ def dispose_experiment(session_id):
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':
         user=User.query.filter_by(session_id=session_id).first()
+        print "Weblab trying to delete user"
         if user is not None:
+            print user.nickname +" deleted"
             user.permission = False
             db.session.add(user)
             db.session.commit()
-            return 'deleted'
         return 'not found'
     return 'unknown op'

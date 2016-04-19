@@ -64,7 +64,7 @@ def background_thread():
                                     socketio.emit('Serial data',
                                           {'data':line, 'count': count},
                                           room= 'Serial',
-                                          namespace='/labs/zumoline/zumo_backend')
+                                          namespace='/zumo_backend')
                         time.sleep(0.1)
                     else:
                         time.sleep(0.5)
@@ -109,7 +109,7 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-@app.before_request
+@zumo.before_request
 def before_request():
     g.user = current_user
     if g.user.is_authenticated:
@@ -196,7 +196,7 @@ def test_connect():
     #emit('General', {'data': 'Connected', 'count': 0})
 
 
-@socketio.on('Serial event', namespace='/labs/zumoline/zumo_backend')
+@socketio.on('Serial event', namespace='/zumo_backend')
 def send_room_message(message):
     global serialArdu
     print message['data']

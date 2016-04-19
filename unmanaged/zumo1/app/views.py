@@ -64,7 +64,7 @@ def background_thread():
                                     socketio.emit('Serial data',
                                           {'data':line, 'count': count},
                                           room= 'Serial',
-                                          namespace='/zumo_backend')
+                                          namespace='/labs/zumoline/zumo_backend')
                         time.sleep(0.1)
                     else:
                         time.sleep(0.5)

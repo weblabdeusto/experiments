@@ -151,7 +151,7 @@ $(document).ready(function(){
     file_manager.init();
 
     //SOCKET MANAGEMENT
-    namespace = '/labs/zumoline/zumo_backend'; // change to an empty string to use the global namespace
+    namespace = '/zumo_backend'; // change to an empty string to use the global namespace
 
     // the socket.io documentation recommends sending an explicit package upon connection
     // this is specially important when using the global namespace

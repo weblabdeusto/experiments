@@ -196,7 +196,7 @@ def test_connect():
     #emit('General', {'data': 'Connected', 'count': 0})
 
 
-@socketio.on('Serial event', namespace='/zumo_backend')
+@socketio.on('Serial event', namespace='/labs/zumoline/zumo_backend')
 def send_room_message(message):
     global serialArdu
     print message['data']

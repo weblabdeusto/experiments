@@ -27,7 +27,7 @@ try:
 except:
     print 'Zumo is not connected'
 
-@app.route('/test')
+@app.route('/labs/zumoline/test')
 def test():
     return 'SUCCESS!!'
 
@@ -59,7 +59,7 @@ def background_thread():
                                     socketio.emit('Serial data',
                                           {'data':line, 'count': count},
                                           room= 'Serial',
-                                          namespace='/zumo_backend')
+                                          namespace='/labs/zumoline/zumo_backend')
                         time.sleep(0.1)
                     else:
                         time.sleep(0.5)
@@ -112,7 +112,7 @@ def before_request():
         db.session.add(g.user)
         db.session.commit()
 
-@app.route('/home')
+@app.route('/labs/zumoline/home')
 @check_permission
 @login_required
 def home():
@@ -168,7 +168,7 @@ def home():
 
 
 
-@socketio.on('disconnect request', namespace='/zumo_backend')
+@socketio.on('disconnect request', namespace='/labs/zumoline/zumo_backend')
 def disconnect_request():
 
     global serialArdu
@@ -185,13 +185,13 @@ def disconnect_request():
     disconnect()
 
 
-@socketio.on('connect', namespace='/zumo_backend')
+@socketio.on('connect', namespace='/labs/zumoline/zumo_backend')
 def test_connect():
     print 'Conected to general channel'
     #emit('General', {'data': 'Connected', 'count': 0})
 
 
-@socketio.on('Serial event', namespace='/zumo_backend')
+@socketio.on('Serial event', namespace='/labs/zumoline/zumo_backend')
 def send_room_message(message):
     global serialArdu
     print message['data']
@@ -205,7 +205,7 @@ def send_room_message(message):
         print "Error sending data"
 
 
-@socketio.on('Serial start', namespace='/zumo_backend')
+@socketio.on('Serial start', namespace='/labs/zumoline/zumo_backend')
 def test_connect():
     global serialThread
     global serialArdu
@@ -254,7 +254,7 @@ def test_connect():
 
 
 
-@socketio.on('close', namespace='/zumo_backend')
+@socketio.on('close', namespace='/labs/zumoline/zumo_backend')
 def closeSerial():
     global serialArdu
 
@@ -269,7 +269,7 @@ def closeSerial():
 
     close_room('Serial')
 
-@socketio.on('disconnect', namespace='/zumo_backend')
+@socketio.on('disconnect', namespace='/labs/zumoline/zumo_backend')
 def test_disconnect():
     global serialArdu
 
@@ -285,7 +285,7 @@ def test_disconnect():
 ##### ----------> BUTTONS <-----------#######
 #############################################
 
-@app.route("/buttonon/<button>",methods=['GET'])
+@app.route("/labs/zumoline/buttonon/<button>",methods=['GET'])
 def turnOn(button):
     try:
         if button == 'A':
@@ -307,7 +307,7 @@ def turnOn(button):
     except:
          return jsonify(success=False)
 
-@app.route("/buttonoff/<button>",methods=['GET'])
+@app.route("/labs/zumoline/buttonoff/<button>",methods=['GET'])
 def turnOff(button):
     try:
         if button == 'A':
@@ -334,7 +334,7 @@ def turnOff(button):
 ### --------> BOOTLOADER <------------#######
 #############################################
 
-@app.route("/eraseflash", methods=['POST'])
+@app.route("/labs/zumoline/eraseflash", methods=['POST'])
 @login_required
 def erase():
     global loadThread
@@ -387,7 +387,7 @@ def eraseThread():
 
 
 
-@app.route("/loadbinary", methods=['POST'])
+@app.route("/labs/zumoline/loadbinary", methods=['POST'])
 @login_required
 def load():
     global loadThread
@@ -466,7 +466,7 @@ def launch_binary(basedir,file_name,demo,board):
 #############################################
 
 
-@app.route('/logout')
+@app.route('/labs/zumoline/logout')
 @login_required
 def logout():
     print g.user.nickname +' going out'
@@ -481,7 +481,7 @@ def logout():
     return jsonify(error=False,auth=True)
 
 
-@app.route('/poll')
+@app.route('/labs/zumoline/poll')
 @check_permission
 @login_required
 def poll():
@@ -507,7 +507,7 @@ def poll():
 # should be stored in a Redis or 
 # SQL database.
 
-@app.route("/lab/<session_id>/")
+@app.route("/labs/zumoline/lab/<session_id>/")
 def index(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is None:
@@ -536,7 +536,7 @@ def get_json():
 # sessions on memory in this dummy example.
 # 
 
-@app.route("/weblab/sessions/", methods=['POST'])
+@app.route("/labs/zumoline/weblab/sessions/", methods=['POST'])
 def start_experiment():
     # Parse it: it is a JSON file containing two fields:
     request_data = get_json()
@@ -595,7 +595,7 @@ def start_experiment():
 # This method provides the current status of a particular 
 # user.
 # 
-@app.route('/weblab/sessions/<session_id>/status')
+@app.route('/labs/zumoline/weblab/sessions/<session_id>/status')
 def status(session_id):
     print "Weblab status check"
     user = User.query.filter_by(session_id=session_id).first()
@@ -625,7 +625,7 @@ def status(session_id):
 # when an administrator defines so, or when the assigned time
 # is over.
 # 
-@app.route('/weblab/sessions/<session_id>', methods=['POST'])
+@app.route('/labs/zumoline/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':

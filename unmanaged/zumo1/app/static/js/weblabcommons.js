@@ -12,7 +12,7 @@ var poll = function() {
         }
     };
 
-    $.ajax({url:"/poll",
+    $.ajax({url:"/labs/zumoline/poll",
             datatype: 'json',
             success : callback
     });
@@ -29,7 +29,7 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url:"/logout",
+            url:"/labs/zumoline/logout",
             datatype: "json",
             success: callback
         });

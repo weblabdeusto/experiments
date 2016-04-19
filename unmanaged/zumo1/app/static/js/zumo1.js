@@ -94,7 +94,7 @@ function FileManager(){
         };
 
         $.ajax({
-            url:"/loadbinary",
+            url:"/labs/zumoline/loadbinary",
             type: "POST",
             data: file_data,
             datatype: 'application/json;charset=UTF-8',
@@ -117,7 +117,7 @@ function FileManager(){
         };
 
         $.ajax({
-            url:"/eraseflash",
+            url:"/labs/zumoline/eraseflash",
             type: "POST",
             datatype: 'application/json;charset=UTF-8',
             success: callback
@@ -133,7 +133,7 @@ var turnOn = function(btn_id){
             console.log(data);
         };
 
-        $.get("/buttonon/"+ btn_id ,callback);
+        $.get("/labs/zumoline/buttonon/"+ btn_id ,callback);
 };
 
 var turnOff = function(btn_id){
@@ -142,7 +142,7 @@ var turnOff = function(btn_id){
             console.log(data);
         };
 
-        $.get("/buttonoff/"+ btn_id ,callback);
+        $.get("/labs/zumoline/buttonoff/"+ btn_id ,callback);
 };
 
 $(document).ready(function(){
@@ -151,7 +151,7 @@ $(document).ready(function(){
     file_manager.init();
 
     //SOCKET MANAGEMENT
-    namespace = '/zumo_backend'; // change to an empty string to use the global namespace
+    namespace = '/labs/zumoline/zumo_backend'; // change to an empty string to use the global namespace
 
     // the socket.io documentation recommends sending an explicit package upon connection
     // this is specially important when using the global namespace
@@ -229,43 +229,43 @@ $(document).ready(function(){
 
     btn_A_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_A_div.mousedown(function(){
-        $(this).attr("src", "/static/img/A-on.png");
+        $(this).attr("src", "/labs/zumoline/static/img/A-on.png");
         turnOn('A');
     });
     btn_A_div.mouseup(function(){
-        $(this).attr("src", "/static/img/A-off.png");
+        $(this).attr("src", "/labs/zumoline/static/img/A-off.png");
         turnOff('A');
     });
     btn_A_div.mouseout(function(){
-        $(this).attr("src", "/static/img/A-off.png");
+        $(this).attr("src", "/labs/zumoline/static/img/A-off.png");
         turnOff('A');
     });
 
     btn_B_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_B_div.mousedown(function(){
-        $(this).attr("src", "/static/img/B-on.png");
+        $(this).attr("src", "/labs/zumoline/static/img/B-on.png");
         turnOn('B');
     });
     btn_B_div.mouseup(function(){
-        $(this).attr("src", "/static/img/B-off.png");
+        $(this).attr("src", "/labs/zumoline/static/img/B-off.png");
         turnOff('B');
     });
     btn_B_div.mouseout(function(){
-        $(this).attr("src", "/static/img/B-off.png");
+        $(this).attr("src", "/labs/zumoline/static/img/B-off.png");
         turnOff('B');
     });
 
     btn_C_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_C_div.mousedown(function(){
-        $(this).attr("src", "/static/img/C-on.png");
+        $(this).attr("src", "/labs/zumoline/static/img/C-on.png");
         turnOn('C');
     });
     btn_C_div.mouseup(function(){
-        $(this).attr("src", "/static/img/C-off.png");
+        $(this).attr("src", "/labs/zumoline/static/img/C-off.png");
         turnOff('C');
     });
     btn_C_div.mouseout(function(){
-        $(this).attr("src", "/static/img/C-off.png");
+        $(this).attr("src", "/labs/zumoline/static/img/C-off.png");
         turnOff('C');
     });
 });

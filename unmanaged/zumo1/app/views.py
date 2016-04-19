@@ -336,7 +336,7 @@ def turnOff(button):
 #############################################
 
 @zumo.route("/eraseflash", methods=['POST'])
-@login_required
+#@login_required
 def erase():
     global loadThread
 

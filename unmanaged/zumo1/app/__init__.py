@@ -36,4 +36,3 @@ if not app.debug:
 from app import views, models
 
 app.register_blueprint(views.zumo, url_prefix='/labs/zumoline')
-app.register_blueprint(views.socketio, url_prefix='/labs/zumoline')

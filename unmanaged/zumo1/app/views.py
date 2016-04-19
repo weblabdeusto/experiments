@@ -602,7 +602,7 @@ def status(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is not None: 
         print "Did not poll in", (datetime.now() - user.last_poll).seconds, "seconds"
-        if (datetime.now() - user.last_poll).seconds >= 40:
+        if (datetime.now() - user.last_poll).seconds >= 15:
             return json.dumps({'should_finish' : -1})
         print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
         if user.max_date<=datetime.now():

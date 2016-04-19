@@ -64,7 +64,7 @@ def background_thread():
                                     socketio.emit('Serial data',
                                           {'data':line, 'count': count},
                                           room= 'Serial',
-                                          namespace='/labs/zumoline/zumo_backend')
+                                          namespace='/zumo_backend')
                         time.sleep(0.1)
                     else:
                         time.sleep(0.5)
@@ -173,7 +173,7 @@ def home():
 
 
 
-@socketio.on('disconnect request', namespace='/labs/zumoline/zumo_backend')
+@socketio.on('disconnect request', namespace='/zumo_backend')
 def disconnect_request():
 
     global serialArdu
@@ -190,7 +190,7 @@ def disconnect_request():
     disconnect()
 
 
-@socketio.on('connect', namespace='/labs/zumoline/zumo_backend')
+@socketio.on('connect', namespace='/zumo_backend')
 def test_connect():
     print 'Conected to general channel'
     #emit('General', {'data': 'Connected', 'count': 0})
@@ -210,7 +210,7 @@ def send_room_message(message):
         print "Error sending data"
 
 
-@socketio.on('Serial start', namespace='/labs/zumoline/zumo_backend')
+@socketio.on('Serial start', namespace='/zumo_backend')
 def test_connect():
     global serialThread
     global serialArdu
@@ -259,7 +259,7 @@ def test_connect():
 
 
 
-@socketio.on('close', namespace='/labs/zumoline/zumo_backend')
+@socketio.on('close', namespace='/zumo_backend')
 def closeSerial():
     global serialArdu
 
@@ -274,7 +274,7 @@ def closeSerial():
 
     close_room('Serial')
 
-@socketio.on('disconnect', namespace='/labs/zumoline/zumo_backend')
+@socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():
     global serialArdu
 

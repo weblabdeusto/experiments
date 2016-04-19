@@ -240,6 +240,5 @@ $(document).ready(function(){
        $(this).attr("src", "/static/img/C-off.png");
     });
 
-
 });
 

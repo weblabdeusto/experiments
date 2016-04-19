@@ -125,6 +125,26 @@ function FileManager(){
     };
 }
 
+//Buttons
+
+var turnOn = function(btn_id){
+
+    var callback = function(data) {
+            console.log(data);
+        };
+
+        $.get("/buttonon/"+ btn_id ,callback);
+};
+
+var turnOff = function(btn_id){
+
+    var callback = function(data) {
+            console.log(data);
+        };
+
+        $.get("/buttonoff/"+ btn_id ,callback);
+};
+
 $(document).ready(function(){
 
     file_manager = new FileManager();
@@ -209,36 +229,44 @@ $(document).ready(function(){
 
     btn_A_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_A_div.mousedown(function(){
-       $(this).attr("src", "/static/img/A-on.png");
+        $(this).attr("src", "/static/img/A-on.png");
+        turnOn('A');
     });
     btn_A_div.mouseup(function(){
-       $(this).attr("src", "/static/img/A-off.png");
+        $(this).attr("src", "/static/img/A-off.png");
+        turnOff('A');
     });
-     btn_A_div.mouseout(function(){
-       $(this).attr("src", "/static/img/A-off.png");
+    btn_A_div.mouseout(function(){
+        $(this).attr("src", "/static/img/A-off.png");
+        turnOff('A');
     });
 
     btn_B_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_B_div.mousedown(function(){
-       $(this).attr("src", "/static/img/B-on.png");
+        $(this).attr("src", "/static/img/B-on.png");
+        turnOn('B');
     });
     btn_B_div.mouseup(function(){
-       $(this).attr("src", "/static/img/B-off.png");
+        $(this).attr("src", "/static/img/B-off.png");
+        turnOff('B');
     });
     btn_B_div.mouseout(function(){
-       $(this).attr("src", "/static/img/B-off.png");
+        $(this).attr("src", "/static/img/B-off.png");
+        turnOff('B');
     });
 
     btn_C_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_C_div.mousedown(function(){
-       $(this).attr("src", "/static/img/C-on.png");
+        $(this).attr("src", "/static/img/C-on.png");
+        turnOn('C');
     });
     btn_C_div.mouseup(function(){
-       $(this).attr("src", "/static/img/C-off.png");
+        $(this).attr("src", "/static/img/C-off.png");
+        turnOff('C');
     });
     btn_C_div.mouseout(function(){
-       $(this).attr("src", "/static/img/C-off.png");
+        $(this).attr("src", "/static/img/C-off.png");
+        turnOff('C');
     });
-
 });
 

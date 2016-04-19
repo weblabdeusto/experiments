@@ -282,6 +282,55 @@ def test_disconnect():
 
 
 #############################################
+##### ----------> BUTTONS <-----------#######
+#############################################
+
+@app.route("/buttonon/<button>",methods=['GET'])
+def binary(button):
+    try:
+        if button == 'A':
+            f=open('/sys/class/gpio/gpio20/value')
+            f.write('0')
+            f.close()
+        elif button == 'B':
+            f=open('/sys/class/gpio/gpio26/value')
+            f.write('0')
+            f.close()
+        elif button == 'C':
+            f=open('/sys/class/gpio/gpio16/value')
+            f.write('0')
+            f.close()
+        else:
+            return jsonify(success=False)
+
+        return jsonify(success=True)
+    except:
+         return jsonify(success=False)
+
+@app.route("/buttonoff/<button>",methods=['GET'])
+def binary(button):
+    try:
+        if button == 'A':
+            f=open('/sys/class/gpio/gpio20/value')
+            f.write('1')
+            f.close()
+        elif button == 'B':
+            f=open('/sys/class/gpio/gpio26/value')
+            f.write('1')
+            f.close()
+        elif button == 'C':
+            f=open('/sys/class/gpio/gpio16/value')
+            f.write('1')
+            f.close()
+        else:
+            return jsonify(success=False)
+
+        return jsonify(success=True)
+    except:
+         return jsonify(success=False)
+
+
+#############################################
 ### --------> BOOTLOADER <------------#######
 #############################################
 

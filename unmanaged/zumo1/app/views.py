@@ -289,15 +289,15 @@ def test_disconnect():
 def turnOn(button):
     try:
         if button == 'A':
-            f=open('/sys/class/gpio/gpio20/value')
+            f=open('/sys/class/gpio/gpio20/value','w')
             f.write('0')
             f.close()
         elif button == 'B':
-            f=open('/sys/class/gpio/gpio26/value')
+            f=open('/sys/class/gpio/gpio26/value','w')
             f.write('0')
             f.close()
         elif button == 'C':
-            f=open('/sys/class/gpio/gpio16/value')
+            f=open('/sys/class/gpio/gpio16/value','w')
             f.write('0')
             f.close()
         else:
@@ -311,15 +311,15 @@ def turnOn(button):
 def turnOff(button):
     try:
         if button == 'A':
-            f=open('/sys/class/gpio/gpio20/value')
+            f=open('/sys/class/gpio/gpio20/value','w')
             f.write('1')
             f.close()
         elif button == 'B':
-            f=open('/sys/class/gpio/gpio26/value')
+            f=open('/sys/class/gpio/gpio26/value','w')
             f.write('1')
             f.close()
         elif button == 'C':
-            f=open('/sys/class/gpio/gpio16/value')
+            f=open('/sys/class/gpio/gpio16/value','w')
             f.write('1')
             f.close()
         else:

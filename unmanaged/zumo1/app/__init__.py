@@ -6,7 +6,7 @@ elif async_mode == 'gevent':
     from gevent import monkey
     monkey.patch_all()
 
-from flask import Flask
+from flask import Flask,Blueprint
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask_socketio import SocketIO
@@ -14,6 +14,7 @@ from celery import Celery
 
 app = Flask(__name__)
 app.config.from_object('config')
+
 db = SQLAlchemy(app)
 lm = LoginManager()
 lm.init_app(app)
@@ -33,3 +34,5 @@ if not app.debug:
     app.logger.info('weblab zumo robot startup')
 
 from app import views, models
+
+app.register_blueprint(views.zumo, url_prefix='/labs/zumoline')

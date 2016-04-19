@@ -15,6 +15,11 @@ from celery import Celery
 app = Flask(__name__)
 app.config.from_object('config')
 
+zumo = Blueprint('zumo',
+                 __name__,
+                 template_folder='templates',
+                 static_folder='static')
+
 db = SQLAlchemy(app)
 lm = LoginManager()
 lm.init_app(app)
@@ -33,6 +38,6 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('weblab zumo robot startup')
 
-from app import views, models
+from app import views, models, zumo
 
-app.register_blueprint(views.zumo, url_prefix='/labs/zumoline')
+app.register_blueprint(zumo, url_prefix='/labs/zumoline')

@@ -5,7 +5,7 @@ from flask_socketio import  emit, join_room, leave_room, \
     close_room, disconnect
 
 from datetime import datetime, timedelta
-from app import app, db, lm, socketio
+from app import app, db, lm, socketio,zumo
 from config import basedir, ideIP
 from .models import User
 from functools import wraps
@@ -22,10 +22,6 @@ from threading import Thread
 serialThread = None
 loadThread = None
 
-zumo = Blueprint('zumo',
-                 __name__,
-                 template_folder='templates',
-                 static_folder='static')
 
 try:
     serialArdu = serial.Serial()

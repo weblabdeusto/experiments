@@ -225,7 +225,7 @@ def test_connect():
             serialThread.daemon = False
             serialThread.start()
 
-    print("helloooo")
+    print("Opening serial")
     count = 0
     opened = False
     while not opened:
@@ -278,6 +278,7 @@ def test_disconnect():
     if serialArdu.isOpen():
         print 'SERIAL NOT CLOSED!!'
     close_room('Serial')
+    print 'user desconected and serial closed'
     erase()
     print('Client disconnected', request.sid)
 

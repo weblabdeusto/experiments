@@ -155,7 +155,7 @@ $(document).ready(function(){
 
     // the socket.io documentation recommends sending an explicit package upon connection
     // this is specially important when using the global namespace
-    var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+    var socket = io.connect('http://' + document.domain + ':' + location.port + namespace,{path: "/labs/zumoline/socket.io"});
     console.log(socket);
     // event handler for server sent data
     // the data is displayed in the "Received" section of the page

@@ -24,7 +24,7 @@ db = SQLAlchemy(app)
 lm = LoginManager()
 lm.init_app(app)
 
-socketio = SocketIO(app, async_mode=async_mode)
+socketio = SocketIO(app, async_mode=async_mode, resource = "/labs/zumoline/socket.io")
 
 if not app.debug:
     import logging

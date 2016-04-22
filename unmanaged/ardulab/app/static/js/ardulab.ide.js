@@ -33,7 +33,7 @@ function start_long_task() {
         }
     });
 }
-
+//TODO: Show if compiler is busy
 function update_progress(status_url, status_div) {
     var _this = this;
     // send GET request to status URL

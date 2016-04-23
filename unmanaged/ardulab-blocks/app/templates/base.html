@@ -1,0 +1,46 @@
+ <!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Ardulab-blockly</title>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/weblabcommons.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/ardulab-blockly.css')}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+        <script src="{{ url_for('static', filename='js/blockly/blockly_compressed.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/blockly/blocks_compressed.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/blockly/arduino_compressed.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/blockly/msg/js/en.js') }}"></script>
+
+
+    </head>
+    <body>
+        <br>
+        <div  style="text-align:center">
+            <h1><b>Ardulab-Blockly</b></h1>
+        </div>
+        <div>
+            {% block content %}{% endblock %}
+        </div>
+        <div class="text-center">
+            <br>
+            <button id="button_finish" type="button" class="btn btn-default btn-lg">Finish</button>
+        </div>
+        <script>
+            var BACK_URL = "{{g.user.back}}";
+            var TIME_LEFT = {{timeleft-1}};
+            var BASE_URL = "{{base_url}}";
+            var USER_FOLDER = "{{ g.user.folder_id }}";
+        </script>
+
+         <script src="https://cdn.jsdelivr.net/ace/1.2.3/min/ace.js"></script>
+         <script type="text/javascript" src="{{ url_for('static', filename='js/weblabcommons.js') }}"></script>
+         <script type="text/javascript"  src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+         <script type="text/javascript" src="{{ url_for('.static', filename='js/iframeResizer.contentWindow.min.js') }}"></script>
+         <script type="text/javascript" src="{{ url_for('.static', filename='js/iframeResizer.min.js') }}"></script>
+         <script type="text/javascript" src="{{ url_for('.static', filename='js/ardulab.blockly.js') }}"></script>
+    </body>
+</html>
+

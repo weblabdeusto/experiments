@@ -1,0 +1,20 @@
+
+#ino-code{
+    height: 150px;
+    overflow-y: scroll;
+    background-color: #c8c8ff;
+    border: 2px solid #444;
+    outline-color: #1f6377;
+}
+
+#editor {
+    margin-top: 20%;
+    padding-bottom: 100%;
+    top: 10%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 4px;
+    border: 1px solid #444;
+
+}

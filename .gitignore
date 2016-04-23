@@ -2,10 +2,10 @@
 workspace.xml
 *.log*
 *.save*
-*.pid
+*.pid*
 #ignore build directory
 .build/
-*.txt
+*.txt*
 #ignore user files
 #src/
 
@@ -21,3 +21,6 @@ uploads/
 *.cpp
 *.h
 *.ino
+closure_library/*
+.idea*
+

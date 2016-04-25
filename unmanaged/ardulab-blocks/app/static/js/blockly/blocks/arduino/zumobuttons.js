@@ -1,21 +1,7 @@
-/**
- * @license Licensed under the Apache License, Version 2.0 (the "License"):
- *          http://www.apache.org/licenses/LICENSE-2.0
- */
 
 /**
- * @fileoverview Blocks for Arduino Button library.
- *     The Arduino Servo functions syntax can be found in the following URL:
- *     http://arduino.cc/en/Reference/Button
- *     Additional functions apart from the normal generators have been added to
- *     be able to generate the 'set' drop down menu with all current instances
- *     of the Button class:
- *         Blockly.Blocks.zumobuttons.ButtonInstances
- *         Blockly.Blocks.zumobuttons.FieldButtonInstance
- *         Blockly.Blocks.zumobuttons.ButtonDropdownList
+ * @fileoverview Blocks for library.
  *
- * TODO: Still need to had some kind of handler to refresh the "set" drop down
- *     menu values if an instance in a 'configure' block is renamed.
  */
 
 'use strict';

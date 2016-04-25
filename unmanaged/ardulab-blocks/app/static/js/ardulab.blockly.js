@@ -18,7 +18,6 @@ $(document).ready(function(){
 
     function myUpdateFunction(event) {
         var code = Blockly.Arduino.workspaceToCode(workspace);
-        console.log(code);
         editor.setValue(code);
         editor.gotoLine(1);
 

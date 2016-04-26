@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container-fluid">
-<br>
     <div class="col-md-8">
-        <div id="blocklyDiv" style="height: 600px"></div>
+        <span class="btn btn-primary" id="load-button" style="margin-left: 15%">
+            <i class="glyphicon glyphicon-upload"></i>
+            <span>Load</span>
+        </span>
+
+        <span class="btn btn-success" id="save-btn">
+            <i class="glyphicon glyphicon-download"></i>
+            <span>Save</span>
+        </span>
+        <span class="btn btn-default" id="validate-btn">
+            <i class="glyphicon glyphicon-check"></i>
+            <span>Validate</span>
+        </span>
+        <div id="blocklyDiv" style="height: 600px;margin-top: 1%"></div>
     </div>
     <div class="col-md-4">
         <div id="editor"></div>
     </div>
-
-
 
 </div>
 

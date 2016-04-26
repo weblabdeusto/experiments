@@ -4,12 +4,6 @@
  */
 
 /**
-/**
- * @license Licensed under the Apache License, Version 2.0 (the "License"):
- *          http://www.apache.org/licenses/LICENSE-2.0
- */
-
-/**
  * @fileoverview Arduino code generator for the Button library blocks.
  *     The Arduino Button library docs: http://arduino.cc/en/Reference/Button
  */
@@ -36,7 +30,7 @@ Blockly.Arduino['Button_config'] = function(block) {
   var robotButton = block.getRobotButton();
 
 
-  Blockly.Arduino.addInclude('Button', '#include <Zumo32U4.h>');
+  Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
   var globalCode = 'Zumo32U4' + robotButton + ' '+ ButtonName+';';
   Blockly.Arduino.addDeclaration('Button_' + ButtonName, globalCode);
@@ -54,6 +48,9 @@ Blockly.Arduino['Button_config'] = function(block) {
  * @return {array} Completed code with order of operation.
  */
 Blockly.Arduino['Button_isPressed'] = function(block) {
+
+  Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
+
   var ButtonInstanceName = block.getFieldValue('BUTTON_NAME');
   var code = ButtonInstanceName + '.isPressed()';
   return [code, Blockly.Arduino.ORDER_ATOMIC];
@@ -62,12 +59,18 @@ Blockly.Arduino['Button_isPressed'] = function(block) {
 Blockly.Arduino['Button_waitFor'] = function(block) {
   var ButtonInstanceName = block.getFieldValue('BUTTON_NAME');
   var waitForCode = block.getFieldValue('BUTTON_NAME') + '.waitForButton();\n';
+
+  Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
+
   Blockly.Arduino.addSetup('serial_' + ButtonInstanceName, waitForCode, true);
   return;
 };
 
 Blockly.Arduino['Button_singlePressed'] = function(block) {
   var ButtonInstanceName = block.getFieldValue('BUTTON_NAME');
+
+  Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
+
   var code = ButtonInstanceName + '.getSingleDebouncedPress()';
   return [code, Blockly.Arduino.ORDER_ATOMIC];
 };

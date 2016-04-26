@@ -9,7 +9,7 @@ goog.require('Blockly.Arduino');
 
 Blockly.Arduino['readProximity'] = function(block) {
 
-    Blockly.Arduino.addInclude('proxSensors', '#include <Zumo32U4ProximitySensors.h>');
+    Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
     var globalCode = 'Zumo32U4ProximitySensors proxSensors;';
     Blockly.Arduino.addDeclaration('proxSensors_', globalCode);
@@ -27,7 +27,7 @@ Blockly.Arduino['countsGeneric'] = function(block) {
     var led = block.getFieldValue('DETECT_LIST');
 
 
-    Blockly.Arduino.addInclude('proxSensors', '#include <Zumo32U4ProximitySensors.h>');
+    Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
     var globalCode = 'Zumo32U4ProximitySensors proxSensors;';
     Blockly.Arduino.addDeclaration('proxSensors_', globalCode);
@@ -59,7 +59,7 @@ Blockly.Arduino['countsGeneric'] = function(block) {
 
 Blockly.Arduino['readBasicLeft'] = function(block) {
 
-    Blockly.Arduino.addInclude('proxSensors', '#include <Zumo32U4ProximitySensors.h>');
+    Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
     var globalCode = 'Zumo32U4ProximitySensors proxSensors;';
     Blockly.Arduino.addDeclaration('proxSensors_', globalCode);
@@ -73,7 +73,7 @@ Blockly.Arduino['readBasicLeft'] = function(block) {
 
 Blockly.Arduino['readBasicCenter'] = function(block) {
 
-    Blockly.Arduino.addInclude('proxSensors', '#include <Zumo32U4ProximitySensors.h>');
+    Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
     var globalCode = 'Zumo32U4ProximitySensors proxSensors;';
     Blockly.Arduino.addDeclaration('proxSensors_', globalCode);
@@ -88,7 +88,7 @@ Blockly.Arduino['readBasicCenter'] = function(block) {
 
 Blockly.Arduino['readBasicRight'] = function(block) {
 
-    Blockly.Arduino.addInclude('proxSensors', '#include <Zumo32U4ProximitySensors.h>');
+    Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
     var globalCode = 'Zumo32U4ProximitySensors proxSensors;';
     Blockly.Arduino.addDeclaration('proxSensors_', globalCode);

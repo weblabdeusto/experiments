@@ -9,7 +9,7 @@ goog.require('Blockly.Arduino');
 
 Blockly.Arduino['basicReadLine'] = function(block) {
 
-    Blockly.Arduino.addInclude('proxSensors', '#include <Wire.h>\n#include <Zumo32U4LineSensors.h>');
+    Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
     var globalCode = 'Zumo32U4LineSensors lineSensors;';
     Blockly.Arduino.addDeclaration('lineSensors_', globalCode);
@@ -28,7 +28,7 @@ Blockly.Arduino['getLineSensorValue'] = function(block) {
 
     var sensor = block.getFieldValue('SENSOR_LIST');
 
-     Blockly.Arduino.addInclude('proxSensors', '#include <Wire.h>\n#include <Zumo32U4LineSensors.h>');
+    Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
     var globalCode = 'Zumo32U4LineSensors lineSensors;';
     Blockly.Arduino.addDeclaration('lineSensors_', globalCode);

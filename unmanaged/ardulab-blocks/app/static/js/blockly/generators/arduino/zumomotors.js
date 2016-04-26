@@ -10,7 +10,7 @@ goog.require('Blockly.Arduino');
 
 Blockly.Arduino['motorrightspeed'] = function(block) {
 
-  Blockly.Arduino.addInclude('motors', '#include <Zumo32U4Motors.h>');
+  Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
   var globalCode = 'Zumo32U4Motors motors;';
   Blockly.Arduino.addDeclaration('motors', globalCode);
@@ -24,7 +24,7 @@ Blockly.Arduino['motorrightspeed'] = function(block) {
 Blockly.Arduino['motorleftspeed'] = function(block) {
 
 
-  Blockly.Arduino.addInclude('motors', '#include <Zumo32U4Motors.h>');
+  Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
   var globalCode = 'Zumo32U4Motors motors;';
   Blockly.Arduino.addDeclaration('motors', globalCode);
@@ -38,7 +38,7 @@ Blockly.Arduino['motorleftspeed'] = function(block) {
 Blockly.Arduino['motorsspeed'] = function(block) {
 
 
-  Blockly.Arduino.addInclude('motors', '#include <Zumo32U4Motors.h>');
+  Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
 
   var globalCode = 'Zumo32U4Motors motors;';
   Blockly.Arduino.addDeclaration('motors', globalCode);

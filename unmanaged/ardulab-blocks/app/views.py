@@ -100,14 +100,13 @@ def poll():
 @celery.task(bind=True)
 def compile_project(self,user_folder,board):
 
-    #user_folder = "3037b2d4-bb35-4ad6-a9c8-daa2f489ae69"
-    #board="leonardo"
+
     self.update_state(state='PROGRESS',
                       meta={'current': 0, 'total': 100,
                             'status': "Preparing files"})
 
     try:
-        result = subprocess.check_output(["sh", basedir+"/app/scripts/build.sh",board, user_folder, basedir], stderr=subprocess.STDOUT)
+        result = subprocess.check_output(["sh", basedir+"/app/scripts/build.sh",board, basedir], stderr=subprocess.STDOUT)
         print "Success!"
         self.update_state(state='PROGRESS',
                       meta={'current': 50, 'total': 100,
@@ -141,13 +140,7 @@ def compile_project(self,user_folder,board):
                       meta={'current': 90, 'total': 100,
                             'status': "Preparing files"})
     try:
-        name=""
-        for file in os.listdir(basedir+"/app/static/uploads/"+user_folder):
-
-            if file.split(".")[1]=="ino":
-                name=file.split(".")[0]
-                break
-        result = subprocess.check_output(["sh", basedir+"/app/scripts/moveBinary.sh", board, user_folder,name,basedir], stderr=subprocess.STDOUT)
+        result = subprocess.check_output(["sh", basedir+"/app/scripts/moveBinary.sh", board, user_folder,'blocks',basedir], stderr=subprocess.STDOUT)
         print "Success!"
         self.update_state(state='PROGRESS',
                       meta={'current': 95, 'total': 100,
@@ -167,10 +160,24 @@ def compile_project(self,user_folder,board):
 @check_permission
 @login_required
 def compile():
-    #TODO: Remove workspace content, get user's sketch and save on workspace
+
+    file_content = request.form['content']
+    file_path = os.path.join(basedir, 'app/workspace/src/blocks.ino')
+    print file_path
+
+    try:
+        os.remove(file_path)
+        f = open(file_path,"a")
+        f.write(file_content)
+        f.close()
+        print 'file created'
+    except:
+        return jsonify(success=False,auth=True)
+
     if not os.path.exists(basedir+'/app/static/binaries/'+g.user.folder_id):
         os.makedirs(basedir+'/app/static/binaries/'+g.user.folder_id)
     task = compile_project.apply_async(args=[g.user.folder_id, "leonardo"])
+
     return jsonify({}), 202, {'Location': url_for('taskstatus',
                                                   task_id=task.id)}
 
@@ -297,6 +304,7 @@ def start_experiment():
         user.last_poll= datetime.now()
         user.max_date = max_date
         print 'Back URL: ' + user.back
+
     db.session.add(user)
     db.session.commit()
     link = url_for('index', session_id=session_id, _external = True)

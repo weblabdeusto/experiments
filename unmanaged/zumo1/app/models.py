@@ -8,8 +8,10 @@ class User(db.Model):
     last_poll = db.Column(db.DateTime)
     back = db.Column(db.String(80))
     session_id = db.Column(db.String(80))
-    folder_id = db.Column(db.String(80))
-    sketch = db.Column(db.String(80))
+    ide_folder_id = db.Column(db.String(80))
+    ide_sketch = db.Column(db.String(80))
+    blockly_folder_id = db.Column(db.String(80))
+    blockly_sketch = db.Column(db.String(80))
 
     def is_authenticated(self):
         return True

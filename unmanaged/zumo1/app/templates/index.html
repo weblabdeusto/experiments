@@ -7,9 +7,13 @@
             <div class="panel panel-default" style="margin-top: 5%">
                 <div class="panel-heading">User Code: </div>
                 <div class="panel-body">
-                {% if g.user.sketch != "None" %}
-                    <p class="file" id="user-{{ g.user.sketch }}">{{ g.user.sketch }}</p>
-                {% else %}
+                {% if g.user.ide_sketch != "None" %}
+                    <p class="file" id="user-{{ g.user.ide_sketch }}">{{ g.user.ide_sketch }}</p>
+                {% endif %}
+                {% if g.user.blockly_sketch != "None" %}
+                    <p class="file" id="user-{{ g.user.blockly_sketch }}">{{ g.user.blockly_sketch }}</p>
+                {% endif %}
+                {% if g.user.blockly_sketch == "None" and g.user.ide_sketch=="None"%}
                      <p>No user code available</p>
                 {% endif %}
                 </div>

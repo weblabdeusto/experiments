@@ -6,7 +6,7 @@ from flask_socketio import  emit, join_room, leave_room, \
 
 from datetime import datetime, timedelta
 from app import app, db, lm, socketio,zumo
-from config import basedir, ideIP
+from config import basedir, ideIP, blocklyIP
 from .models import User
 from functools import wraps
 import json
@@ -138,24 +138,6 @@ def home():
     demo_files=[]
     for demo in demo_files2:
         demo_files.append(demo.split(".")[0])
-
-    if(g.user.folder_id=="None"):
-        print "No users code"
-    else:
-        try:
-            files = os.listdir(basedir+'/binaries/user')
-            for f in files:
-                os.remove(basedir+'/binaries/user/'+f)
-            print g.user.folder_id
-            response = requests.get('https://'+ideIP+'/static/binaries/'+g.user.folder_id+'/'+g.user.sketch+'.hex',timeout=10)
-            f=open(basedir+'/binaries/user/'+g.user.sketch+'.hex','a')
-            f.write(response.content)
-            f.close()
-        except:
-            print 'Error getting user code'
-            g.user.sketch = 'None'
-            db.session.add(g.user)
-            db.session.commit()
 
     return render_template('index.html',
                            title='Home',
@@ -397,6 +379,28 @@ def load():
     name = request.form['name']
     demo = request.form['demo']
 
+    print "loading "+ name
+
+    if demo == "false":
+        if(g.user.ide_folder_id=="None" and g.user.blockly_folder_id=="None"):
+            print "No users code"
+        else:
+            try:
+                files = os.listdir(basedir+'/binaries/user')
+                for f in files:
+                    os.remove(basedir+'/binaries/user/'+f)
+                if name == "blocks":
+                    print 'https://'+blocklyIP+'/static/binaries/'+g.user.blockly_folder_id+'/'+g.user.blockly_sketch+'.hex'
+                    response = requests.get('http://'+blocklyIP+'/static/binaries/'+g.user.blockly_folder_id+'/'+g.user.blockly_sketch+'.hex',timeout=10)
+                else:
+                    response = requests.get('http://'+ideIP+'/static/binaries/'+g.user.ide_folder_id+'/'+g.user.ide_sketch+'.hex',timeout=10)
+                f=open(basedir+'/binaries/user/'+name+'.hex','a')
+                f.write(response.content)
+                f.close()
+            except:
+                print 'Error getting user code'
+                return jsonify(success=False)
+
     if loadThread is None:
         loadThread = Thread(target=launch_binary, args=(basedir,name,demo=='true',"leonardo",))
         loadThread.daemon = False
@@ -556,31 +560,48 @@ def start_experiment():
     session_id = str(random.randint(0, 10e8)) # Not especially secure 0:-)
     user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
 
+    #Check if users has his code on the IDE
     try:
         print "doing request to "+ ideIP
         resp = requests.get('http://'+ ideIP +'/binary/'+server_initial_data['request.username'],timeout=4)
         print resp.content
         data= json.loads(resp.content)
-        folder_id =  data["folder"]
-        sketch = data["sketch"]
+        ide_folder_id =  data["folder"]
+        ide_sketch = data["sketch"]
 
     except:
         print "Error doing request"
-        folder_id = "None"
-        sketch = "None"
+        ide_folder_id = "None"
+        ide_sketch = "None"
+
+    #Check if users has his code on the IDE
+    try:
+        print "doing request to "+ blocklyIP
+        resp = requests.get('http://'+ blocklyIP +'/binary/'+server_initial_data['request.username'],timeout=4)
+        print resp.content
+        data= json.loads(resp.content)
+        blockly_folder_id =  data["folder"]
+        blockly_sketch = data["sketch"]
+
+    except:
+        print "Error doing request"
+        blockly_folder_id = "None"
+        blockly_sketch = "None"
 
     if user is None:
         user = User(nickname=server_initial_data['request.username'], max_date=max_date, last_poll= datetime.now(),
-                    back=request_data['back'], session_id=session_id, permission=True, folder_id=folder_id, sketch=sketch)
+                    back=request_data['back'], session_id=session_id, permission=True, ide_folder_id=ide_folder_id,
+                    ide_sketch=ide_sketch, blockly_folder_id=blockly_folder_id, blockly_sketch=blockly_sketch)
     else:
         print 'User exists'
         user.session_id = session_id
         user.back = request_data['back']
         user.last_poll= datetime.now()
         user.max_date = max_date
-        user.folder_id = folder_id
-        user.sketch = sketch
-
+        user.ide_folder_id = ide_folder_id
+        user.ide_sketch = ide_sketch
+        user.blockly_folder_id = blockly_folder_id
+        user.blockly_sketch = blockly_sketch
 
     db.session.add(user)
     db.session.commit()

@@ -43,10 +43,15 @@
             var USER_FILE = "";
             var DEMO_FILES = [];
 
-            {% if g.user.sketch != None %}
-                USER_FILE = "{{g.user.sketch}}";
+            {% if g.user.ide_sketch != None %}
+                USER_FILE = "{{g.user.ide_sketch}}";
             {% else %}
                 USER_FILE = "None";
+            {% endif %}
+            {% if g.user.blockly_sketch != None %}
+                USER_BLOCKLY_FILE = "{{g.user.blockly_sketch}}";
+            {% else %}
+                USER_BLOCKLY_FILE = "None";
             {% endif %}
             {% for file in demo_files %}
                 DEMO_FILES.push("{{ file }}");

@@ -33,16 +33,25 @@ function FileManager(){
 
     this.demo_files = [];
     this.user_file = null;
+    this.blockly_file = null;
 
     this.init = function(){
         for(var i=0;i<DEMO_FILES.length;i++){
             this.demo_files.push(new File(DEMO_FILES[i],true))
         }
+        console.log(USER_BLOCKLY_FILE);
         if(USER_FILE!="None"){
             this.user_file = new File(USER_FILE,false);
             this.setActive(USER_FILE,false);
         }
-        else{
+
+        if(USER_BLOCKLY_FILE!="None"){
+            this.blockly_file = new File(USER_BLOCKLY_FILE,false);
+            console.log(this.blockly_file);
+            if(USER_FILE=='None')
+                this.setActive(USER_BLOCKLY_FILE,false);
+        }
+        if(USER_FILE=="None" && USER_BLOCKLY_FILE=="None"){
             if(this.demo_files.length>=1){
                 this.setActive(this.demo_files[0].name,true);
             }
@@ -59,6 +68,10 @@ function FileManager(){
                 this.user_file.active = false;
                 this.user_file.div.css("font-size", "100%");
             }
+            if (this.blockly_file!=null){
+                this.blockly_file.active = false;
+                this.blockly_file.div.css("font-size", "100%");
+            }
             if(demo){
                 if(this.demo_files[i].name==name){
                     this.demo_files[i].active=true;
@@ -70,6 +83,13 @@ function FileManager(){
                     if(this.user_file.name==name){
                         this.user_file.active = true;
                         this.user_file.div.css("font-size", "150%");
+                        return;
+                    }
+                }
+                if(this.blockly_file != null){
+                    if(this.blockly_file.name==name){
+                        this.blockly_file.active = true;
+                        this.blockly_file.div.css("font-size", "150%");
                     }
                 }
             }
@@ -211,6 +231,12 @@ $(document).ready(function(){
         if(file_manager.user_file!=null){
             if(file_manager.user_file.active){
                 file_manager.loadFile(file_manager.user_file);
+                return;
+            }
+        }
+        if(file_manager.blockly_file!=null){
+            if(file_manager.blockly_file.active){
+                file_manager.loadFile(file_manager.blockly_file);
                 return;
             }
         }

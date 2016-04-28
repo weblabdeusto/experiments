@@ -261,7 +261,6 @@ def test_disconnect():
         print 'SERIAL NOT CLOSED!!'
     close_room('Serial')
     print 'user desconected and serial closed'
-    erase()
     print('Client disconnected', request.sid)
 
 
@@ -579,7 +578,7 @@ def start_experiment():
         print "doing request to "+ blocklyIP
         resp = requests.get('http://'+ blocklyIP +'/binary/'+server_initial_data['request.username'],timeout=4)
         print resp.content
-        data= json.loads(resp.content)
+        data = json.loads(resp.content)
         blockly_folder_id =  data["folder"]
         blockly_sketch = data["sketch"]
 
@@ -640,6 +639,7 @@ def status(session_id):
     # 
     return json.dumps({'should_finish' : -1})
 
+
 #############################################################
 # 
 # WebLab-Deusto API:
@@ -650,6 +650,7 @@ def status(session_id):
 # 
 @zumo.route('/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
+    erase()
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':
         user=User.query.filter_by(session_id=session_id).first()

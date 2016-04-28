@@ -408,8 +408,9 @@ def launch_binary(basedir,file_name,demo,board):
     print demo
     print file_name
     socketio.emit('General', {'data': 'stopSerial'},namespace='/zumo_backend')
-    while serialArdu.isOpen:
+    while serialArdu.isOpen():
         time.sleep(0.1)
+        print "Waiting for serial stop"
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")

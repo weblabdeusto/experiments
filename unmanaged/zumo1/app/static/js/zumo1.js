@@ -227,6 +227,8 @@ $(document).ready(function(){
     $("#launch-btn").click(function(){
 
         socket.emit('Serial close');
+        $("#stop-btn").prop( "disabled", true );
+        $("#launch-btn").prop( "disabled", true );
 
         if(file_manager.user_file!=null){
             if(file_manager.user_file.active){

@@ -409,6 +409,7 @@ def launch_binary(basedir,file_name,demo,board):
     print demo
     print file_name
     while serialArdu.isOpen():
+        serialArdu.close()
         time.sleep(0.1)
         print "Waiting for serial stop"
     try:

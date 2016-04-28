@@ -177,13 +177,6 @@ $(document).ready(function(){
     // this is specially important when using the global namespace
     var socket = io.connect('http://' + document.domain + ':' + location.port + namespace,{path: "/labs/zumoline/socket.io"});
     console.log(socket);
-    // event handler for server sent data
-    // the data is displayed in the "Received" section of the page
-    socket.on('Serial data', function(msg) {
-        var serialDiv = $('#serial-monitor');
-        serialDiv.append('<p>'+msg.data+'</p>');
-        serialDiv.scrollTop(serialDiv.children().length*1000)
-    });
 
     socket.on('General', function(msg) {
         var serialDiv = $('#serial-monitor');
@@ -201,29 +194,33 @@ $(document).ready(function(){
             $("#stop-btn").prop( "disabled", true );
             $("#launch-btn").prop( "disabled", true );
             $("#serial-monitor").html("");
-            socket.emit('close');
+            socket.emit('Serial close');
         }
         else{
             serialDiv.append('<p>General: ' + msg.data+'</p>');
             serialDiv.scrollTop(serialDiv.children().length*1000)
         }
     });
-    // event handler for new connections
 
-    // handlers for the different forms in the page
-    // these send data to the server in a variety of ways
-     $('#start-serial').click(function(event) {
-        socket.emit('Serial start');
-        return false;
+    socket.on('Serial event', function(msg) {
+        var serialDiv = $('#serial-monitor');
+        serialDiv.append('<p>'+msg.data+'</p>');
+        serialDiv.scrollTop(serialDiv.children().length*1000)
     });
 
     $('#send-data').click(function(event) {
         console.log($('#serial-data').val());
-        socket.emit('Serial event', {data: $("#serial-dada").val()});
+        socket.emit('Serial send', {data: $("#serial-dada").val()});
         return false;
     });
+
+    $('#start-serial').click(function(event) {
+        socket.emit('Serial start');
+        return false;
+    });
+
     $('#close-serial').click(function(event) {
-        socket.emit('close');
+        socket.emit('Serial close');
         return false;
     });
 

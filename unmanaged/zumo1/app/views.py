@@ -57,9 +57,8 @@ def background_thread():
                                 out += serialArdu.read(1)
                             for line in out.split('\r\n'):
                                 if line != "":
-                                    socketio.emit('Serial data',
+                                    socketio.emit('Serial event',
                                           {'data':line, 'count': count},
-                                          room= 'Serial',
                                           namespace='/zumo_backend')
                         time.sleep(0.1)
                     else:
@@ -161,8 +160,7 @@ def disconnect_request():
         serialArdu.close()
 
     session['receive_count'] = session.get('receive_count', 0) + 1
-    leave_room('Serial')
-    close_room('Serial')
+
     emit('General',
          {'data': 'Disconnected!', 'count': session['receive_count']})
     disconnect()
@@ -174,8 +172,8 @@ def test_connect():
     emit('General', {'data': 'Connected', 'count': 0})
 
 
-@socketio.on('Serial event', namespace='/zumo_backend')
-def send_room_message(message):
+@socketio.on('Serial send', namespace='/zumo_backend')
+def send_serial_message(message):
     global serialArdu
     print message['data']
 
@@ -186,13 +184,6 @@ def send_room_message(message):
             serialArdu.write(message['data'].encode())
     except:
         print "Error sending data"
-
-@socketio.on('hello', namespace='/zumo_backend')
-def test_hello():
-    print "user send hello"
-    emit('General', {'data': 'respond', 'count': 0})
-    #join_room('Serial')
-    emit('Serial data', {'data': 'respond', 'count': 0},room='Serial')
 
 
 @socketio.on('Serial start', namespace='/zumo_backend')
@@ -229,10 +220,8 @@ def test_connect():
             if serialArdu.isOpen():
                 opened = True
                 print 'serial opened'
-                join_room('Serial')
-                #emit('Serial data',
-                #     {'data': 'Serial connected', 'count': 1},
-                #     room='Serial')
+                emit('Serial event',
+                     {'data': 'Serial connected', 'count': 1})
             else:
                 print('CANT OPEN RETRY...')
         except:
@@ -242,9 +231,7 @@ def test_connect():
             print('Cant open serial...retry on /dev/ttyACM'+str(count))
             time.sleep(0.1)
 
-
-
-@socketio.on('close', namespace='/zumo_backend')
+@socketio.on('Serial close', namespace='/zumo_backend')
 def closeSerial():
     global serialArdu
 
@@ -253,11 +240,8 @@ def closeSerial():
     serialArdu.close()
     if not serialArdu.isOpen():
         print 'Serial closed'
-        #emit('Serial data', {'data': 'Serial is closing.',
-        #                     'count': session['receive_count']},
-        #     room='Serial')
-
-    close_room('Serial')
+        emit('Serial event', {'data': 'Serial is closing.',
+                             'count': session['receive_count']})
 
 @socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():
@@ -266,10 +250,9 @@ def test_disconnect():
     serialArdu.close()
     if serialArdu.isOpen():
         print 'SERIAL NOT CLOSED!!'
-    #close_room('Serial')
+
     print 'user desconected and serial closed'
     print('Client disconnected', request.sid)
-
 
 #############################################
 ##### ----------> BUTTONS <-----------#######
@@ -346,8 +329,7 @@ def erase():
 def eraseThread():
     global serialArdu
 
-    time.sleep(1.5)
-
+    time.sleep(1)
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -363,8 +345,9 @@ def eraseThread():
 
     except:
         print "Error enabling bootloader"
+        return
 
-    time.sleep(1.5)
+    time.sleep(1)
     try:
         #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
         result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
@@ -425,7 +408,8 @@ def launch_binary(basedir,file_name,demo,board):
     print demo
     print file_name
     socketio.emit('General', {'data': 'stopSerial'},namespace='/zumo_backend')
-    time.sleep(1.5)
+    while serialArdu.isOpen:
+        time.sleep(0.1)
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -440,11 +424,12 @@ def launch_binary(basedir,file_name,demo,board):
         print "reset done"
     except:
         print "Error enabling bootloader"
+        return
     print 'Loading code'
     time.sleep(1)
     if(demo):
         #try:
-            file_name
+            print file_name
             print 'flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex'
             #subprocess.call('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             res = os.system('ls /dev/tty* -all')
@@ -464,7 +449,7 @@ def launch_binary(basedir,file_name,demo,board):
             #result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/user/'+file_name+'.hex')
             print "Success!"
-            time.sleep(1.5)
+            time.sleep(1)
             socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
 
         except subprocess.CalledProcessError, ex:

@@ -167,7 +167,7 @@ def compile():
 
 #    try:
     os.remove(file_path)
-    f = open(file_path,"w+")
+    f = open(file_path,"w")
     f.write(file_content)
     f.close()
     print 'file created'

@@ -226,6 +226,8 @@ $(document).ready(function(){
 
     $("#launch-btn").click(function(){
 
+        socket.emit('Serial close');
+
         if(file_manager.user_file!=null){
             if(file_manager.user_file.active){
                 file_manager.loadFile(file_manager.user_file);
@@ -293,9 +295,6 @@ $(document).ready(function(){
         turnOff('C');
     });
 
-    $("#test-btn").click(function(){
-        socket.emit('hello');
-    });
 
 });
 

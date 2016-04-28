@@ -368,7 +368,6 @@ def load():
 
     name = request.form['name']
     demo = request.form['demo']
-    socketio.emit('General', {'data': 'stopSerial'}, namespace='/zumo_backend')
     print "loading "+ name
 
     if demo == "false":
@@ -439,7 +438,7 @@ def launch_binary(basedir,file_name,demo,board):
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             print "Success!"
             time.sleep(1.5)
-            socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
+
         #except subprocess.CalledProcessError, ex:
             # error code <> 0
         #    print "Error loading file"
@@ -452,12 +451,11 @@ def launch_binary(basedir,file_name,demo,board):
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/user/'+file_name+'.hex')
             print "Success!"
             time.sleep(1.5)
-            socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
 
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"
-
+    socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
 
 #############################################
 ### ------------> WEBLAB <------------#######

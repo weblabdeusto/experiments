@@ -6,22 +6,18 @@ var editor = ace.edit("editor");
 
 function start_long_task() {
     // add task status elements
-    $("#validate-btn").prop( "disabled", true );
-    var status_div=$("#console");
-    var panel    = $('#fixed-panel');
-    status_div.append("<p>Starting validation</p>");
-    panel.scrollTop(status_div.children().length*1000);
 
     var params = {'content':editor.getValue()};
     // send ajax POST request to start background job
     $.ajax({
         type: 'POST',
-        url: '/labs/ardublocks/compile',
+        url: '/compile',
         data: params,
         dataType: 'json',
         success: function(data, status, request) {
             status_url = request.getResponseHeader('Location');
-            update_progress(status_url, status_div);
+            console.log(status_url);
+            update_progress(status_url);
         },
         error: function() {
             alert('Unexpected error');
@@ -29,7 +25,7 @@ function start_long_task() {
     });
 }
 //TODO: Show if compiler is busy
-function update_progress(status_url, status_div) {
+function update_progress(status_url) {
     var _this = this;
     // send GET request to status URL
     $.getJSON(status_url, function(data) {
@@ -50,14 +46,7 @@ function update_progress(status_url, status_div) {
         if (data['state'] != 'PENDING' && data['state'] != 'PROGRESS') {
             if ('result' in data) {
                 var result = data['result'].split("%%%");
-                // show result
-                for(var i=0;i<result.length;i++){
-                    status_div.append("<p>" + result[i]+"</p>");
-                }
-                if(i>1){
-                    status_div.append("<p style='color:red'>Error Compiling!</p>");
-                }
-                panel.scrollTop(status_div.children().length*1000);
+
                 $("#validate-btn").prop( "disabled", false );
             }
             else {
@@ -68,7 +57,7 @@ function update_progress(status_url, status_div) {
         else {
             // rerun in 2 seconds
             setTimeout(function() {
-                update_progress(status_url, status_div);
+                update_progress(status_url);
             }, 500);
         }
     });

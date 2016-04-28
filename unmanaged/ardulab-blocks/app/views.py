@@ -165,14 +165,14 @@ def compile():
     file_path = os.path.join(basedir, 'app/workspace/src/blocks.ino')
     print file_path
 
-    try:
-        os.remove(file_path)
-        f = open(file_path,"a")
-        f.write(file_content)
-        f.close()
-        print 'file created'
-    except:
-        return jsonify(success=False,auth=True)
+#    try:
+    os.remove(file_path)
+    f = open(file_path,"a")
+    f.write(file_content)
+    f.close()
+    print 'file created'
+#    except:
+#        return jsonify(success=False,auth=True)
 
     if not os.path.exists(basedir+'/app/static/binaries/'+g.user.folder_id):
         os.makedirs(basedir+'/app/static/binaries/'+g.user.folder_id)

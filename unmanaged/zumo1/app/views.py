@@ -265,7 +265,7 @@ def test_disconnect():
     serialArdu.close()
     if serialArdu.isOpen():
         print 'SERIAL NOT CLOSED!!'
-    close_room('Serial')
+    #close_room('Serial')
     print 'user desconected and serial closed'
     print('Client disconnected', request.sid)
 

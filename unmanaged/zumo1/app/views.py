@@ -363,10 +363,11 @@ def eraseThread():
 @login_required
 def load():
     global loadThread
+    global socketio
 
     name = request.form['name']
     demo = request.form['demo']
-
+    socketio.emit('General', {'data': 'stopSerial'}, namespace='/zumo_backend')
     print "loading "+ name
 
     if demo == "false":
@@ -407,7 +408,6 @@ def launch_binary(basedir,file_name,demo,board):
     global socketio
     print demo
     print file_name
-    socketio.emit('General', {'data': 'stopSerial'},namespace='/zumo_backend')
     while serialArdu.isOpen():
         time.sleep(0.1)
         print "Waiting for serial stop"

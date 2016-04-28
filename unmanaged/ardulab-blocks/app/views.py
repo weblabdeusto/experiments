@@ -168,11 +168,7 @@ def compile():
 
 #    try:
     os.remove(file_path)
-<<<<<<< HEAD
     f = open(file_path,"wb+")
-=======
-    f = open(file_path,"w")
->>>>>>> 870e67fbf086c6ed9f7b2c158eb58ecbef7de35d
     f.write(file_content)
     f.close()
     print 'file created'

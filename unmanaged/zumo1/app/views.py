@@ -190,8 +190,8 @@ def send_room_message(message):
 @socketio.on('hello', namespace='/zumo_backend')
 def test_hello():
     print "user send hello"
-    #join_room('Serial')
-    emit('General', {'data': 'respond', 'count': 0})
+    join_room('Serial')
+    emit('Serial data', {'data': 'respond', 'count': 0},room='Serial')
 
 
 @socketio.on('Serial start', namespace='/zumo_backend')
@@ -265,7 +265,7 @@ def test_disconnect():
     serialArdu.close()
     if serialArdu.isOpen():
         print 'SERIAL NOT CLOSED!!'
-    close_room('Serial')
+    #close_room('Serial')
     print 'user desconected and serial closed'
     print('Client disconnected', request.sid)
 

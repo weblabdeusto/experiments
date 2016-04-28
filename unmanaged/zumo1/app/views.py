@@ -339,7 +339,6 @@ def erase():
 def eraseThread():
     global serialArdu
 
-    socketio.emit('General', {'data': 'stopSerial'},namespace='/zumo_backend')
     time.sleep(1.5)
 
     try:
@@ -438,7 +437,7 @@ def launch_binary(basedir,file_name,demo,board):
     time.sleep(1)
     if(demo):
         #try:
-            print file_name
+            file_name
             print 'flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex'
             #subprocess.call('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             res = os.system('ls /dev/tty* -all')

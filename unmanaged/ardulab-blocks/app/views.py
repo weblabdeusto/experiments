@@ -164,10 +164,11 @@ def compile():
     file_content = request.form['content']
     file_path = os.path.join(basedir, 'app/workspace/src/blocks.ino')
     print file_path
+    print file_content
 
 #    try:
     os.remove(file_path)
-    f = open(file_path,"w+")
+    f = open(file_path,"wb+")
     f.write(file_content)
     f.close()
     print 'file created'

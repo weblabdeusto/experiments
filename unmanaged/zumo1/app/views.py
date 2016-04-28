@@ -171,7 +171,7 @@ def disconnect_request():
 @socketio.on('connect', namespace='/zumo_backend')
 def test_connect():
     print 'Conected to general channel'
-    #emit('General', {'data': 'Connected', 'count': 0})
+    emit('General', {'data': 'Connected', 'count': 0})
 
 
 @socketio.on('Serial event', namespace='/zumo_backend')
@@ -186,6 +186,11 @@ def send_room_message(message):
             serialArdu.write(message['data'].encode())
     except:
         print "Error sending data"
+
+@socketio.on('hello', namespace='/zumo_backend')
+def test_hello():
+    print "user send hello"
+    emit('General', {'data': 'respond', 'count': 0})
 
 
 @socketio.on('Serial start', namespace='/zumo_backend')

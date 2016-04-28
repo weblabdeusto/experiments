@@ -16,7 +16,7 @@ from uuid import uuid4
 
 import subprocess
 
-@app.route('/labs/ardublocks/test')
+@app.route('/test')
 def test():
     return 'SUCCESS!!'
 
@@ -51,7 +51,7 @@ def before_request():
 #        db.session.add(g.user)
 #        db.session.commit()
 
-@app.route('/labs/ardublocks/home')
+@app.route('/home')
 @login_required
 @check_permission
 def home():
@@ -65,7 +65,7 @@ def home():
                            user=g.user,
                            timeleft=time)
 
-@app.route('/labs/ardublocks/logout')
+@app.route('/logout')
 @login_required
 def logout():
     print g.user.nickname +' going out'
@@ -80,7 +80,7 @@ def logout():
     return jsonify(error=False,auth=True)
 
 
-@app.route('/labs/ardublocks/poll')
+@app.route('/poll')
 @check_permission
 @login_required
 def poll():
@@ -156,7 +156,7 @@ def compile_project(self,user_folder,board):
     return {'current': 100, 'total': 100, 'status': 'Project compiled!',
             'result': result}
 
-@app.route('/labs/ardublocks/compile', methods=['POST'])
+@app.route('/compile', methods=['POST'])
 @check_permission
 @login_required
 def compile():
@@ -182,7 +182,7 @@ def compile():
                                                   task_id=task.id)}
 
 
-@app.route('/labs/ardublocks/status/<task_id>')
+@app.route('/status/<task_id>')
 def taskstatus(task_id):
     task = compile_project.AsyncResult(task_id)
     if task.state == 'PENDING':
@@ -216,7 +216,7 @@ def taskstatus(task_id):
 ### -------> ROBOTS <-------- ###
 #################################
 
-@app.route("/labs/ardublocks/binary/<user_name>",methods=['GET'])
+@app.route("/binary/<user_name>",methods=['GET'])
 def binary(user_name):
 
     user = User.query.filter_by(nickname=user_name).first()
@@ -242,7 +242,7 @@ def binary(user_name):
 # should be stored in a Redis or 
 # SQL database.
 
-@app.route("/labs/ardublocks/lab/<session_id>/")
+@app.route("/lab/<session_id>/")
 def index(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is None:
@@ -272,7 +272,7 @@ def get_json():
 # sessions on memory in this dummy example.
 # 
 
-@app.route("/labs/ardublocks/weblab/sessions/", methods=['POST'])
+@app.route("/weblab/sessions/", methods=['POST'])
 def start_experiment():
     # Parse it: it is a JSON file containing two fields:
     request_data = get_json()
@@ -319,7 +319,7 @@ def start_experiment():
 # This method provides the current status of a particular 
 # user.
 # 
-@app.route('/labs/ardublocks/weblab/sessions/<session_id>/status')
+@app.route('/weblab/sessions/<session_id>/status')
 def status(session_id):
     print "Weblab status check"
     user = User.query.filter_by(session_id=session_id).first()
@@ -350,7 +350,7 @@ def status(session_id):
 # when an administrator defines so, or when the assigned time
 # is over.
 # 
-@app.route('/labs/ardublocks/weblab/sessions/<session_id>', methods=['POST'])
+@app.route('/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':

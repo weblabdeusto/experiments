@@ -219,7 +219,7 @@ def test_connect():
             if serialArdu.isOpen():
                 opened = True
                 print 'serial opened'
-                emit('Serial event',
+                emit('General',
                      {'data': 'Serial connected'},
                      namespace= '/zumo_backend')
             else:

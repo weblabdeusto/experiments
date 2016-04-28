@@ -18,6 +18,7 @@ function start_long_task() {
         success: function(data, status, request) {
             status_url = request.getResponseHeader('Location');
             console.log(status_url);
+            $("#validate-btn").prop( "disabled", true );
             update_progress(status_url);
         },
         error: function() {

@@ -188,6 +188,7 @@ $(document).ready(function(){
     socket.on('General', function(msg) {
         var serialDiv = $('#serial-monitor');
         var status_div = $("#output");
+        serialDiv.append('<p>General: ' + msg.data+'</p>');
         if(msg.data=="startSerial"){
             $("#stop-btn").prop( "disabled", false );
             $("#launch-btn").prop( "disabled", false );
@@ -201,9 +202,6 @@ $(document).ready(function(){
             $("#launch-btn").prop( "disabled", true );
             $("#serial-monitor").html("");
             socket.emit('close');
-        }
-        else if(msg.data=="respond"){
-            console.log("SERVER RESPONDED");
         }
         else{
             serialDiv.append('<p>General: ' + msg.data+'</p>');

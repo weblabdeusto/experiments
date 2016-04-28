@@ -202,6 +202,9 @@ $(document).ready(function(){
             $("#serial-monitor").html("");
             socket.emit('close');
         }
+        else if(msg.data=="respond"){
+            console.log("SERVER RESPONDED");
+        }
         else{
             serialDiv.append('<p>General: ' + msg.data+'</p>');
             serialDiv.scrollTop(serialDiv.children().length*1000)
@@ -294,5 +297,10 @@ $(document).ready(function(){
         $(this).attr("src", "/labs/zumoline/static/img/C-off.png");
         turnOff('C');
     });
+
+    $("#test-btn").click(function(){
+        socket.emit('hello');
+    });
+
 });
 

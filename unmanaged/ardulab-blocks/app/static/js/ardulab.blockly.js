@@ -12,7 +12,7 @@ function start_long_task() {
     // send ajax POST request to start background job
     $.ajax({
         type: 'POST',
-        url: '/compile',
+        url: '/labs/ardublocks/compile',
         data: params,
         dataType: 'json',
         success: function(data, status, request) {

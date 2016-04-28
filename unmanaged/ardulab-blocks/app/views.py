@@ -133,7 +133,7 @@ def compile_project(self,user_folder,board):
         self.update_state(state='FAILURE',
                       meta={'current': 90, 'total': 100,
                             'status': "Compiling files"})
-        return {'current': 100, 'total': 100, 'status': 'Error compiling!!',
+        return {'current': 100, 'total': 100, 'status': 'Error',
             'result': errors}
 
     self.update_state(state='PROGRESS',
@@ -153,7 +153,7 @@ def compile_project(self,user_folder,board):
 
 
     result = "Success!"
-    return {'current': 100, 'total': 100, 'status': 'Project compiled!',
+    return {'current': 100, 'total': 100, 'status': 'Success',
             'result': result}
 
 @app.route('/compile', methods=['POST'])

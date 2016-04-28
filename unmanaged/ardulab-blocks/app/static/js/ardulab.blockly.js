@@ -41,6 +41,12 @@ function update_progress(status_url, status_div) {
             _this.last_status = data['status'];
             panel.scrollTop(status_div.children().length*1000);
         }
+        if(data['status']=='Error'){
+            $("#validate-btn").removeClass("btn-default").addClass("btn-danger");
+        }
+        else if(data['status']=='Success'){
+            $("#validate-btn").removeClass("btn-default").addClass("btn-success");
+        }
         if (data['state'] != 'PENDING' && data['state'] != 'PROGRESS') {
             if ('result' in data) {
                 var result = data['result'].split("%%%");
@@ -83,6 +89,12 @@ $(document).ready(function(){
     Blockly.Arduino.Boards.changeBoard(workspace, "leonardo");
 
     function myUpdateFunction(event) {
+        var btn = $("#validate-btn");
+        if(btn.hasClass("btn-danger"))
+            btn.removeClass("btn-danger").addClass("btn-default");
+        else if(btn.hasClass("btn-success")){
+            btn.removeClass("btn-success").addClass("btn-default");
+        }
         var code = Blockly.Arduino.workspaceToCode(workspace);
         editor.setValue(code);
         editor.gotoLine(1);

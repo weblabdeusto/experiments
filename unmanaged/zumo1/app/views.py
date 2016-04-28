@@ -240,7 +240,7 @@ def closeSerial():
     serialArdu.close()
     if not serialArdu.isOpen():
         print 'Serial closed'
-        emit('Serial event', {'data': 'Serial is closing.'})
+        emit('General', {'data': 'Serial is closing.'})
 
 @socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():

@@ -167,7 +167,6 @@ def compile():
     print file_content
 
 #    try:
-    os.remove(file_path)
     f = open(file_path,"wb+")
     f.write(file_content)
     f.close()

@@ -33,11 +33,7 @@ function update_progress(status_url) {
         var panel    = $('#fixed-panel');
         // update UI
         percent = parseInt(data['current'] * 100 / data['total']);
-        if(_this.last_status!=data['status']){
-            //status_div.append("<p>" + data['status']+"</p>");
-            _this.last_status = data['status'];
-            panel.scrollTop(status_div.children().length*1000);
-        }
+
         if(data['status']=='Error'){
             $("#validate-btn").removeClass("btn-default").addClass("btn-danger");
         }

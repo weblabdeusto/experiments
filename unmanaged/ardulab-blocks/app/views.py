@@ -157,8 +157,8 @@ def compile_project(self,user_folder,board):
             'result': result}
 
 @app.route('/compile', methods=['POST'])
-@check_permission
-@login_required
+#@check_permission
+#@login_required
 def compile():
 
     file_content = request.form['content']

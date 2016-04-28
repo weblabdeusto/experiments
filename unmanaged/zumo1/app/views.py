@@ -221,7 +221,8 @@ def test_connect():
                 opened = True
                 print 'serial opened'
                 emit('Serial event',
-                     {'data': 'Serial connected', 'count': 1})
+                     {'data': 'Serial connected', 'count': 1},
+                     namespace= '/zumo_backend')
             else:
                 print('CANT OPEN RETRY...')
         except:
@@ -229,7 +230,7 @@ def test_connect():
             if count == 5:
                 count = 0
             print('Cant open serial...retry on /dev/ttyACM'+str(count))
-            time.sleep(0.1)
+            time.sleep(0.5)
 
 @socketio.on('Serial close', namespace='/zumo_backend')
 def closeSerial():
@@ -450,7 +451,7 @@ def launch_binary(basedir,file_name,demo,board):
             #result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/user/'+file_name+'.hex')
             print "Success!"
-            time.sleep(1)
+            time.sleep(1.5)
             socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
 
         except subprocess.CalledProcessError, ex:

@@ -8,6 +8,7 @@ function start_long_task() {
     // add task status elements
 
     var params = {'content':editor.getValue()};
+    console.log(params);
     // send ajax POST request to start background job
     $.ajax({
         type: 'POST',

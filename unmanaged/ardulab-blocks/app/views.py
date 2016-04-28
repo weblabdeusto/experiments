@@ -158,7 +158,7 @@ def compile_project(self,user_folder,board):
 
 @app.route('/compile', methods=['POST'])
 #@check_permission
-#@login_required
+@login_required
 def compile():
 
     file_content = request.form['content']
@@ -167,7 +167,7 @@ def compile():
 
 #    try:
     os.remove(file_path)
-    f = open(file_path,"a")
+    f = open(file_path,"w+")
     f.write(file_content)
     f.close()
     print 'file created'

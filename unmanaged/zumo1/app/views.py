@@ -44,7 +44,6 @@ def background_thread():
     print 'Thread launched'
     try:
         while run:
-            count += 1
             if serialArdu!=None:
                 try:
                     #print 'trying...'
@@ -58,7 +57,7 @@ def background_thread():
                             for line in out.split('\r\n'):
                                 if line != "":
                                     socketio.emit('Serial event',
-                                          {'data':line, 'count': count},
+                                          {'data':line},
                                           namespace='/zumo_backend')
                         time.sleep(0.1)
                     else:
@@ -162,14 +161,14 @@ def disconnect_request():
     session['receive_count'] = session.get('receive_count', 0) + 1
 
     emit('General',
-         {'data': 'Disconnected!', 'count': session['receive_count']})
+         {'data': 'Disconnected!'})
     disconnect()
 
 
 @socketio.on('connect', namespace='/zumo_backend')
 def test_connect():
     print 'Conected to general channel'
-    emit('General', {'data': 'Connected', 'count': 0})
+    emit('General', {'data': 'Connected'})
 
 
 @socketio.on('Serial send', namespace='/zumo_backend')
@@ -221,7 +220,7 @@ def test_connect():
                 opened = True
                 print 'serial opened'
                 emit('Serial event',
-                     {'data': 'Serial connected', 'count': 1},
+                     {'data': 'Serial connected'},
                      namespace= '/zumo_backend')
             else:
                 print('CANT OPEN RETRY...')
@@ -241,8 +240,7 @@ def closeSerial():
     serialArdu.close()
     if not serialArdu.isOpen():
         print 'Serial closed'
-        emit('Serial event', {'data': 'Serial is closing.',
-                             'count': session['receive_count']})
+        emit('Serial event', {'data': 'Serial is closing.'})
 
 @socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():
@@ -406,6 +404,7 @@ def load():
 def launch_binary(basedir,file_name,demo,board):
     global serialArdu
     global socketio
+
     print demo
     print file_name
     while serialArdu.isOpen():

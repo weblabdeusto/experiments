@@ -340,7 +340,7 @@ def eraseThread():
     global serialArdu
 
     socketio.emit('General', {'data': 'stopSerial'},namespace='/zumo_backend')
-    time.sleep(1)
+    time.sleep(1.5)
 
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
@@ -358,7 +358,7 @@ def eraseThread():
     except:
         print "Error enabling bootloader"
 
-    time.sleep(0.5)    
+    time.sleep(1.5)
     try:
         #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
         result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
@@ -419,7 +419,7 @@ def launch_binary(basedir,file_name,demo,board):
     print demo
     print file_name
     socketio.emit('General', {'data': 'stopSerial'},namespace='/zumo_backend')
-    time.sleep(1)
+    time.sleep(1.5)
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -445,7 +445,7 @@ def launch_binary(basedir,file_name,demo,board):
             print res
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             print "Success!"
-            time.sleep(1)
+            time.sleep(1.5)
             socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
         #except subprocess.CalledProcessError, ex:
             # error code <> 0
@@ -458,7 +458,7 @@ def launch_binary(basedir,file_name,demo,board):
             #result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/user/'+file_name+'.hex')
             print "Success!"
-            time.sleep(1)
+            time.sleep(1.5)
             socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
 
         except subprocess.CalledProcessError, ex:

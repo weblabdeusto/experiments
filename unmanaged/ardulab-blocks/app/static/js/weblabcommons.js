@@ -12,7 +12,7 @@ var poll = function() {
         }
     };
 
-    $.ajax({url:"/labs/ardulabblocks/poll",
+    $.ajax({url:"/labs/ardublocks/poll",
             datatype: 'json',
             success : callback
     });
@@ -27,7 +27,7 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url:"/labs/ardulabblocks/logout",
+            url:"/labs/ardublocks/logout",
             datatype: "json",
             success: callback
         });

@@ -4,12 +4,12 @@
 import os
 import sys
 
-ARDULAB_DIR = os.path.dirname(__file__)
-if ARDULAB_DIR == '':
-    ARDULAB_DIR= os.path.abspath('.')
+ARDUBLOCKS_DIR = os.path.dirname(__file__)
+if ARDUBLOCKS_DIR == '':
+    ARDUBLOCKS_DIR= os.path.abspath('.')
 
-sys.path.insert(0, ARDULAB_DIR)
-os.chdir(ARDULAB_DIR)
+sys.path.insert(0, ARDUBLOCKS_DIR)
+os.chdir(ARDUBLOCKS_DIR)
 
 sys.stdout = open('stdout.txt', 'w', 0)
 sys.stderr = open('stderr.txt', 'w', 0)

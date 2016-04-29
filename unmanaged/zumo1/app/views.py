@@ -147,7 +147,10 @@ def home():
 ### --------> SERIAL-SOCKET <---------#######
 #############################################
 
-
+@socketio.on_error()        # Handles the default namespace
+def error_handler(e):
+    print "Error... doing nothing"
+    pass
 
 @socketio.on('disconnect request', namespace='/zumo_backend')
 def disconnect_request():

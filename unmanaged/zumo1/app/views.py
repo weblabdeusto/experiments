@@ -469,6 +469,7 @@ def launch_binary(basedir,file_name,demo,board):
 @login_required
 def logout():
     global serialArdu
+    global socketio
 
     if serialArdu.isOpen():
         serialArdu.close()

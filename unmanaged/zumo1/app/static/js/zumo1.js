@@ -186,7 +186,11 @@ $(window).load(function(){
             console.log('Serial start request recived');
             $("#stop-btn").prop( "disabled", false );
             $("#launch-btn").prop( "disabled", false );
-            socket.emit('Serial start');
+            setTimeout(function() {
+                console.log("Starting serial");
+                socket.emit('Serial start');
+                },1000);
+
             status_div.html("<p>Ready</p>");
 
         }

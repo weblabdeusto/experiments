@@ -183,6 +183,7 @@ $(document).ready(function(){
         var status_div = $("#output");
 
         if(msg.data=="startSerial"){
+            console.log('Serial start request recived');
             $("#stop-btn").prop( "disabled", false );
             $("#launch-btn").prop( "disabled", false );
             socket.emit('Serial start');

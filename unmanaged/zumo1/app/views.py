@@ -473,7 +473,7 @@ def logout():
 
     if serialArdu.isOpen():
         serialArdu.close()
-    socketio.disconnect()
+
     print g.user.nickname +' going out'
     g.user.session_id = ""
     g.user.permission = False

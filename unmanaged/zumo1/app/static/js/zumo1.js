@@ -208,6 +208,21 @@ $(document).ready(function(){
         serialDiv.scrollTop(serialDiv.children().length*1000)
     });
 
+    $("#button_finish").click(function(){
+
+        socket.emit('disconnect request');
+        var callback = function(data) {
+            window.location.replace(BACK_URL);
+        };
+
+        $.ajax({
+            url:"/labs/zumoline/logout",
+            datatype: "json",
+            success: callback
+        });
+
+    });
+
     $('#send-data').click(function(event) {
         console.log($('#serial-data').val());
         socket.emit('Serial send', {data: $("#serial-dada").val()});

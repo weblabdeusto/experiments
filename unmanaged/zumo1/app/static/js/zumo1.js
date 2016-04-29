@@ -280,6 +280,7 @@ $(document).ready(function(){
     });
     btn_B_div.mouseout(function(){
         $(this).attr("src", "/labs/zumoline/static/img/B-off.png");
+        $(this).attr("src", "/labs/zumoline/static/img/B-off.png");
         turnOff('B');
     });
 

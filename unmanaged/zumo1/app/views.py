@@ -73,7 +73,7 @@ def background_thread():
     except:
         run = False
         print 'Something unusual happend.....'
-        time.sleep(1)
+        serialArdu.close()
 
 
 ##################################
@@ -329,6 +329,8 @@ def eraseThread():
     global serialArdu
 
     time.sleep(1)
+    if serialArdu.isOpen():
+        serialArdu.close()
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -465,6 +467,10 @@ def launch_binary(basedir,file_name,demo,board):
 @zumo.route('/logout')
 @login_required
 def logout():
+    global serialArdu
+
+    if serialArdu.isOpen():
+        serialArdu.close()
     print g.user.nickname +' going out'
     g.user.session_id = ""
     g.user.permission = False

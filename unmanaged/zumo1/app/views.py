@@ -457,6 +457,7 @@ def launch_binary(basedir,file_name,demo,board):
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"
+    print "tell client to start serial"
     socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
 
 #############################################

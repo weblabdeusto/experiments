@@ -165,7 +165,7 @@ var turnOff = function(btn_id){
         $.get("/labs/zumoline/buttonoff/"+ btn_id ,callback);
 };
 
-$(document).load(function(){
+$(document).onload(function(){
 
     file_manager = new FileManager();
     file_manager.init();

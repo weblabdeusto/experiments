@@ -59,7 +59,7 @@ def background_thread():
                                     socketio.emit('Serial event',
                                           {'data':line},
                                           namespace='/zumo_backend')
-                        time.sleep(0.1)
+                        time.sleep(0.2)
                     else:
                         time.sleep(0.5)
                 except:
@@ -472,6 +472,7 @@ def logout():
 
     if serialArdu.isOpen():
         serialArdu.close()
+    disconnect()
     print g.user.nickname +' going out'
     g.user.session_id = ""
     g.user.permission = False
@@ -649,6 +650,7 @@ def status(session_id):
 @zumo.route('/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
     erase()
+
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':
         user=User.query.filter_by(session_id=session_id).first()

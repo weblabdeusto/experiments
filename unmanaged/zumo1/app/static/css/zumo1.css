@@ -26,7 +26,6 @@
     height: 100%;
 }
 #serial-monitor{
-    line-height: 10px;
     height: 200px;
     overflow-y: scroll;
     overflow-x: scroll;

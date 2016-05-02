@@ -146,6 +146,7 @@ def error_handler(e):
 def disconnect_request():
 
     global serialArdu
+    stopSerial()
 
     #TODO:CLose serial
     if serialArdu.isOpen():
@@ -166,7 +167,7 @@ def test_connect():
 @socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():
     global serialArdu
-
+    stopSerial()
     serialArdu.close()
     if serialArdu.isOpen():
         print 'SERIAL NOT CLOSED!!'

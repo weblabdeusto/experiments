@@ -118,11 +118,6 @@ def home():
     if serialArdu.isOpen():
         print 'Serial not closed'
 
-    if serialThread is None:
-        serialThread = Thread(target=background_thread)
-        serialThread.daemon = False
-        serialThread.start()
-
     if g.user.max_date > datetime.now():
         time = (g.user.max_date - datetime.now()).seconds
     else:
@@ -184,7 +179,7 @@ def serialRead():
     global runSerial
 
     runSerial=True
-    print 'Thread launched'
+    print 'Serial thread launched'
 
     print("Opening serial")
     count = 0

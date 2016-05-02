@@ -182,9 +182,6 @@ def serialRead():
     global runSerial
     global socketio
 
-    socketio.emit('General',
-          {'data':'ready'},
-          namespace='/zumo_backend')
 
     time.sleep(1)
     runSerial=True
@@ -506,8 +503,6 @@ def launch_binary(basedir,file_name,demo,board):
             print res
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             print "Success!"
-            time.sleep(1.5)
-            print 'Starting serial'
 
 
         #except subprocess.CalledProcessError, ex:
@@ -521,14 +516,15 @@ def launch_binary(basedir,file_name,demo,board):
             #result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/user/'+file_name+'.hex')
             print "Success!"
-            time.sleep(1.5)
-            print 'Starting serial'
-
 
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"
 
+        print 'sending ready to general channel'
+
+    socketio.emit('General', {'data':'ready'}, namespace='/zumo_backend')
+    print 'Ready send'
     time.sleep(1)
     print "Starting serial"
     startSerial()

@@ -217,13 +217,11 @@ def serialRead():
                 print('Serial data....Reading')
                 while serialArdu.inWaiting() > 0:
                     out += serialArdu.read(1)
-                for line in out.split('\r\n'):
-                    if line != "":
-                        socketio.emit('Serial event',
-                              {'data':line},
-                              namespace='/zumo_backend')
-                        time.sleep(0.1)
-            time.sleep(0.3)
+                    socketio.emit('Serial event',
+                          {'data':out},
+                          namespace='/zumo_backend')
+
+            time.sleep(0.1)
         runSerial = False
         serialArdu.close()
         print "Serial thread finished"

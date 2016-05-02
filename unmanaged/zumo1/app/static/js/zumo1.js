@@ -235,7 +235,7 @@ $(window).load(function(){
 
         //socket.emit('Serial close');
 
-        launch_btn.prop( "disabled", true );
+        //launch_btn.prop( "disabled", true );
 
         if(file_manager.user_file!=null){
             if(file_manager.user_file.active){

@@ -166,13 +166,16 @@ class myThread(threading.Thread):
                 print('Cant open serial...retry on /dev/ttyACM'+str(count))
         time.sleep(2)
         while not self._stopevent.isSet( ):
-            out=""
-            while serialArdu.inWaiting() > 0:
-                out += serialArdu.read(1)
+            try:
+                out=""
+                while serialArdu.inWaiting() > 0:
+                    out += serialArdu.read(1)
 
-            socketio.emit('Serial event',
-                  {'data':out},
-                  namespace='/zumo_backend')
+                socketio.emit('Serial event',
+                      {'data':out},
+                      namespace='/zumo_backend')
+            except:
+                time.sleep(0.2)
 
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)

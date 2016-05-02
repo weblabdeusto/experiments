@@ -200,6 +200,8 @@ $(window).load(function(){
         console.log(msg.data);
         if(msg.data=='ready'){
             console.log('READYYYY');
+            launch_btn.prop( "disabled", false );
+            status_div.html("<p>Ready!!</p>")
         }
         var messages = msg.data.split("\n");
         for (var i= 0;i<=messages.length;i++){

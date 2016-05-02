@@ -413,7 +413,7 @@ def eraseThread():
     time.sleep(1)
     try:
         #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
-        result = os.system('avrdude -c avr910 -p atmega32U4 -P /dev/ttyACM0 -e')
+        result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
         print "Success!"
 
     except subprocess.CalledProcessError, ex:

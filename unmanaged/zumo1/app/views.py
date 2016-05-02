@@ -144,7 +144,7 @@ def error_handler(e):
 
 @socketio.on('disconnect request', namespace='/zumo_backend')
 def disconnect_request():
-
+    global serialThread
     global serialArdu
     stopSerial()
 
@@ -167,6 +167,7 @@ def test_connect():
 @socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():
     global serialArdu
+
     stopSerial()
     serialArdu.close()
     if serialArdu.isOpen():
@@ -367,6 +368,10 @@ def turnOff(button):
 #@login_required
 def erase():
     global loadThread
+    global serialArdu
+
+    serialArdu.close()
+    time.sleep(1)
 
     if loadThread is None:
         loadThread = Thread(target=eraseThread)
@@ -408,7 +413,7 @@ def eraseThread():
     time.sleep(1)
     try:
         #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
-        result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
+        result = os.system('avrdude -c avr910 -p atmega32U4 -P /dev/ttyACM0 -e')
         print "Success!"
 
     except subprocess.CalledProcessError, ex:

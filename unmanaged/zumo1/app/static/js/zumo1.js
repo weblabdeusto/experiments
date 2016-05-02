@@ -200,7 +200,7 @@ $(window).load(function(){
         //console.log(msg.data);
         if(msg.data=='ready'){
             launch_btn.prop( "disabled", false );
-            status_div.html("<p>Ready!!</p>")
+            status_div.html("<p>Ready!!</p>");
         }
         else{
         var messages = msg.data.split("\n");

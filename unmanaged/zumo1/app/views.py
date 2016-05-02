@@ -184,6 +184,9 @@ def serialRead():
 
     runSerial=True
     print 'Serial thread launched'
+    socketio.emit('Serial event',
+      {'data':'ready'},
+      namespace='/zumo_backend')
 
     print("Opening serial")
     count = 0

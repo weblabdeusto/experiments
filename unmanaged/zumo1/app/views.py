@@ -176,8 +176,10 @@ def test_disconnect():
     print('Client disconnected', request.sid)
 
 def serialRead():
+
     global serialArdu
     global runSerial
+    global socketio
 
     runSerial=True
     print 'Serial thread launched'
@@ -197,7 +199,7 @@ def serialRead():
             if serialArdu.isOpen():
                 opened = True
                 print 'serial opened'
-                emit('General',
+                socketio.emit('General',
                      {'data': 'Serial connected'},
                      namespace= '/zumo_backend')
                 time.sleep(1)
@@ -231,6 +233,7 @@ def serialRead():
 
 
 def startSerial():
+
     global serialThread
     global runSerial
 
@@ -256,9 +259,11 @@ def startSerial():
 
 
 def stopSerial():
+
     global serialArdu
     global serialThread
     global runSerial
+
     try:
         if serialThread is None:
             print 'Thread not running...'
@@ -267,6 +272,7 @@ def stopSerial():
             if serialThread.isAlive():
                 print 'serial thread running...stop'
                 runSerial = False
+                print 'Waiting for serial thread finish'
                 serialThread.join()
                 print 'Serial thread stopped'
             else:
@@ -512,6 +518,7 @@ def launch_binary(basedir,file_name,demo,board):
     socketio.emit('General',
       {'data':'ready'},
       namespace='/zumo_backend')
+
     time.sleep(1)
     print "Starting serial"
     startSerial()

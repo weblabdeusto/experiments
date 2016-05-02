@@ -208,6 +208,7 @@ $(window).load(function(){
     });
 
     socket.on('Serial event', function(msg) {
+
         var serialDiv = $('#serial-monitor');
         serialDiv.append('<p>'+msg.data+'</p>');
         serialDiv.scrollTop(serialDiv.children().length*1000)
@@ -254,9 +255,9 @@ $(window).load(function(){
 
     $("#launch-btn").click(function(){
 
-        socket.emit('Serial close');
-        $("#stop-btn").prop( "disabled", true );
-        $("#launch-btn").prop( "disabled", true );
+        //socket.emit('Serial close');
+        //$("#stop-btn").prop( "disabled", true );
+        //$("#launch-btn").prop( "disabled", true );
 
         if(file_manager.user_file!=null){
             if(file_manager.user_file.active){

@@ -184,7 +184,7 @@ def serialRead():
     socketio.emit('General',
     {'data':'ready'},
     namespace='/zumo_backend')
-
+    time.sleep(1)
     runSerial=True
     print 'Serial thread launched'
 

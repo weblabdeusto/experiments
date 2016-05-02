@@ -238,21 +238,21 @@ def startSerial():
     global runSerial
 
     if serialThread is None:
-        print 'Thread not running...launching'
-        serialThread = Thread(target=serialRead)
-        serialThread.daemon = True
-        serialThread.start()
+        print 'Thread not running'
     else:
         if serialThread.isAlive():
             print 'serial thread running...stop'
             runSerial = False
-            serialThread.join()
-            print 'Serial thread STOPPED'
+            print 'Serial thread alive...'
+            while serialThread.isAlive():
+                print 'Waiting for thread'
+                time.sleep(0.2)
+
         else:
             print 'serial thread is not running'
-            serialThread = Thread(target=serialRead)
-            serialThread.daemon = True
-            serialThread.start()
+    serialThread = Thread(target=serialRead)
+    serialThread.daemon = True
+    serialThread.start()
 
 
 
@@ -271,12 +271,10 @@ def stopSerial():
                 print 'serial thread running...stop'
                 runSerial = False
                 print 'Waiting for serial thread finish'
+                while serialThread.isAlive():
+                    print 'waiting for thread'
+                    time.sleep(0.2)
                 #serialThread.join()
-                time.sleep(1)
-                if serialThread == None:
-                    print 'Thread realy stopped'
-                else:
-                    print 'Thread still running'
                 print 'Serial thread stopped'
             else:
                 serialThread = None

@@ -50,11 +50,9 @@ def background_thread():
                             print('Serial data....Reading')
                             while serialArdu.inWaiting() > 0:
                                 out += serialArdu.read(1)
-                            for line in out.split('\r\n'):
-                                if line != "":
-                                    socketio.emit('Serial event',
-                                          {'data':line},
-                                          namespace='/zumo_backend')
+                            socketio.emit('Serial event',
+                                  {'data':out},
+                                  namespace='/zumo_backend')
                         time.sleep(0.2)
                     else:
                         time.sleep(0.5)
@@ -242,7 +240,7 @@ def startSerial():
     if serialThread is None:
         print 'Thread not running...launching'
         serialThread = Thread(target=serialRead)
-        serialThread.daemon = False
+        serialThread.daemon = True
         serialThread.start()
     else:
         if serialThread.isAlive():
@@ -253,7 +251,7 @@ def startSerial():
         else:
             print 'serial thread is not running'
             serialThread = Thread(target=serialRead)
-            serialThread.daemon = False
+            serialThread.daemon = True
             serialThread.start()
 
 

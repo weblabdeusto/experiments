@@ -190,8 +190,10 @@ $(window).load(function(){
         //console.log(msg.data);
         var messages = msg.data.split("\n");
         for (var i= 0;i<=messages.length;i++){
-            serialDiv.append('<p>'+messages[i]+'</p>');
-            serialDiv.scrollTop(serialDiv.children().length*1000)
+            if(messages[i]!=undefined){
+                serialDiv.append('<p>'+messages[i]+'</p>');
+                serialDiv.scrollTop(serialDiv.children().length*1000)
+            }
         }
     });
 

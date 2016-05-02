@@ -108,7 +108,7 @@ def before_request():
 #@check_permission
 @login_required
 def home():
-    global serialThread
+
     global serialArdu
 
     if serialArdu.isOpen():
@@ -145,15 +145,6 @@ def disconnect_request():
     global serialThread
     global serialArdu
     stopSerial()
-
-    #TODO:CLose serial
-    if serialArdu.isOpen():
-        serialArdu.close()
-
-    session['receive_count'] = session.get('receive_count', 0) + 1
-
-    emit('General',
-         {'data': 'Disconnected!'})
     disconnect()
 
 
@@ -167,17 +158,74 @@ def test_disconnect():
     global serialArdu
 
     stopSerial()
-    serialArdu.close()
-    if serialArdu.isOpen():
-        print 'SERIAL NOT CLOSED!!'
 
     print 'user desconected and serial closed'
     print('Client disconnected', request.sid)
 
+
+import threading
+
+class myThread(threading.Thread):
+    def __init__(self, name='TestThread'):
+        """ constructor, setting initial variables """
+        self._stopevent = threading.Event( )
+        threading.Thread.__init__(self, name=name)
+
+    def run(self):
+        global serialArdu
+        global socketio
+
+        """ main control loop """
+        print "%s starts" % (self.getName( ),)
+        print 'Serial thread launched'
+        socketio.emit('Serial event',
+          {'data':'ready'},
+          namespace='/zumo_backend')
+
+        print("Opening serial")
+        opened = False
+        while not opened:
+            try:
+                serialArdu.port='/dev/ttyACM'+str(count)
+                print serialArdu.port
+                serialArdu.baudrate=9600
+                serialArdu.parity="N"
+                serialArdu.bytesize=8
+
+                serialArdu.open()
+                if serialArdu.isOpen():
+                    opened = True
+                    print 'serial opened'
+                else:
+                    print('CANT OPEN RETRY...')
+            except:
+                count=count+1
+                if count == 5:
+                    count = 0
+                print('Cant open serial...retry on /dev/ttyACM'+str(count))
+
+        while not self._stopevent.isSet( ):
+            out=""
+            if serialArdu.inWaiting()>0:
+                print('Serial data....Reading')
+                while serialArdu.inWaiting() > 0:
+                    out += serialArdu.read(1)
+
+                socketio.emit('Serial event',
+                      {'data':out},
+                      namespace='/zumo_backend')
+
+            self._stopevent.wait(0.2)
+        print "%s ends" % (self.getName( ),)
+        serialArdu.close()
+
+    def join(self, timeout=None):
+        """ Stop the thread and wait for it to end. """
+        self._stopevent.set( )
+        threading.Thread.join(self, timeout)
+
 def serialRead():
 
-    global serialArdu
-    global runSerial
     global socketio
 
     runSerial=True
@@ -242,15 +290,11 @@ def startSerial():
     else:
         if serialThread.isAlive():
             print 'serial thread running...stop'
-            runSerial = False
-            print 'Serial thread alive...'
-            while serialThread.isAlive():
-                print 'Waiting for thread'
-                time.sleep(0.2)
-
+            serialThread.join()
+            print 'Serial thread stopped'
         else:
             print 'serial thread is not running'
-    serialThread = Thread(target=serialRead)
+    serialThread = myThread()
     serialThread.daemon = True
     serialThread.start()
 
@@ -269,12 +313,7 @@ def stopSerial():
         else:
             if serialThread.isAlive():
                 print 'serial thread running...stop'
-                runSerial = False
-                print 'Waiting for serial thread finish'
-                while serialThread.isAlive():
-                    print 'waiting for thread'
-                    time.sleep(0.2)
-                #serialThread.join()
+                serialThread.join()
                 print 'Serial thread stopped'
             else:
                 serialThread = None

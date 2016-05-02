@@ -307,6 +307,7 @@ def erase():
     global loadThread
     global serialArdu
 
+    stopSerial()
 
     if loadThread is None:
         loadThread = Thread(target=eraseThread)

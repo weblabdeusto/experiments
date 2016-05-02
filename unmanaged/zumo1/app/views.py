@@ -167,14 +167,12 @@ class myThread(threading.Thread):
         time.sleep(2)
         while not self._stopevent.isSet( ):
             out=""
-            if serialArdu.inWaiting()>0:
-                print('Serial data....Reading')
-                while serialArdu.inWaiting() > 0:
-                    out += serialArdu.read(1)
+            while serialArdu.inWaiting() > 0:
+                out += serialArdu.read(1)
 
-                socketio.emit('Serial event',
-                      {'data':out},
-                      namespace='/zumo_backend')
+            socketio.emit('Serial event',
+                  {'data':out},
+                  namespace='/zumo_backend')
 
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)
@@ -306,8 +304,6 @@ def erase():
     global loadThread
     global serialArdu
 
-    serialArdu.close()
-    time.sleep(1)
 
     if loadThread is None:
         loadThread = Thread(target=eraseThread)
@@ -326,9 +322,6 @@ def erase():
 def eraseThread():
     global serialArdu
 
-    time.sleep(1)
-    if serialArdu.isOpen():
-        serialArdu.close()
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -411,10 +404,6 @@ def launch_binary(basedir,file_name,demo,board):
     print demo
     print file_name
 
-    while serialArdu.isOpen():
-        serialArdu.close()
-        time.sleep(0.1)
-        print "Waiting for serial stop"
     try:
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
@@ -473,12 +462,7 @@ def launch_binary(basedir,file_name,demo,board):
 @zumo.route('/logout')
 @login_required
 def logout():
-    global serialArdu
-    global socketio
-
-    if serialArdu.isOpen():
-        serialArdu.close()
-
+    stopSerial()
     print g.user.nickname +' going out'
     g.user.session_id = ""
     g.user.permission = False

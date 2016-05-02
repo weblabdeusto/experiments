@@ -182,29 +182,29 @@ $(window).load(function(){
         var serialDiv = $('#serial-monitor');
         var status_div = $("#output");
 
-        if(msg.data=="startSerial"){
-            console.log('Serial start request recived');
-            $("#stop-btn").prop( "disabled", false );
-            $("#launch-btn").prop( "disabled", false );
-            setTimeout(function() {
-                console.log("Starting serial");
-                socket.emit('Serial start');
-                },1000);
-
-            status_div.html("<p>Ready</p>");
-
-        }
-        else if(msg.data=="stopSerial"){
-            status_div.html("<p>Loading binary...</p>");
-            $("#stop-btn").prop( "disabled", true );
-            $("#launch-btn").prop( "disabled", true );
-            $("#serial-monitor").html("");
-            socket.emit('Serial close');
-        }
-        else{
-            serialDiv.append('<p>General: ' + msg.data+'</p>');
-            serialDiv.scrollTop(serialDiv.children().length*1000)
-        }
+        //if(msg.data=="startSerial"){
+        //    console.log('Serial start request recived');
+        //    $("#stop-btn").prop( "disabled", false );
+        //    $("#launch-btn").prop( "disabled", false );
+        //    setTimeout(function() {
+        //        console.log("Starting serial");
+        //        socket.emit('Serial start');
+        //        },1000);
+        //
+        //    status_div.html("<p>Ready</p>");
+        //
+        //}
+        //else if(msg.data=="stopSerial"){
+        //    status_div.html("<p>Loading binary...</p>");
+        //    $("#stop-btn").prop( "disabled", true );
+        //    $("#launch-btn").prop( "disabled", true );
+        //    $("#serial-monitor").html("");
+        //    socket.emit('Serial close');
+        //}
+        //else{
+        serialDiv.append('<p>General: ' + msg.data+'</p>');
+        serialDiv.scrollTop(serialDiv.children().length*1000)
+        //}
     });
 
     socket.on('Serial event', function(msg) {
@@ -230,7 +230,15 @@ $(window).load(function(){
 
     $('#send-data').click(function(event) {
         console.log($('#serial-data').val());
-        socket.emit('Serial send', {data: $("#serial-dada").val()});
+        //socket.emit('Serial send', {data: $("#serial-dada").val()});
+        //TODO: Call serial send with ajax
+
+        var callback = function(data) {
+            console.log(data);
+        };
+
+        $.get("/labs/zumoline/sendserial" ,callback);
+
         return false;
     });
 

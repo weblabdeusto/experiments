@@ -21,12 +21,8 @@ from threading import Thread
 
 serialThread = None
 loadThread = None
-
-
-try:
-    serialArdu = serial.Serial()
-except:
-    print 'Zumo is not connected'
+serialArdu = serial.Serial()
+runSerial = False
 
 @zumo.route('/test')
 def test():
@@ -74,7 +70,6 @@ def background_thread():
         run = False
         print 'Something unusual happend.....'
         serialArdu.close()
-
 
 ##################################
 #######------>WEBLAB<-------######
@@ -147,7 +142,7 @@ def home():
 ### --------> SERIAL-SOCKET <---------#######
 #############################################
 
-@socketio.on_error()        # Handles the default namespace
+@socketio.on_error(namespace='/zumo_backend')
 def error_handler(e):
     print "Error... doing nothing"
     pass
@@ -173,39 +168,23 @@ def test_connect():
     print 'Conected to general channel'
     emit('General', {'data': 'Connected'})
 
-
-@socketio.on('Serial send', namespace='/zumo_backend')
-def send_serial_message(message):
-    global serialArdu
-    print message['data']
-
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    try:
-        if serialArdu.isOpen():
-            print 'Sending'
-            serialArdu.write(message['data'].encode())
-    except:
-        print "Error sending data"
-
-
-@socketio.on('Serial start', namespace='/zumo_backend')
-def test_connect():
-    global serialThread
+@socketio.on('disconnect', namespace='/zumo_backend')
+def test_disconnect():
     global serialArdu
 
-    if serialThread is None:
-        print 'Thread not running...launching'
-        serialThread = Thread(target=background_thread)
-        serialThread.daemon = False
-        serialThread.start()
-    else:
-        if serialThread.isAlive():
-            print 'serial thread running'
-        else:
-            print 'serial thread is stoped'
-            serialThread = Thread(target=background_thread)
-            serialThread.daemon = False
-            serialThread.start()
+    serialArdu.close()
+    if serialArdu.isOpen():
+        print 'SERIAL NOT CLOSED!!'
+
+    print 'user desconected and serial closed'
+    print('Client disconnected', request.sid)
+
+def serialRead():
+    global serialArdu
+    global runSerial
+
+    runSerial=True
+    print 'Thread launched'
 
     print("Opening serial")
     count = 0
@@ -225,6 +204,7 @@ def test_connect():
                 emit('General',
                      {'data': 'Serial connected'},
                      namespace= '/zumo_backend')
+                time.sleep(1)
             else:
                 print('CANT OPEN RETRY...')
         except:
@@ -233,28 +213,163 @@ def test_connect():
                 count = 0
             print('Cant open serial...retry on /dev/ttyACM'+str(count))
             time.sleep(0.5)
+    try:
+        while runSerial:
+            out=""
+            if serialArdu.inWaiting()>0:
+                print('Serial data....Reading')
+                while serialArdu.inWaiting() > 0:
+                    out += serialArdu.read(1)
+                for line in out.split('\r\n'):
+                    if line != "":
+                        socketio.emit('Serial event',
+                              {'data':line},
+                              namespace='/zumo_backend')
+            time.sleep(0.2)
+        serialArdu.close()
+        print "Serial thread finish"
+    except:
+        runSerial = False
+        serialArdu.close()
+        print "ERROR ON SERIAL THREAD"
 
-@socketio.on('Serial close', namespace='/zumo_backend')
-def closeSerial():
+
+def startSerial():
+    global serialThread
+    global runSerial
+
+    if serialThread is None:
+        print 'Thread not running...launching'
+        serialThread = Thread(target=serialRead)
+        serialThread.daemon = False
+        serialThread.start()
+    else:
+        if serialThread.isAlive():
+            print 'serial thread running...stop'
+            runSerial = False
+            serialThread.join()
+            print 'Serial thread stopped and relaunching'
+            serialThread = Thread(target=serialRead)
+            serialThread.daemon = False
+            serialThread.start()
+        else:
+            print 'serial thread is stoped'
+            serialThread = Thread(target=background_thread)
+            serialThread.daemon = False
+            serialThread.start()
+
+
+def stopSerial():
+    global serialArdu
+    global serialThread
+    global runSerial
+    try:
+        if serialThread is None:
+            print 'Thread not running...'
+
+        else:
+            if serialThread.isAlive():
+                print 'serial thread running...stop'
+                runSerial = False
+                serialThread.join()
+                print 'Serial thread stopped'
+            else:
+                serialThread = None
+        return True
+    except:
+        print 'Error closing serial'
+        return False
+
+@zumo.route('/sendserial')
+@login_required
+def sendSerial():
+    global serialThread
     global serialArdu
 
-    session['receive_count'] = session.get('receive_count', 0) + 1
+    message = 'Hello'
 
-    serialArdu.close()
-    if not serialArdu.isOpen():
-        print 'Serial closed'
-        emit('General', {'data': 'Serial is closing.'})
+    if serialThread.isAlive():
+        if serialArdu.isOpen():
+            serialArdu.write(message)
+            return jsonify(success=True)
+        else:
+            print 'Thread alive but serial closed...'
+            return jsonify(success=False)
+    else:
+        print 'Serial thread is not running'
+        return jsonify(success=False)
 
-@socketio.on('disconnect', namespace='/zumo_backend')
-def test_disconnect():
-    global serialArdu
+# @socketio.on('Serial send', namespace='/zumo_backend')
+# def send_serial_message(message):
+#     global serialArdu
+#     print message['data']
+#
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     try:
+#         if serialArdu.isOpen():
+#             print 'Sending'
+#             serialArdu.write(message['data'].encode())
+#     except:
+#         print "Error sending data"
+#
+#
+# @socketio.on('Serial start', namespace='/zumo_backend')
+# def test_connect():
+#     global serialThread
+#     global serialArdu
+#
+#     if serialThread is None:
+#         print 'Thread not running...launching'
+#         serialThread = Thread(target=background_thread)
+#         serialThread.daemon = False
+#         serialThread.start()
+#     else:
+#         if serialThread.isAlive():
+#             print 'serial thread running'
+#         else:
+#             print 'serial thread is stoped'
+#             serialThread = Thread(target=background_thread)
+#             serialThread.daemon = False
+#             serialThread.start()
+#
+#     print("Opening serial")
+#     count = 0
+#     opened = False
+#     while not opened:
+#         try:
+#             serialArdu.port='/dev/ttyACM'+str(count)
+#             print serialArdu.port
+#             serialArdu.baudrate=9600
+#             serialArdu.parity="N"
+#             serialArdu.bytesize=8
+#
+#             serialArdu.open()
+#             if serialArdu.isOpen():
+#                 opened = True
+#                 print 'serial opened'
+#                 emit('General',
+#                      {'data': 'Serial connected'},
+#                      namespace= '/zumo_backend')
+#             else:
+#                 print('CANT OPEN RETRY...')
+#         except:
+#             count=count+1
+#             if count == 5:
+#                 count = 0
+#             print('Cant open serial...retry on /dev/ttyACM'+str(count))
+#             time.sleep(0.5)
+#
+# @socketio.on('Serial close', namespace='/zumo_backend')
+# def closeSerial():
+#     global serialArdu
+#
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#
+#     serialArdu.close()
+#     if not serialArdu.isOpen():
+#         print 'Serial closed'
+#         emit('General', {'data': 'Serial is closing.'})
 
-    serialArdu.close()
-    if serialArdu.isOpen():
-        print 'SERIAL NOT CLOSED!!'
-
-    print 'user desconected and serial closed'
-    print('Client disconnected', request.sid)
 
 #############################################
 ##### ----------> BUTTONS <-----------#######
@@ -367,7 +482,10 @@ def eraseThread():
 @login_required
 def load():
     global loadThread
-    global socketio
+
+    print 'Stop serial'
+    stopSerial()
+    print 'Serial stopped'
 
     name = request.form['name']
     demo = request.form['demo']
@@ -408,10 +526,10 @@ def load():
 
 def launch_binary(basedir,file_name,demo,board):
     global serialArdu
-    global socketio
 
     print demo
     print file_name
+
     while serialArdu.isOpen():
         serialArdu.close()
         time.sleep(0.1)
@@ -443,6 +561,8 @@ def launch_binary(basedir,file_name,demo,board):
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             print "Success!"
             time.sleep(1.5)
+            print 'Starting serial'
+
 
         #except subprocess.CalledProcessError, ex:
             # error code <> 0
@@ -456,12 +576,15 @@ def launch_binary(basedir,file_name,demo,board):
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/user/'+file_name+'.hex')
             print "Success!"
             time.sleep(1.5)
+            print 'Starting serial'
+
 
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"
-    print "tell client to start serial"
-    socketio.emit('General', {'data': 'startSerial'},namespace='/zumo_backend')
+    print "Starting serial"
+    startSerial()
+
 
 #############################################
 ### ------------> WEBLAB <------------#######

@@ -199,9 +199,6 @@ def serialRead():
             if serialArdu.isOpen():
                 opened = True
                 print 'serial opened'
-                socketio.emit('General',
-                     {'data': 'Serial connected'},
-                     namespace= '/zumo_backend')
                 time.sleep(1)
             else:
                 print('CANT OPEN RETRY...')

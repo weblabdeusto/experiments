@@ -217,9 +217,9 @@ def serialRead():
                 print('Serial data....Reading')
                 while serialArdu.inWaiting() > 0:
                     out += serialArdu.read(1)
-                    socketio.emit('Serial event',
-                          {'data':out},
-                          namespace='/zumo_backend')
+                socketio.emit('Serial event',
+                      {'data':out},
+                      namespace='/zumo_backend')
 
             time.sleep(0.1)
         runSerial = False

@@ -174,6 +174,7 @@ class myThread(threading.Thread):
     def run(self):
         global serialArdu
         global socketio
+        count = 0
 
         """ main control loop """
         print "%s starts" % (self.getName( ),)

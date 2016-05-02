@@ -198,20 +198,15 @@ $(window).load(function(){
 
     socket.on('Serial event', function(msg) {
         console.log(msg.data);
-        if(msg.data=='ready'){
-            console.log('READY RECIVED')
-            launch_btn.prop( "disabled", false );
-            status_div.html("<p>Ready!!</p>");
-        }
-        else{
-            var messages = msg.data.split("\n");
-            for (var i= 0;i<=messages.length;i++){
-                if(messages[i]!=undefined){
-                    serialDiv.append('<p>'+messages[i]+'</p>');
-                    serialDiv.scrollTop(serialDiv.children().length*1000)
-                }
+
+        var messages = msg.data.split("\n");
+        for (var i= 0;i<=messages.length;i++){
+            if(messages[i]!=undefined){
+                serialDiv.append('<p>'+messages[i]+'</p>');
+                serialDiv.scrollTop(serialDiv.children().length*1000)
             }
         }
+
 
     });
 

@@ -177,10 +177,7 @@ class myThread(threading.Thread):
                 socketio.emit('Serial event',
                       {'data':out},
                       namespace='/zumo_backend')
-            else:
-                socketio.emit('Serial event',
-                      {'data':'serial closed'},
-                      namespace='/zumo_backend')
+
 
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)

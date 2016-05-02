@@ -221,6 +221,7 @@ def serialRead():
                               {'data':line},
                               namespace='/zumo_backend')
             time.sleep(0.2)
+        runSerial = False
         serialArdu.close()
         print "Serial thread finished"
     except:
@@ -273,6 +274,10 @@ def stopSerial():
                 print 'Waiting for serial thread finish'
                 #serialThread.join()
                 time.sleep(1)
+                if serialThread == None:
+                    print 'Thread realy stopped'
+                else:
+                    print 'Thread still running'
                 print 'Serial thread stopped'
             else:
                 serialThread = None

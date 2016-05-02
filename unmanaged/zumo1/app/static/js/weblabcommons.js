@@ -11,8 +11,8 @@ var poll = function() {
             window.location.replace(BACK_URL);
         }
         if(data['ready']){
-            launch_btn.prop( "disabled", false );
-            status_div.html("<p>Ready!!</p>")
+            $("#launch-btn").prop( "disabled", false );
+            $("#output").html("<p>Ready!!</p>")
         }
     };
 

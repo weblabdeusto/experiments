@@ -182,8 +182,6 @@ def serialRead():
     global runSerial
     global socketio
 
-
-    time.sleep(1)
     runSerial=True
     print 'Serial thread launched'
 

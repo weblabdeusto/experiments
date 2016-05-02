@@ -246,7 +246,8 @@ def startSerial():
         if serialThread.isAlive():
             print 'serial thread running...stop'
             runSerial = False
-            serialThread.join()
+            time.sleep(1)
+            #serialThread.join()
             print 'Serial thread stopped and relaunching'
             serialThread = Thread(target=serialRead)
             serialThread.daemon = False
@@ -273,7 +274,8 @@ def stopSerial():
                 print 'serial thread running...stop'
                 runSerial = False
                 print 'Waiting for serial thread finish'
-                serialThread.join()
+                #serialThread.join()
+                time.sleep(1)
                 print 'Serial thread stopped'
             else:
                 serialThread = None

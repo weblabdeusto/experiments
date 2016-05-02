@@ -152,12 +152,12 @@ class myThread(threading.Thread):
                 serialArdu.baudrate=9600
                 serialArdu.parity="N"
                 serialArdu.bytesize=8
+                serialArdu.timeout = 0
 
                 serialArdu.open()
                 if serialArdu.isOpen():
                     opened = True
                     print 'serial opened'
-                    time.sleep(1)
                 else:
                     print('CANT OPEN RETRY...')
             except:
@@ -169,8 +169,10 @@ class myThread(threading.Thread):
         while not self._stopevent.isSet( ):
             if serialArdu.isOpen():
                 out=""
-                while serialArdu.inWaiting() > 0:
+                buffer_len = serialArdu.inWaiting()
+                while buffer_len > 0:
                     out += serialArdu.read(1)
+                    buffer_len=buffer_len-1
 
                 socketio.emit('Serial event',
                       {'data':out},

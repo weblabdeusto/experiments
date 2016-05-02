@@ -187,9 +187,9 @@ $(window).load(function(){
     });
 
     socket.on('Serial event', function(msg) {
-
-        serialDiv.append('<p>'+msg.data+'</p>');
-        serialDiv.scrollTop(serialDiv.children().length*1000)
+        console.log(msg);
+        //serialDiv.append('<p>'+msg.data+'</p>');
+        //serialDiv.scrollTop(serialDiv.children().length*1000)
     });
 
     $("#button_finish").click(function(){

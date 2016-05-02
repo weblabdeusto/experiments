@@ -223,7 +223,7 @@ def serialRead():
                               namespace='/zumo_backend')
             time.sleep(0.2)
         serialArdu.close()
-        print "Serial thread finish"
+        print "Serial thread finished"
     except:
         runSerial = False
         serialArdu.close()
@@ -250,7 +250,7 @@ def startSerial():
             serialThread.start()
         else:
             print 'serial thread is stoped'
-            serialThread = Thread(target=background_thread)
+            serialThread = Thread(target=serialRead)
             serialThread.daemon = False
             serialThread.start()
 

@@ -225,62 +225,6 @@ class myThread(threading.Thread):
         self._stopevent.set( )
         threading.Thread.join(self, timeout)
 
-def serialRead():
-
-    global socketio
-
-    runSerial=True
-    print 'Serial thread launched'
-    socketio.emit('Serial event',
-      {'data':'ready'},
-      namespace='/zumo_backend')
-
-    print("Opening serial")
-    count = 0
-    opened = False
-    while not opened:
-        try:
-            serialArdu.port='/dev/ttyACM'+str(count)
-            print serialArdu.port
-            serialArdu.baudrate=9600
-            serialArdu.parity="N"
-            serialArdu.bytesize=8
-
-            serialArdu.open()
-            if serialArdu.isOpen():
-                opened = True
-                print 'serial opened'
-                time.sleep(0.5)
-            else:
-                print('CANT OPEN RETRY...')
-        except:
-            count=count+1
-            if count == 5:
-                count = 0
-            print('Cant open serial...retry on /dev/ttyACM'+str(count))
-            time.sleep(0.5)
-    try:
-        while runSerial:
-            out=""
-            if serialArdu.inWaiting()>0:
-                print('Serial data....Reading')
-                while serialArdu.inWaiting() > 0:
-                    out += serialArdu.read(1)
-
-                socketio.emit('Serial event',
-                      {'data':out},
-                      namespace='/zumo_backend')
-
-            time.sleep(0.2)
-        runSerial = False
-        serialArdu.close()
-        print "Serial thread finished"
-    except:
-        runSerial = False
-        serialArdu.close()
-        print "ERROR ON SERIAL THREAD"
-
-
 def startSerial():
 
     global serialThread

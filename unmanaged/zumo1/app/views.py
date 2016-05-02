@@ -173,10 +173,10 @@ class myThread(threading.Thread):
                 while buffer_len > 0:
                     out += serialArdu.read(1)
                     buffer_len=buffer_len-1
-
-                socketio.emit('Serial event',
-                      {'data':out},
-                      namespace='/zumo_backend')
+                if out!="":
+                    socketio.emit('Serial event',
+                          {'data':out},
+                          namespace='/zumo_backend')
 
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)

@@ -178,7 +178,6 @@ class myThread(threading.Thread):
                       {'data':out},
                       namespace='/zumo_backend')
 
-
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)
         serialArdu.close()

@@ -201,7 +201,7 @@ def startSerial():
         else:
             print 'serial thread is not running'
     serialThread = myThread()
-    serialThread.setDaemon(False)
+    serialThread.setDaemon(True)
     serialThread.start()
 
 

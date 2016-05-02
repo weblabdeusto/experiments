@@ -124,7 +124,7 @@ function FileManager(){
 
     this.eraseMemory = function(){
 
-        $("#stop-btn").prop( "disabled", true );
+        //$("#stop-btn").prop( "disabled", true );
         $("#launch-btn").prop( "disabled", true );
         var status_div = $("#output");
 
@@ -182,8 +182,16 @@ $(window).load(function(){
 
     socket.on('General', function(msg) {
 
-        serialDiv.append('<p>General: ' + msg.data+'</p>');
-        serialDiv.scrollTop(serialDiv.children().length*1000);
+        if(msg.data=='ready'){
+            launch_btn.prop( "disabled", false );
+            status_div.html("<p>Ready!!</p>")
+        }
+        else{
+            serialDiv.append('<p>General: ' + msg.data+'</p>');
+            serialDiv.scrollTop(serialDiv.children().length*1000);
+        }
+
+
     });
 
     socket.on('Serial event', function(msg) {
@@ -240,7 +248,7 @@ $(window).load(function(){
 
         //socket.emit('Serial close');
 
-        //launch_btn.prop( "disabled", true );
+        launch_btn.prop( "disabled", true );
 
         if(file_manager.user_file!=null){
             if(file_manager.user_file.active){

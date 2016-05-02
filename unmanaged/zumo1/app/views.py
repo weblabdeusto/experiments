@@ -182,6 +182,10 @@ def serialRead():
     global runSerial
     global socketio
 
+    socketio.emit('General',
+          {'data':'ready'},
+          namespace='/zumo_backend')
+
     time.sleep(1)
     runSerial=True
     print 'Serial thread launched'
@@ -217,13 +221,12 @@ def serialRead():
                 print('Serial data....Reading')
                 while serialArdu.inWaiting() > 0:
                     out += serialArdu.read(1)
-                print out
 
                 socketio.emit('Serial event',
                       {'data':out},
                       namespace='/zumo_backend')
 
-            time.sleep(0.1)
+            time.sleep(0.2)
         runSerial = False
         serialArdu.close()
         print "Serial thread finished"

@@ -204,7 +204,6 @@ def startSerial():
         else:
             print 'serial thread is not running'
     serialThread = myThread()
-    serialThread.daemon = True
     serialThread.start()
 
 
@@ -313,7 +312,6 @@ def erase():
 
     if loadThread is None:
         loadThread = Thread(target=eraseThread)
-        loadThread.daemon = False
         loadThread.start()
     else:
         if loadThread.isAlive():

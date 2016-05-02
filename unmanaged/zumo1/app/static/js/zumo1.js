@@ -188,8 +188,11 @@ $(window).load(function(){
 
     socket.on('Serial event', function(msg) {
         //console.log(msg.data);
-        serialDiv.append('<p>'+msg.data+'</p>');
-        serialDiv.scrollTop(serialDiv.children().length*1000)
+        var messages = msg.data.split("\n");
+        for (var i= 0;i<=messages.length;i++){
+            serialDiv.append('<p>'+messages[i]+'</p>');
+            serialDiv.scrollTop(serialDiv.children().length*1000)
+        }
     });
 
     $("#button_finish").click(function(){

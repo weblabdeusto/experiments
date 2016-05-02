@@ -25,7 +25,7 @@ $(document).ready(function(){
     $("#button_finish").click(function(){
 
         var callback = function(data) {
-            console.log(data[ready]);
+            console.log(data);
             window.location.replace(BACK_URL);
         };
 

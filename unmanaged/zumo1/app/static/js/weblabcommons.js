@@ -10,6 +10,10 @@ var poll = function() {
             console.log('Not authenticated');
             window.location.replace(BACK_URL);
         }
+        if(data['ready']){
+            launch_btn.prop( "disabled", false );
+            status_div.html("<p>Ready!!</p>")
+        }
     };
 
     $.ajax({url:"/labs/zumoline/poll",
@@ -25,7 +29,7 @@ $(document).ready(function(){
     $("#button_finish").click(function(){
 
         var callback = function(data) {
-            console.log(data['ready']);
+
             window.location.replace(BACK_URL);
         };
 

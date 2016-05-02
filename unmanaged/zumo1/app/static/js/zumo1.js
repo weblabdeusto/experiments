@@ -182,18 +182,13 @@ $(window).load(function(){
         var serialDiv = $('#serial-monitor');
         var status_div = $("#output");
 
-        //if(msg.data=="startSerial"){
-        //    console.log('Serial start request recived');
-        //    $("#stop-btn").prop( "disabled", false );
-        //    $("#launch-btn").prop( "disabled", false );
-        //    setTimeout(function() {
-        //        console.log("Starting serial");
-        //        socket.emit('Serial start');
-        //        },1000);
-        //
-        //    status_div.html("<p>Ready</p>");
-        //
-        //}
+        if(msg.data=="ready"){
+            console.log('Serial start request recived');
+            $("#stop-btn").prop( "disabled", false );
+            $("#launch-btn").prop( "disabled", false );
+            status_div.html("<p>Ready</p>");
+
+        }
         //else if(msg.data=="stopSerial"){
         //    status_div.html("<p>Loading binary...</p>");
         //    $("#stop-btn").prop( "disabled", true );
@@ -201,10 +196,10 @@ $(window).load(function(){
         //    $("#serial-monitor").html("");
         //    socket.emit('Serial close');
         //}
-        //else{
-        serialDiv.append('<p>General: ' + msg.data+'</p>');
-        serialDiv.scrollTop(serialDiv.children().length*1000)
-        //}
+        else{
+            serialDiv.append('<p>General: ' + msg.data+'</p>');
+            serialDiv.scrollTop(serialDiv.children().length*1000);
+        }
     });
 
     socket.on('Serial event', function(msg) {
@@ -256,8 +251,8 @@ $(window).load(function(){
     $("#launch-btn").click(function(){
 
         //socket.emit('Serial close');
-        //$("#stop-btn").prop( "disabled", true );
-        //$("#launch-btn").prop( "disabled", true );
+        $("#stop-btn").prop( "disabled", true );
+        $("#launch-btn").prop( "disabled", true );
 
         if(file_manager.user_file!=null){
             if(file_manager.user_file.active){

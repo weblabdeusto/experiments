@@ -295,77 +295,6 @@ def sendSerial():
         print 'Serial thread is not running'
         return jsonify(success=False)
 
-# @socketio.on('Serial send', namespace='/zumo_backend')
-# def send_serial_message(message):
-#     global serialArdu
-#     print message['data']
-#
-#     session['receive_count'] = session.get('receive_count', 0) + 1
-#     try:
-#         if serialArdu.isOpen():
-#             print 'Sending'
-#             serialArdu.write(message['data'].encode())
-#     except:
-#         print "Error sending data"
-#
-#
-# @socketio.on('Serial start', namespace='/zumo_backend')
-# def test_connect():
-#     global serialThread
-#     global serialArdu
-#
-#     if serialThread is None:
-#         print 'Thread not running...launching'
-#         serialThread = Thread(target=background_thread)
-#         serialThread.daemon = False
-#         serialThread.start()
-#     else:
-#         if serialThread.isAlive():
-#             print 'serial thread running'
-#         else:
-#             print 'serial thread is stoped'
-#             serialThread = Thread(target=background_thread)
-#             serialThread.daemon = False
-#             serialThread.start()
-#
-#     print("Opening serial")
-#     count = 0
-#     opened = False
-#     while not opened:
-#         try:
-#             serialArdu.port='/dev/ttyACM'+str(count)
-#             print serialArdu.port
-#             serialArdu.baudrate=9600
-#             serialArdu.parity="N"
-#             serialArdu.bytesize=8
-#
-#             serialArdu.open()
-#             if serialArdu.isOpen():
-#                 opened = True
-#                 print 'serial opened'
-#                 emit('General',
-#                      {'data': 'Serial connected'},
-#                      namespace= '/zumo_backend')
-#             else:
-#                 print('CANT OPEN RETRY...')
-#         except:
-#             count=count+1
-#             if count == 5:
-#                 count = 0
-#             print('Cant open serial...retry on /dev/ttyACM'+str(count))
-#             time.sleep(0.5)
-#
-# @socketio.on('Serial close', namespace='/zumo_backend')
-# def closeSerial():
-#     global serialArdu
-#
-#     session['receive_count'] = session.get('receive_count', 0) + 1
-#
-#     serialArdu.close()
-#     if not serialArdu.isOpen():
-#         print 'Serial closed'
-#         emit('General', {'data': 'Serial is closing.'})
-
 
 #############################################
 ##### ----------> BUTTONS <-----------#######
@@ -522,6 +451,7 @@ def load():
 
 def launch_binary(basedir,file_name,demo,board):
     global serialArdu
+    global socketio
 
     print demo
     print file_name
@@ -578,6 +508,11 @@ def launch_binary(basedir,file_name,demo,board):
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"
+
+    socketio.emit('General',
+      {'data':'ready'},
+      namespace='/zumo_backend')
+    time.sleep(1)
     print "Starting serial"
     startSerial()
 

@@ -222,7 +222,8 @@ def serialRead():
                         socketio.emit('Serial event',
                               {'data':line},
                               namespace='/zumo_backend')
-            time.sleep(0.2)
+                        time.sleep(0.1)
+            time.sleep(0.3)
         runSerial = False
         serialArdu.close()
         print "Serial thread finished"

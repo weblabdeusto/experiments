@@ -169,6 +169,9 @@ $(window).load(function(){
 
     file_manager = new FileManager();
     file_manager.init();
+    var serialDiv = $('#serial-monitor');
+    var status_div = $("#output");
+    var launch_btn = $("#launch-btn");
 
     //SOCKET MANAGEMENT
     namespace = '/zumo_backend'; // change to an empty string to use the global namespace
@@ -176,38 +179,15 @@ $(window).load(function(){
     // the socket.io documentation recommends sending an explicit package upon connection
     // this is specially important when using the global namespace
     var socket = io.connect('http://' + document.domain + ':' + location.port + namespace,{path: "/labs/zumoline/socket.io"});
-    console.log(socket);
 
     socket.on('General', function(msg) {
-        var serialDiv = $('#serial-monitor');
-        var status_div = $("#output");
 
-        if(msg.data=="ready"){
-            console.log('Serial start request recived');
-            $("#stop-btn").prop( "disabled", false );
-            $("#launch-btn").prop( "disabled", false );
-            status_div.html("<p>Ready</p>");
-
-        }
-        //else if(msg.data=="stopSerial"){
-        //    status_div.html("<p>Loading binary...</p>");
-        //    $("#stop-btn").prop( "disabled", true );
-        //    $("#launch-btn").prop( "disabled", true );
-        //    $("#serial-monitor").html("");
-        //    socket.emit('Serial close');
-        //}
-        else{
-            serialDiv.append('<p>General: ' + msg.data+'</p>');
-            serialDiv.scrollTop(serialDiv.children().length*1000);
-        }
+        serialDiv.append('<p>General: ' + msg.data+'</p>');
+        serialDiv.scrollTop(serialDiv.children().length*1000);
     });
 
     socket.on('Serial event', function(msg) {
 
-        $("#stop-btn").prop( "disabled", false );
-        $("#launch-btn").prop( "disabled", false );
-        $("#output").html("<p>Ready</p>");
-        var serialDiv = $('#serial-monitor');
         serialDiv.append('<p>'+msg.data+'</p>');
         serialDiv.scrollTop(serialDiv.children().length*1000)
     });
@@ -251,11 +231,11 @@ $(window).load(function(){
         return false;
     });
 
-    $("#launch-btn").click(function(){
+    launch_btn.click(function(){
 
         //socket.emit('Serial close');
-        $("#stop-btn").prop( "disabled", true );
-        $("#launch-btn").prop( "disabled", true );
+
+        launch_btn.prop( "disabled", true );
 
         if(file_manager.user_file!=null){
             if(file_manager.user_file.active){

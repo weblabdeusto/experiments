@@ -28,46 +28,6 @@ runSerial = False
 def test():
     return 'SUCCESS!!'
 
-##################################
-#####------->BACK<----------######
-##################################
-def background_thread():
-
-    """Example of how to send server generated events to clients."""
-    global serialArdu
-    count = 0
-    run=True
-    print 'Thread launched'
-    try:
-        while run:
-            if serialArdu!=None:
-                try:
-                    #print 'trying...'
-                    if serialArdu.isOpen():
-                        #print 'Serial waiting for data'
-                        out=""
-                        if serialArdu.inWaiting()>0:
-                            print('Serial data....Reading')
-                            while serialArdu.inWaiting() > 0:
-                                out += serialArdu.read(1)
-                            socketio.emit('Serial event',
-                                  {'data':out},
-                                  namespace='/zumo_backend')
-                        time.sleep(0.2)
-                    else:
-                        time.sleep(0.5)
-                except:
-                    serialArdu.close()
-                    print 'Port changed...Wait...'
-                    time.sleep(0.5)
-
-            else:
-                print 'Waiting for init serial'
-                time.sleep(0.5)
-    except:
-        run = False
-        print 'Something unusual happend.....'
-        serialArdu.close()
 
 ##################################
 #######------>WEBLAB<-------######
@@ -204,7 +164,7 @@ class myThread(threading.Thread):
                 if count == 5:
                     count = 0
                 print('Cant open serial...retry on /dev/ttyACM'+str(count))
-
+        time.sleep(2)
         while not self._stopevent.isSet( ):
             out=""
             if serialArdu.inWaiting()>0:

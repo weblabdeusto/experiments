@@ -206,7 +206,7 @@ $(window).load(function(){
 
         $("#stop-btn").prop( "disabled", false );
         $("#launch-btn").prop( "disabled", false );
-        status_div.html("<p>Ready</p>");
+        $("#output").html("<p>Ready</p>");
         var serialDiv = $('#serial-monitor');
         serialDiv.append('<p>'+msg.data+'</p>');
         serialDiv.scrollTop(serialDiv.children().length*1000)

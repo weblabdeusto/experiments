@@ -181,6 +181,10 @@ def serialRead():
     global runSerial
     global socketio
 
+    socketio.emit('General',
+    {'data':'ready'},
+    namespace='/zumo_backend')
+
     runSerial=True
     print 'Serial thread launched'
 
@@ -518,10 +522,6 @@ def launch_binary(basedir,file_name,demo,board):
         except subprocess.CalledProcessError, ex:
             # error code <> 0
             print "Error loading file"
-
-    socketio.emit('General',
-      {'data':'ready'},
-      namespace='/zumo_backend')
 
     time.sleep(1)
     print "Starting serial"

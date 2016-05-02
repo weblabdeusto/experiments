@@ -157,6 +157,7 @@ class myThread(threading.Thread):
                 if serialArdu.isOpen():
                     opened = True
                     print 'serial opened'
+                    time.sleep(1)
                 else:
                     print('CANT OPEN RETRY...')
             except:
@@ -164,9 +165,9 @@ class myThread(threading.Thread):
                 if count == 5:
                     count = 0
                 print('Cant open serial...retry on /dev/ttyACM'+str(count))
-        time.sleep(2)
+
         while not self._stopevent.isSet( ):
-            try:
+            if serialArdu.isOpen():
                 out=""
                 while serialArdu.inWaiting() > 0:
                     out += serialArdu.read(1)
@@ -174,8 +175,10 @@ class myThread(threading.Thread):
                 socketio.emit('Serial event',
                       {'data':out},
                       namespace='/zumo_backend')
-            except:
-                time.sleep(0.2)
+            else:
+                socketio.emit('Serial event',
+                      {'data':'serial closed'},
+                      namespace='/zumo_backend')
 
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)

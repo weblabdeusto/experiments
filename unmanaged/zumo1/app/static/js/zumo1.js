@@ -201,7 +201,7 @@ $(window).load(function(){
         if(msg.data=='ready'){
             console.log('READY RECIVED')
             launch_btn.prop( "disabled", false );
-            status_div.html("<p>Ready!!</p>")
+            status_div.html("<p>Ready!!</p>");
         }
         else{
         var messages = msg.data.split("\n");

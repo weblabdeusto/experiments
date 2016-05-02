@@ -181,8 +181,8 @@ def serialRead():
     global serialArdu
     global runSerial
     global socketio
-
-    socketio.emit('Serial event', {'data':'ready'}, namespace='/zumo_backend')
+    for i in range(0,2):
+        socketio.emit('Serial event', {'data':'ready'}, namespace='/zumo_backend')
     print 'Ready send'
     time.sleep(0.5)
     runSerial=True

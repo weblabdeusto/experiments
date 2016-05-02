@@ -204,7 +204,7 @@ $(window).load(function(){
             status_div.html("<p>Ready!!</p>");
         }
         else{
-        var messages = msg.data.split("\n");
+            var messages = msg.data.split("\n");
             for (var i= 0;i<=messages.length;i++){
                 if(messages[i]!=undefined){
                     serialDiv.append('<p>'+messages[i]+'</p>');

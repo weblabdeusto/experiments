@@ -181,10 +181,7 @@ def serialRead():
     global serialArdu
     global runSerial
     global socketio
-    for i in range(0,2):
-        socketio.emit('Serial event', {'data':'ready'}, namespace='/zumo_backend')
-    print 'Ready send'
-    time.sleep(0.5)
+
     runSerial=True
     print 'Serial thread launched'
 
@@ -203,7 +200,7 @@ def serialRead():
             if serialArdu.isOpen():
                 opened = True
                 print 'serial opened'
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 print('CANT OPEN RETRY...')
         except:
@@ -249,7 +246,7 @@ def startSerial():
             print 'serial thread running...stop'
             runSerial = False
             time.sleep(1)
-            #serialThread.join()
+            serialThread.join()
             print 'Serial thread stopped and relaunching'
             serialThread = Thread(target=serialRead)
             serialThread.daemon = False

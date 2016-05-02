@@ -184,7 +184,6 @@ $(window).load(function(){
 
         console.log('recived: '+msg.data);
         if(msg.data=='ready'){
-
             launch_btn.prop( "disabled", false );
             status_div.html("<p>Ready!!</p>")
         }

@@ -499,9 +499,8 @@ def launch_binary(basedir,file_name,demo,board):
             # error code <> 0
             print "Error loading file"
 
-        print 'sending ready to general channel'
 
-    time.sleep(2)
+    time.sleep(0.5)
     print "Starting serial"
     startSerial()
 
@@ -536,13 +535,23 @@ def logout():
 @check_permission
 @login_required
 def poll():
+    global serialThread
+
     g.user.last_poll = datetime.now()
     db.session.add(g.user)
     db.session.commit()
     print 'polled'
+    if serialThread is None:
+        ready = True
+    elif serialThread.isAlive():
+        ready = True
+    else:
+        ready = False
+
+
     # In JavaScript, use setTimeout() to call this method every 5 seconds or whatever
     # Save in User or Redis or whatever that the user has just polled
-    return jsonify(error=False,auth=True)
+    return jsonify(error=False,auth=True,ready=ready)
 
 
 

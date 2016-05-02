@@ -197,8 +197,9 @@ $(window).load(function(){
     });
 
     socket.on('Serial event', function(msg) {
-        //console.log(msg.data);
+        console.log(msg.data);
         if(msg.data=='ready'){
+            console.log('READY RECIVED')
             launch_btn.prop( "disabled", false );
             status_div.html("<p>Ready!!</p>")
         }

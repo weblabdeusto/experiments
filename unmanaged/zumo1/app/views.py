@@ -152,7 +152,6 @@ class myThread(threading.Thread):
                 serialArdu.baudrate=9600
                 serialArdu.parity="N"
                 serialArdu.bytesize=8
-                serialArdu.timeout = 0
 
                 serialArdu.open()
                 if serialArdu.isOpen():
@@ -202,7 +201,9 @@ def startSerial():
         else:
             print 'serial thread is not running'
     serialThread = myThread()
+    serialThread.setDaemon(False)
     serialThread.start()
+
 
 
 

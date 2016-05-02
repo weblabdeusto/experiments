@@ -173,6 +173,7 @@ class myThread(threading.Thread):
                     out += serialArdu.read(1)
                     buffer_len=buffer_len-1
                 if out!="":
+                    print "Sending data"
                     socketio.emit('Serial event',
                           {'data':out},
                           namespace='/zumo_backend')
@@ -203,8 +204,6 @@ def startSerial():
     serialThread = myThread()
     serialThread.setDaemon(True)
     serialThread.start()
-
-
 
 
 def stopSerial():

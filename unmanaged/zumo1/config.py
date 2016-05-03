@@ -14,8 +14,8 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 #Ardulab config
-ideIP = "weblab.deusto.es/labs/ardulab"
-blocklyIP = "weblab.deusto.es/labs/ardublocks"
+ideIP = "192.168.0.2/labs/ardulab"
+blocklyIP = "192.168.0.2/labs/ardublocks"
 
 #Weblab
 LOGIN_URL = ""

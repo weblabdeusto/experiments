@@ -69,6 +69,36 @@ def before_request():
 @login_required
 def home():
 
+    #Check if users has his code on the IDE
+    try:
+        print "doing request to "+ ideIP
+        resp = requests.get('http://'+ ideIP +'/binary/'+g.user.nickname,timeout=4)
+        print resp.content
+        data= json.loads(resp.content)
+        g.user.ide_folder_id =  data["folder"]
+        g.user.ide_sketch = data["sketch"]
+
+    except:
+        print "Error doing request"
+        g.user.ide_folder_id = "None"
+        g.user.ide_sketch = "None"
+
+    #Check if users has his code on the IDE
+    try:
+        print "doing request to "+ blocklyIP
+        resp = requests.get('http://'+ blocklyIP +'/binary/'+g.user.nickname,timeout=4)
+        print resp.content
+        data = json.loads(resp.content)
+        g.user.blockly_folder_id =  data["folder"]
+        g.user.blockly_sketch = data["sketch"]
+
+    except:
+        print "Error doing request"
+        g.user.blockly_folder_id = "None"
+        g.user.blockly_sketch = "None"
+
+    db.session.add(g.user)
+    db.session.commit()
     if g.user.max_date > datetime.now():
         time = (g.user.max_date - datetime.now()).seconds
     else:
@@ -546,33 +576,11 @@ def start_experiment():
     session_id = str(random.randint(0, 10e8)) # Not especially secure 0:-)
     user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
 
-    #Check if users has his code on the IDE
-    try:
-        print "doing request to "+ ideIP
-        resp = requests.get('http://'+ ideIP +'/binary/'+server_initial_data['request.username'],timeout=4)
-        print resp.content
-        data= json.loads(resp.content)
-        ide_folder_id =  data["folder"]
-        ide_sketch = data["sketch"]
 
-    except:
-        print "Error doing request"
-        ide_folder_id = "None"
-        ide_sketch = "None"
-
-    #Check if users has his code on the IDE
-    try:
-        print "doing request to "+ blocklyIP
-        resp = requests.get('http://'+ blocklyIP +'/binary/'+server_initial_data['request.username'],timeout=4)
-        print resp.content
-        data = json.loads(resp.content)
-        blockly_folder_id =  data["folder"]
-        blockly_sketch = data["sketch"]
-
-    except:
-        print "Error doing request"
-        blockly_folder_id = "None"
-        blockly_sketch = "None"
+    ide_folder_id = "None"
+    ide_sketch = "None"
+    blockly_folder_id = "None"
+    blockly_sketch = "None"
 
     if user is None:
         user = User(nickname=server_initial_data['request.username'], max_date=max_date, last_poll= datetime.now(),

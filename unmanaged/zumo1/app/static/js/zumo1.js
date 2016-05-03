@@ -182,7 +182,7 @@ $(document).ready(function(){
 
             // the socket.io documentation recommends sending an explicit package upon connection
             // this is specially important when using the global namespace   + ':' + location.port + namespace
-            window.socket = io.connect('http://weblab.deusto.es',
+            window.socket = io.connect('http://130.206.138.16',
                 {path: "/labs/zumoline/socket.io", 'multiplex': false})
                 .on('connect', function () {
                     console.log('connecteeed');

@@ -505,17 +505,10 @@ def poll():
     db.session.add(g.user)
     db.session.commit()
     print 'polled'
-    if serialThread is None:
-        ready = True
-    elif serialThread.isAlive():
-        ready = True
-    else:
-        ready = False
-
 
     # In JavaScript, use setTimeout() to call this method every 5 seconds or whatever
     # Save in User or Redis or whatever that the user has just polled
-    return jsonify(error=False,auth=True,ready=ready)
+    return jsonify(error=False,auth=True)
 
 
 

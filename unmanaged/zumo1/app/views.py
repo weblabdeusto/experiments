@@ -116,7 +116,7 @@ def test_connect():
 @socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():
     global serialArdu
-
+    stopSerial()
 
     print 'user desconected and serial closed'
     print('Client disconnected', request.sid)
@@ -465,7 +465,7 @@ def launch_binary(basedir,file_name,demo,board):
 @zumo.route('/logout')
 @login_required
 def logout():
-    stopSerial()
+
     print g.user.nickname +' going out'
     g.user.session_id = ""
     g.user.permission = False

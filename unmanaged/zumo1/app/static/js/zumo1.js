@@ -180,8 +180,12 @@ $(document).ready(function(){
 
         // the socket.io documentation recommends sending an explicit package upon connection
         // this is specially important when using the global namespace   + ':' + location.port + namespace
-        window.socket = io.connect('http://' + document.domain,
-            {path: "/labs/zumoline/socket.io", 'force new connection': true});
+        window.socket = io.connect('http://weblab.deusto.es',
+            {path: "/labs/zumoline/socket.io", 'multiplex': false})
+            .on('connect',function(){
+               console.log('connecteeed');
+            });
+
 
     } catch (ex) {
         console.log("Captured exception");
@@ -199,10 +203,6 @@ $(document).ready(function(){
             serialDiv.append('<p>General: ' + msg.data+'</p>');
             serialDiv.scrollTop(serialDiv.children().length*1000);
         }
-    });
-
-    socket.on('connect',function(){
-       console.log('connecteeed');
     });
 
     socket.on('reconnect',function(){

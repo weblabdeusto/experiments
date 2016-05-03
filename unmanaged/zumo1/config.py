@@ -19,4 +19,4 @@ blocklyIP = "192.168.0.2/labs/ardublocks"
 
 #Weblab
 LOGIN_URL = ""
-DEBUG = True
+

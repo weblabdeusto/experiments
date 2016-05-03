@@ -5,7 +5,7 @@ from flask_socketio import  emit, join_room, leave_room, \
     close_room, disconnect
 
 from datetime import datetime, timedelta
-from app import app, db, lm, socketio,zumo
+from app import app, db, lm, socketio, zumo, file_handler
 from config import basedir, ideIP, blocklyIP
 from .models import User
 from functools import wraps
@@ -107,7 +107,7 @@ def home():
     demo_files=[]
     for demo in demo_files2:
         demo_files.append(demo.split(".")[0])
-
+    app.logger.info(g.user.nickname +'starting experiment')
     return render_template('index.html',
                            title='Home',
                            user=g.user,

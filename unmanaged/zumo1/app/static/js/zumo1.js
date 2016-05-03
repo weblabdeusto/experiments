@@ -192,12 +192,14 @@ $(document).ready(function(){
             serialDiv.append('<p>General: ' + msg.data+'</p>');
             serialDiv.scrollTop(serialDiv.children().length*1000);
         }
-
-
     });
 
     socket.on('connect',function(){
        console.log('connecteeed');
+    });
+
+    socket.on('reconnect',function(){
+       console.log('reconnecteeeeed');
     });
 
     socket.on('connect_failed',function(){

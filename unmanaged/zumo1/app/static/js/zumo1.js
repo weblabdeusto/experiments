@@ -176,105 +176,109 @@ $(document).ready(function(){
     //SOCKET MANAGEMENT
     namespace = ''; // change to an empty string to use the global namespace
 
-    try {
+    setTimeout(function() {
 
-        // the socket.io documentation recommends sending an explicit package upon connection
-        // this is specially important when using the global namespace   + ':' + location.port + namespace
-        window.socket = io.connect('http://weblab.deusto.es',
-            {path: "/labs/zumoline/socket.io", 'multiplex': false})
-            .on('connect',function(){
-               console.log('connecteeed');
-            });
+        try {
+
+            // the socket.io documentation recommends sending an explicit package upon connection
+            // this is specially important when using the global namespace   + ':' + location.port + namespace
+            window.socket = io.connect('http://weblab.deusto.es',
+                {path: "/labs/zumoline/socket.io", 'multiplex': false})
+                .on('connect', function () {
+                    console.log('connecteeed');
+                });
 
 
-    } catch (ex) {
-        console.log("Captured exception");
-        console.log(ex);
-    }
-
-    socket.on('General', function(msg) {
-
-        console.log('recived: '+msg.data);
-        if(msg.data=='ready'){
-            launch_btn.prop( "disabled", false );
-            status_div.html("<p>Ready!!</p>")
+        } catch (ex) {
+            console.log("Captured exception");
+            console.log(ex);
         }
-        else{
-            serialDiv.append('<p>General: ' + msg.data+'</p>');
-            serialDiv.scrollTop(serialDiv.children().length*1000);
-        }
-    });
 
-    socket.on('reconnect',function(){
-       console.log('reconnecteeeeed');
-    });
+        socket.on('General', function (msg) {
 
-    socket.on('connect_failed',function(){
-       console.log('connection failed');
-    });
-
-    socket.on('connect_error',function(){
-       console.log('connection error');
-    });
-
-    socket.on('error',function(){
-       console.log('ERRORRRRRR');
-    });
-
-    socket.on('Serial event', function(msg) {
-        console.log(msg.data);
-        if(msg.data=='ready'){
-            console.log('READYYYY');
-            launch_btn.prop( "disabled", false );
-            status_div.html("<p>Ready!!</p>")
-        }
-        var messages = msg.data.split("\n");
-        for (var i= 0;i<=messages.length;i++){
-            if(messages[i]!=undefined){
-                serialDiv.append('<p>'+messages[i]+'</p>');
-                serialDiv.scrollTop(serialDiv.children().length*1000)
+            console.log('recived: ' + msg.data);
+            if (msg.data == 'ready') {
+                launch_btn.prop("disabled", false);
+                status_div.html("<p>Ready!!</p>")
             }
-        }
-    });
-
-    $("#button_finish").click(function(){
-
-        socket.emit('disconnect request');
-        var callback = function(data) {
-            window.location.replace(BACK_URL);
-        };
-
-        $.ajax({
-            url:"/labs/zumoline/logout",
-            datatype: "json",
-            success: callback
+            else {
+                serialDiv.append('<p>General: ' + msg.data + '</p>');
+                serialDiv.scrollTop(serialDiv.children().length * 1000);
+            }
         });
 
-    });
+        socket.on('reconnect', function () {
+            console.log('reconnecteeeeed');
+        });
 
-    $('#send-data').click(function(event) {
-        console.log($('#serial-data').val());
-        //socket.emit('Serial send', {data: $("#serial-dada").val()});
-        //TODO: Call serial send with ajax
+        socket.on('connect_failed', function () {
+            console.log('connection failed');
+        });
 
-        var callback = function(data) {
-            console.log(data);
-        };
+        socket.on('connect_error', function () {
+            console.log('connection error');
+        });
 
-        $.get("/labs/zumoline/sendserial" ,callback);
+        socket.on('error', function () {
+            console.log('ERRORRRRRR');
+        });
 
-        return false;
-    });
+        socket.on('Serial event', function (msg) {
+            console.log(msg.data);
+            if (msg.data == 'ready') {
+                console.log('READYYYY');
+                launch_btn.prop("disabled", false);
+                status_div.html("<p>Ready!!</p>")
+            }
+            var messages = msg.data.split("\n");
+            for (var i = 0; i <= messages.length; i++) {
+                if (messages[i] != undefined) {
+                    serialDiv.append('<p>' + messages[i] + '</p>');
+                    serialDiv.scrollTop(serialDiv.children().length * 1000)
+                }
+            }
+        });
 
-    $('#start-serial').click(function(event) {
-        socket.emit('Serial start');
-        return false;
-    });
+        $("#button_finish").click(function () {
 
-    $('#close-serial').click(function(event) {
-        socket.emit('Serial close');
-        return false;
-    });
+            socket.emit('disconnect request');
+            var callback = function (data) {
+                window.location.replace(BACK_URL);
+            };
+
+            $.ajax({
+                url: "/labs/zumoline/logout",
+                datatype: "json",
+                success: callback
+            });
+
+        });
+
+        $('#send-data').click(function (event) {
+            console.log($('#serial-data').val());
+            //socket.emit('Serial send', {data: $("#serial-dada").val()});
+            //TODO: Call serial send with ajax
+
+            var callback = function (data) {
+                console.log(data);
+            };
+
+            $.get("/labs/zumoline/sendserial", callback);
+
+            return false;
+        });
+
+        $('#start-serial').click(function (event) {
+            socket.emit('Serial start');
+            return false;
+        });
+
+        $('#close-serial').click(function (event) {
+            socket.emit('Serial close');
+            return false;
+        });
+
+    }, 2000);
 
     launch_btn.click(function(){
 

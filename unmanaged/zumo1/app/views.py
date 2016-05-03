@@ -119,18 +119,18 @@ def home():
 #############################################
 
 
-@socketio.on('disconnect request', namespace='/zumo_backend')
+@socketio.on('disconnect request')
 def disconnect_request():
 
     disconnect()
 
 
-@socketio.on('connect', namespace='/zumo_backend')
+@socketio.on('connect')
 def test_connect():
     print 'Conected to general channel'
-    emit('General', {'data': 'Connected'},broadcast=True)
+    socketio.emit('General', {'data': 'Connected'},broadcast=True)
 
-@socketio.on('disconnect', namespace='/zumo_backend')
+@socketio.on('disconnect')
 def test_disconnect():
 
     print 'user desconected'
@@ -155,8 +155,7 @@ class myThread(threading.Thread):
         print 'Serial thread launched'
         socketio.emit('Serial event',
           {'data':'ready'},
-          broadcast=True,
-          namespace='/zumo_backend')
+          broadcast=True)
 
         print("Opening serial")
         opened = False
@@ -191,8 +190,7 @@ class myThread(threading.Thread):
                     print "Sending serial data to client"
                     socketio.emit('Serial event',
                           {'data':out},
-                          broadcast=True,
-                          namespace='/zumo_backend')
+                          broadcast=True)
 
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)
@@ -419,7 +417,6 @@ def load():
 
 def launch_binary(basedir,file_name,demo,board):
     global serialArdu
-    global socketio
 
     print demo
     print file_name

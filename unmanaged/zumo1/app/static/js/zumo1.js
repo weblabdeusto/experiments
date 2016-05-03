@@ -174,7 +174,7 @@ $(document).ready(function(){
     var launch_btn = $("#launch-btn");
 
     //SOCKET MANAGEMENT
-    namespace = '/zumo_backend'; // change to an empty string to use the global namespace
+    namespace = ''; // change to an empty string to use the global namespace
 
     // the socket.io documentation recommends sending an explicit package upon connection
     // this is specially important when using the global namespace

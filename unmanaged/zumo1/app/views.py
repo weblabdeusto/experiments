@@ -637,12 +637,12 @@ def status(session_id):
 # 
 @zumo.route('/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
-    erase()
 
+    print "Weblab trying to delete user"
+    erase()
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':
         user=User.query.filter_by(session_id=session_id).first()
-        print "Weblab trying to delete user"
         if user is not None:
             print user.nickname +" deleted"
             user.permission = False

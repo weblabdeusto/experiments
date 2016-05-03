@@ -69,13 +69,6 @@ def before_request():
 @login_required
 def home():
 
-    global serialArdu
-
-    if serialArdu.isOpen():
-        serialArdu.close()
-    if serialArdu.isOpen():
-        print 'Serial not closed'
-
     if g.user.max_date > datetime.now():
         time = (g.user.max_date - datetime.now()).seconds
     else:
@@ -95,15 +88,9 @@ def home():
 ### --------> SERIAL-SOCKET <---------#######
 #############################################
 
-@socketio.on_error(namespace='/zumo_backend')
-def error_handler(e):
-    print "Error... doing nothing"
-    pass
 
 @socketio.on('disconnect request', namespace='/zumo_backend')
 def disconnect_request():
-    global serialThread
-    global serialArdu
 
     disconnect()
 
@@ -115,9 +102,8 @@ def test_connect():
 
 @socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():
-    global serialArdu
 
-    print 'user desconected and serial closed'
+    print 'user desconected'
     print('Client disconnected', request.sid)
 
 

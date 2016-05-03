@@ -195,6 +195,10 @@ $(document).ready(function(){
 
     });
 
+    socket.on('connect',function(){
+       console.log('connecteeed');
+    });
+
     socket.on('Serial event', function(msg) {
         console.log(msg.data);
         if(msg.data=='ready'){
@@ -209,8 +213,6 @@ $(document).ready(function(){
                 serialDiv.scrollTop(serialDiv.children().length*1000)
             }
         }
-
-
     });
 
     $("#button_finish").click(function(){

@@ -104,7 +104,7 @@ def error_handler(e):
 def disconnect_request():
     global serialThread
     global serialArdu
-    stopSerial()
+
     disconnect()
 
 
@@ -117,7 +117,6 @@ def test_connect():
 def test_disconnect():
     global serialArdu
 
-    stopSerial()
 
     print 'user desconected and serial closed'
     print('Client disconnected', request.sid)
@@ -465,7 +464,7 @@ def launch_binary(basedir,file_name,demo,board):
 @zumo.route('/logout')
 @login_required
 def logout():
-    stopSerial()
+
     print g.user.nickname +' going out'
     g.user.session_id = ""
     g.user.permission = False

@@ -284,34 +284,32 @@ $(document).ready(function(){
             return false;
         });
 
-    }, 2000);
+        launch_btn.click(function(){
 
-    launch_btn.click(function(){
+            launch_btn.prop( "disabled", true );
 
-        //socket.emit('Serial close');
-
-        launch_btn.prop( "disabled", true );
-
-        if(file_manager.user_file!=null){
-            if(file_manager.user_file.active){
-                file_manager.loadFile(file_manager.user_file);
-                return;
+            if(file_manager.user_file!=null){
+                if(file_manager.user_file.active){
+                    file_manager.loadFile(file_manager.user_file);
+                    return;
+                }
             }
-        }
-        if(file_manager.blockly_file!=null){
-            if(file_manager.blockly_file.active){
-                file_manager.loadFile(file_manager.blockly_file);
-                return;
+            if(file_manager.blockly_file!=null){
+                if(file_manager.blockly_file.active){
+                    file_manager.loadFile(file_manager.blockly_file);
+                    return;
+                }
             }
-        }
 
-        for(var i=0;i<file_manager.demo_files.length;i++) {
-            if (file_manager.demo_files[i].active) {
-                file_manager.loadFile(file_manager.demo_files[i]);
-                break;
+            for(var i=0;i<file_manager.demo_files.length;i++) {
+                if (file_manager.demo_files[i].active) {
+                    file_manager.loadFile(file_manager.demo_files[i]);
+                    break;
+                }
             }
-        }
-    });
+        });
+
+    }, 1000);
 
     var btn_A_div =  $("#btn-A");
     var btn_B_div =  $("#btn-B");

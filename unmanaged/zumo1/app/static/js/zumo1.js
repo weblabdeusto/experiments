@@ -199,6 +199,14 @@ $(document).ready(function(){
        console.log('connecteeed');
     });
 
+    socket.on('connect_error',function(){
+       console.log('connection failed');
+    });
+
+    socket.on('connect_error',function(){
+       console.log('connection error');
+    });
+
     socket.on('Serial event', function(msg) {
         console.log(msg.data);
         if(msg.data=='ready'){

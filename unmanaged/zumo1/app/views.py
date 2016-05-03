@@ -468,6 +468,7 @@ def launch_binary(basedir,file_name,demo,board):
             print "Error loading file"
 
     print "Starting serial"
+    time.sleep(3)
     startSerial()
 
 

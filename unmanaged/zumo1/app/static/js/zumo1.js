@@ -256,7 +256,7 @@ $(document).ready(function(){
 
         $('#send-data').click(function () {
 
-            var value = $('#serial-data').val();
+            var value = $('#serial-dada').val();
             console.log(value);
 
             var params = {'content':value};

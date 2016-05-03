@@ -128,7 +128,7 @@ def disconnect_request():
 @socketio.on('connect', namespace='/zumo_backend')
 def test_connect():
     print 'Conected to general channel'
-    emit('General', {'data': 'Connected'})
+    emit('General', {'data': 'Connected'},broadcast=True)
 
 @socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():
@@ -155,6 +155,7 @@ class myThread(threading.Thread):
         print 'Serial thread launched'
         socketio.emit('Serial event',
           {'data':'ready'},
+          broadcast=True,
           namespace='/zumo_backend')
 
         print("Opening serial")
@@ -190,6 +191,7 @@ class myThread(threading.Thread):
                     print "Sending serial data to client"
                     socketio.emit('Serial event',
                           {'data':out},
+                          broadcast=True,
                           namespace='/zumo_backend')
 
             self._stopevent.wait(0.2)

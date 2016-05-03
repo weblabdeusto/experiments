@@ -254,11 +254,12 @@ $(document).ready(function(){
 
         });
 
-        $('#send-data').click(function (event) {
+        $('#send-data').click(function () {
 
-            //socket.emit('Serial send', {data: $("#serial-dada").val()});
-            //TODO: Call serial send with ajax
-            var params = {'content':$('#serial-data').val()};
+            var value = $('#serial-data').val();
+            console.log(value);
+
+            var params = {'content':value};
 
             var callback = function (data) {
                 console.log(data);

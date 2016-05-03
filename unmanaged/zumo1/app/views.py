@@ -117,6 +117,8 @@ def test_connect():
 def test_disconnect():
     global serialArdu
 
+    serialArdu.close()
+
     print 'user desconected and serial closed'
     print('Client disconnected', request.sid)
 

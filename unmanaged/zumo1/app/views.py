@@ -186,10 +186,8 @@ class myThread(threading.Thread):
         while not self._stopevent.isSet( ):
             if serialArdu.isOpen():
                 out=""
-                buffer_len = serialArdu.inWaiting()
-                while buffer_len > 0:
+                while serialArdu.inWaiting() > 0:
                     out += serialArdu.read(1)
-                    buffer_len=buffer_len-1
                 if out!="":
                     print "Sending serial data to client"
                     socketio.emit('Serial event',
@@ -469,8 +467,6 @@ def launch_binary(basedir,file_name,demo,board):
             # error code <> 0
             print "Error loading file"
 
-
-    time.sleep(2)
     print "Starting serial"
     startSerial()
 

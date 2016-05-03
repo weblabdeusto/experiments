@@ -619,7 +619,6 @@ def status(session_id):
         if user.max_date<=datetime.now():
             print "Time expired"
             return json.dumps({'should_finish' : -1})
-        print 'tell weblab to ask in 5 seconds'
         return json.dumps({'should_finish' : 5})
     print "User not found"
     # 

@@ -199,12 +199,16 @@ $(document).ready(function(){
        console.log('connecteeed');
     });
 
-    socket.on('connect_error',function(){
+    socket.on('connect_failed',function(){
        console.log('connection failed');
     });
 
     socket.on('connect_error',function(){
        console.log('connection error');
+    });
+
+    socket.on('connect_timeout',function(){
+       console.log('connection timeout');
     });
 
     socket.on('Serial event', function(msg) {

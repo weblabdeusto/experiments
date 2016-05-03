@@ -217,8 +217,8 @@ $(document).ready(function(){
        console.log('connection error');
     });
 
-    socket.on('connect_timeout',function(){
-       console.log('connection timeout');
+    socket.on('error',function(){
+       console.log('ERRORRRRRR');
     });
 
     socket.on('Serial event', function(msg) {

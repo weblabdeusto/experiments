@@ -5,7 +5,7 @@ from flask_socketio import  emit, join_room, leave_room, \
     close_room, disconnect
 
 from datetime import datetime, timedelta
-from app import app, db, lm, socketio, zumo, file_handler
+from app import app, db, lm, socketio, zumo
 from config import basedir, ideIP, blocklyIP
 from .models import User
 from functools import wraps
@@ -22,7 +22,7 @@ from threading import Thread
 serialThread = None
 loadThread = None
 serialArdu = serial.Serial()
-runSerial = False
+
 
 @zumo.route('/test')
 def test():
@@ -206,7 +206,6 @@ class myThread(threading.Thread):
 def startSerial():
 
     global serialThread
-    global runSerial
 
     if serialThread is None:
         print 'Thread not running'
@@ -227,7 +226,6 @@ def stopSerial():
 
     global serialArdu
     global serialThread
-    global runSerial
 
     try:
         if serialThread is None:
@@ -484,14 +482,13 @@ def launch_binary(basedir,file_name,demo,board):
 def logout():
 
     print g.user.nickname +' going out'
+    app.logger.info(g.user.nickname + ' logout')
     g.user.session_id = ""
     g.user.permission = False
     back = g.user.back
     db.session.add(g.user)
     db.session.commit()
-    print back
     logout_user()
-    print 'logout'
     return jsonify(error=False,auth=True)
 
 
@@ -505,7 +502,7 @@ def poll():
     db.session.add(g.user)
     db.session.commit()
     print 'polled'
-
+    app.logger.info(g.user.nickname + ' polled')
     # In JavaScript, use setTimeout() to call this method every 5 seconds or whatever
     # Save in User or Redis or whatever that the user has just polled
     return jsonify(error=False,auth=True)
@@ -528,12 +525,14 @@ def poll():
 def index(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is None:
+        app.logger.info('%s session id not found' % session_id)
         return "Session identifier not found"
     user.last_poll = datetime.now()
     user.permission=True
     db.session.add(user)
     db.session.commit()
     login_user(user)
+    app.logger.info('Redirecting %s to the experiment' % user.nickname)
     return redirect(url_for('zumo.home'))
 
 def get_json():
@@ -595,6 +594,7 @@ def start_experiment():
     db.session.add(user)
     db.session.commit()
     link = url_for('zumo.index', session_id=session_id, _external = True)
+    app.logger.info("Weblab requesting session for %s, Assigned session_id: %s" % user.nickname, session_id)
     print "Assigned session_id: %s" % session_id
     print "See:",link
     return json.dumps({ 'url' : link, 'session_id' : session_id })
@@ -614,7 +614,9 @@ def status(session_id):
     if user is not None: 
         print "Did not poll in", (datetime.now() - user.last_poll).seconds, "seconds"
         if (datetime.now() - user.last_poll).seconds >= 15:
+            app.logger.info(user.nickname + " did not poll in", (datetime.now() - user.last_poll).seconds, "seconds")
             return json.dumps({'should_finish' : -1})
+        app.logger.info( "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds))
         print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
         if user.max_date<=datetime.now():
             print "Time expired"
@@ -640,6 +642,7 @@ def status(session_id):
 @zumo.route('/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
 
+    app.logger.info('Weblab trying to kick user')
     print "Weblab trying to delete user"
     erase()
     request_data = get_json()
@@ -650,5 +653,8 @@ def dispose_experiment(session_id):
             user.permission = False
             db.session.add(user)
             db.session.commit()
+            app.logger.info( user.nickname +' deleted')
+            return 'deleted'
+        app.logger.info( 'User not found')
         return 'not found'
     return 'unknown op'

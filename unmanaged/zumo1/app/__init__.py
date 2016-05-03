@@ -10,7 +10,6 @@ from flask import Flask,Blueprint
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask_socketio import SocketIO
-from celery import Celery
 
 app = Flask(__name__)
 app.config.from_object('config')

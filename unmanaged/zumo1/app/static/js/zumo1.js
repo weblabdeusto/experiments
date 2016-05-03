@@ -176,10 +176,17 @@ $(document).ready(function(){
     //SOCKET MANAGEMENT
     namespace = ''; // change to an empty string to use the global namespace
 
-    // the socket.io documentation recommends sending an explicit package upon connection
-    // this is specially important when using the global namespace   + ':' + location.port + namespace
-    var socket = io.connect('http://' + document.domain ,
-        {path: "/labs/zumoline/socket.io",'force new connection':true});
+    try {
+
+        // the socket.io documentation recommends sending an explicit package upon connection
+        // this is specially important when using the global namespace   + ':' + location.port + namespace
+        window.socket = io.connect('http://' + document.domain,
+            {path: "/labs/zumoline/socket.io", 'force new connection': true});
+
+    } catch (ex) {
+        console.log("Captured exception");
+        console.log(ex);
+    }
 
     socket.on('General', function(msg) {
 

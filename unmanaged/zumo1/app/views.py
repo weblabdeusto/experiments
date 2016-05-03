@@ -65,7 +65,7 @@ def before_request():
         db.session.commit()
 
 @zumo.route('/home')
-#@check_permission
+@check_permission
 @login_required
 def home():
 
@@ -173,7 +173,7 @@ class myThread(threading.Thread):
                     out += serialArdu.read(1)
                     buffer_len=buffer_len-1
                 if out!="":
-                    print "Sending data"
+                    print "Sending serial data to client"
                     socketio.emit('Serial event',
                           {'data':out},
                           namespace='/zumo_backend')

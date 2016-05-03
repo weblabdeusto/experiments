@@ -221,6 +221,7 @@ def stopSerial():
                 serialThread.join()
                 print 'Serial thread stopped'
             else:
+                print 'Serial thread not running'
                 serialThread = None
         return True
     except:
@@ -464,7 +465,7 @@ def launch_binary(basedir,file_name,demo,board):
 @zumo.route('/logout')
 @login_required
 def logout():
-
+    stopSerial()
     print g.user.nickname +' going out'
     g.user.session_id = ""
     g.user.permission = False

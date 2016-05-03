@@ -255,17 +255,22 @@ $(document).ready(function(){
         });
 
         $('#send-data').click(function (event) {
-            console.log($('#serial-data').val());
+
             //socket.emit('Serial send', {data: $("#serial-dada").val()});
             //TODO: Call serial send with ajax
+            var params = {'content':$('#serial-data').val()};
 
             var callback = function (data) {
                 console.log(data);
             };
 
-            $.get("/labs/zumoline/sendserial", callback);
+            $.post(
+                "/labs/zumoline/sendserial",
+                params,
+                callback,
+                "json"
+            );
 
-            return false;
         });
 
         $('#start-serial').click(function (event) {

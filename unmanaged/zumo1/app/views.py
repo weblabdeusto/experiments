@@ -247,13 +247,13 @@ def stopSerial():
         print 'Error closing serial'
         return False
 
-@zumo.route('/sendserial')
+@zumo.route('/sendserial', methods=['POST'])
 @login_required
 def sendSerial():
     global serialThread
     global serialArdu
 
-    message = 'Hello'
+    message =  request.form['content']
 
     if serialThread.isAlive():
         if serialArdu.isOpen():

@@ -116,7 +116,6 @@ def test_connect():
 @socketio.on('disconnect', namespace='/zumo_backend')
 def test_disconnect():
     global serialArdu
-    stopSerial()
 
     print 'user desconected and serial closed'
     print('Client disconnected', request.sid)

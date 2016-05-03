@@ -177,8 +177,9 @@ $(document).ready(function(){
     namespace = ''; // change to an empty string to use the global namespace
 
     // the socket.io documentation recommends sending an explicit package upon connection
-    // this is specially important when using the global namespace
-    var socket = io.connect('http://' + document.domain + ':' + location.port + namespace,{path: "/labs/zumoline/socket.io"});
+    // this is specially important when using the global namespace   + ':' + location.port + namespace
+    var socket = io.connect('http://' + document.domain ,
+        {path: "/labs/zumoline/socket.io",'force new connection':true});
 
     socket.on('General', function(msg) {
 

@@ -214,6 +214,7 @@ def startSerial():
         if serialThread.isAlive():
             print 'serial thread running...stop'
             serialThread.join()
+            time.sleep(1)
             print 'Serial thread stopped'
         else:
             print 'serial thread is not running'
@@ -236,6 +237,7 @@ def stopSerial():
             if serialThread.isAlive():
                 print 'serial thread running...stop'
                 serialThread.join()
+                time.sleep(1)
                 print 'Serial thread stopped'
             else:
                 print 'Serial thread not running'

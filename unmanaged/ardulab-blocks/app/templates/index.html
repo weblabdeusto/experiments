@@ -2,15 +2,20 @@
 {% block content %}
 <div class="container-fluid">
     <div class="col-md-8">
-        <span class="btn btn-success" id="load-button" style="margin-left: 15%">
-            <i class="glyphicon glyphicon-upload"></i>
-            <span>Load</span>
-        </span>
 
-        <span class="btn btn-primary" id="save-btn">
+        <span class="btn btn-success" id="save-btn" onclick="save()" style="margin-left: 15%">
             <i class="glyphicon glyphicon-download"></i>
             <span>Save</span>
         </span>
+        <span class="btn btn-primary" id="fakeload" >
+            <i class="glyphicon glyphicon-upload"></i>
+            <span>Load</span>
+        </span>
+        <input type="file" id="load" style="display: none;">
+        <button class="btn btn-danger" onclick="discard()">
+            <i class="glyphicon glyphicon-remove"></i>
+            <span>Discard</span>
+        </button>
         <button class="btn btn-default" id="validate-btn">
             <i class="glyphicon glyphicon-check"></i>
             <span>Validate</span>

@@ -37,6 +37,6 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('weblab zumo robot startup')
 
-from app import views, models, zumo
+from app import views, models
 
 #app.register_blueprint(zumo, url_prefix='/labs/zumoline')

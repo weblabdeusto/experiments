@@ -599,7 +599,7 @@ def start_experiment():
 
     db.session.add(user)
     db.session.commit()
-    link = url_for('zumo.index', session_id=session_id, _external = True)
+    link = url_for('index', session_id=session_id, _external = True)
     #app.logger.info("Weblab requesting session for "+  user.nickname +", Assigned session_id: " + session_id)
     print "Assigned session_id: %s" % session_id
     print "See:",link

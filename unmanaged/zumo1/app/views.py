@@ -37,6 +37,7 @@ def check_permission(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
+            print 'User has permission??'
             if not g.user.permission:
                 g.user.session_id = ""
                 url = g.user.back
@@ -65,8 +66,9 @@ def before_request():
         db.session.commit()
 
 @app.route('/labs/zumoline/home')
+@check_permission
 @login_required
-#@check_permission
+
 def home():
 
     #Check if users has his code on the IDE
@@ -576,12 +578,6 @@ def start_experiment():
     session_id = str(random.randint(0, 10e8)) # Not especially secure 0:-)
     user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
 
-
-    ide_folder_id = "None"
-    ide_sketch = "None"
-    blockly_folder_id = "None"
-    blockly_sketch = "None"
-
     if user is None:
         user = User(nickname=server_initial_data['request.username'], max_date=max_date, last_poll= datetime.now(),
                     back=request_data['back'], session_id=session_id, permission=True)
@@ -596,7 +592,7 @@ def start_experiment():
 
     db.session.add(user)
     db.session.commit()
-    link = url_for('index', session_id=session_id)
+    link = url_for('index', session_id=session_id, _external = True)
     #app.logger.info("Weblab requesting session for "+  user.nickname +", Assigned session_id: " + session_id)
     print "Assigned session_id: %s" % session_id
     print "See:",link

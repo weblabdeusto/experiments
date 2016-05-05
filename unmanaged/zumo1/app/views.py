@@ -37,6 +37,7 @@ def check_permission(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
+            dbginfo = repr(g.user)
             if not g.user.permission:
                 g.user.session_id = ""
                 url = g.user.back
@@ -44,11 +45,11 @@ def check_permission(func):
                 db.session.commit()
                 print 'non Authorized'
                 logout_user()
-                return jsonify(error=True, auth=False)
+                return jsonify(error=False, auth=False, dbginfo=dbginfo)
             return func(*args, **kwargs)
         except:
             print 'non found'
-            return jsonify(error=True, auth=False)
+            return jsonify(error=True, auth=False, dbginfo=dbginfo)
     return wrapper
 
 @lm.user_loader
@@ -614,7 +615,7 @@ def status(session_id):
     if user is not None: 
         print "Did not poll in", (datetime.now() - user.last_poll).seconds, "seconds"
         if (datetime.now() - user.last_poll).seconds >= 15:
-            app.logger.info(user.nickname + " did not poll in", (datetime.now() - user.last_poll).seconds, "seconds")
+            # app.logger.info(user.nickname + " did not poll in", (datetime.now() - user.last_poll).seconds, "seconds")
             return json.dumps({'should_finish' : -1})
         app.logger.info( "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds))
         print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)

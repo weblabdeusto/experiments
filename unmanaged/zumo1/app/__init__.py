@@ -40,4 +40,4 @@ if not app.debug:
 from app import views, models, zumo
 
 app.register_blueprint(zumo, url_prefix='/labs/zumoline')
-lm.init_app(app)
+lm.init_app(zumo)

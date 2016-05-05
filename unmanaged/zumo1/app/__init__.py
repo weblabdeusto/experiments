@@ -21,7 +21,7 @@ app.config.from_object('config')
 
 db = SQLAlchemy(app)
 lm = LoginManager()
-lm.init_app(app)
+
 
 socketio = SocketIO(app, async_mode=async_mode, resource = "/labs/zumoline/socket.io")
 
@@ -38,5 +38,7 @@ if not app.debug:
     app.logger.info('weblab zumo robot startup')
 
 from app import views, models
+
+lm.init_app(app)
 
 #app.register_blueprint(zumo, url_prefix='/labs/zumoline')

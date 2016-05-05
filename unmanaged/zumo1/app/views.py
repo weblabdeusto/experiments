@@ -537,7 +537,7 @@ def index(session_id):
     db.session.add(user)
     db.session.commit()
     login_user(user)
-    time.sleep(1)
+
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)
     return redirect(url_for('home'))
 

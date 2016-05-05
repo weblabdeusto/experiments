@@ -14,14 +14,14 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 app.config.from_object('config')
 
-zumo = Blueprint('zumo',
-                 __name__,
-                 template_folder='templates',
-                 static_folder='static')
+#zumo = Blueprint('zumo',
+#                 __name__,
+#                 template_folder='templates',
+#                 static_folder='static')
 
 db = SQLAlchemy(app)
 lm = LoginManager()
-
+lm.init_app(app)
 
 socketio = SocketIO(app, async_mode=async_mode, resource = "/labs/zumoline/socket.io")
 
@@ -39,5 +39,4 @@ if not app.debug:
 
 from app import views, models, zumo
 
-app.register_blueprint(zumo, url_prefix='/labs/zumoline')
-lm.init_app(zumo)
+#app.register_blueprint(zumo, url_prefix='/labs/zumoline')

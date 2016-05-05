@@ -5,7 +5,7 @@ from flask_socketio import  emit, join_room, leave_room, \
     close_room, disconnect
 
 from datetime import datetime, timedelta
-from app import app, db, lm, socketio, zumo
+from app import app, db, lm, socketio
 from config import basedir, ideIP, blocklyIP
 from .models import User
 from functools import wraps
@@ -24,7 +24,7 @@ loadThread = None
 serialArdu = serial.Serial()
 
 
-@zumo.route('/test')
+@app.route('/labs/zumoline/test')
 def test():
     return 'SUCCESS!!'
 
@@ -56,7 +56,7 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-@zumo.before_request
+@app.before_request
 def before_request():
     g.user = current_user
     if g.user.is_authenticated:
@@ -64,7 +64,7 @@ def before_request():
         db.session.add(g.user)
         db.session.commit()
 
-@zumo.route('/home')
+@app.route('/labs/zumoline/home')
 @login_required
 #@check_permission
 def home():
@@ -245,7 +245,7 @@ def stopSerial():
         print 'Error closing serial'
         return False
 
-@zumo.route('/sendserial', methods=['POST'])
+@app.route('/labs/zumoline/sendserial', methods=['POST'])
 @login_required
 def sendSerial():
     global serialThread
@@ -269,7 +269,7 @@ def sendSerial():
 ##### ----------> BUTTONS <-----------#######
 #############################################
 
-@zumo.route("/buttonon/<button>",methods=['GET'])
+@app.route("/labs/zumoline/buttonon/<button>",methods=['GET'])
 def turnOn(button):
     try:
         if button == 'A':
@@ -291,7 +291,7 @@ def turnOn(button):
     except:
          return jsonify(success=False)
 
-@zumo.route("/buttonoff/<button>",methods=['GET'])
+@app.route("/labs/zumoline/buttonoff/<button>",methods=['GET'])
 def turnOff(button):
     try:
         if button == 'A':
@@ -318,7 +318,7 @@ def turnOff(button):
 ### --------> BOOTLOADER <------------#######
 #############################################
 
-@zumo.route("/eraseflash", methods=['POST'])
+@app.route("/labs/zumoline/eraseflash", methods=['POST'])
 #@login_required
 def erase():
     global loadThread
@@ -373,7 +373,7 @@ def eraseThread():
 
 
 
-@zumo.route("/loadbinary", methods=['POST'])
+@app.route("/labs/zumoline/loadbinary", methods=['POST'])
 @login_required
 def load():
     global loadThread
@@ -481,7 +481,7 @@ def launch_binary(basedir,file_name,demo,board):
 #############################################
 
 
-@zumo.route('/logout')
+@app.route('/labs/zumoline/logout')
 @login_required
 def logout():
 
@@ -496,7 +496,7 @@ def logout():
     return jsonify(error=False,auth=True)
 
 
-@zumo.route('/poll')
+@app.route('/labs/zumoline/poll')
 @login_required
 @check_permission
 
@@ -526,7 +526,7 @@ def poll():
 # should be stored in a Redis or 
 # SQL database.
 
-@zumo.route("/lab/<session_id>/")
+@app.route("/labs/zumoline/lab/<session_id>/")
 def index(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is None:
@@ -539,7 +539,7 @@ def index(session_id):
     login_user(user)
     time.sleep(1)
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)
-    return redirect(url_for('zumo.home'))
+    return redirect(url_for('home'))
 
 def get_json():
     # Retrieve the submitted JSON
@@ -558,7 +558,7 @@ def get_json():
 # sessions on memory in this dummy example.
 # 
 
-@zumo.route("/weblab/sessions/", methods=['POST'])
+@app.route("/labs/zumoline/weblab/sessions/", methods=['POST'])
 def start_experiment():
     # Parse it: it is a JSON file containing two fields:
     request_data = get_json()
@@ -613,7 +613,7 @@ def start_experiment():
 # This method provides the current status of a particular 
 # user.
 # 
-@zumo.route('/weblab/sessions/<session_id>/status')
+@app.route('/labs/zumoline/weblab/sessions/<session_id>/status')
 def status(session_id):
     print "Weblab status check"
     user = User.query.filter_by(session_id=session_id).first()
@@ -645,7 +645,7 @@ def status(session_id):
 # when an administrator defines so, or when the assigned time
 # is over.
 # 
-@zumo.route('/weblab/sessions/<session_id>', methods=['POST'])
+@app.route('/labs/zumoline/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
 
     app.logger.info('Weblab trying to kick user')

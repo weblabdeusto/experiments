@@ -497,8 +497,9 @@ def logout():
 
 
 @zumo.route('/poll')
-@check_permission
 @login_required
+@check_permission
+
 def poll():
     global serialThread
 
@@ -536,6 +537,7 @@ def index(session_id):
     db.session.add(user)
     db.session.commit()
     login_user(user)
+    time.sleep(1)
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)
     return redirect(url_for('zumo.home'))
 
@@ -598,7 +600,7 @@ def start_experiment():
     db.session.add(user)
     db.session.commit()
     link = url_for('zumo.index', session_id=session_id, _external = True)
-    app.logger.info("Weblab requesting session for "+  user.nickname +", Assigned session_id: " + session_id)
+    #app.logger.info("Weblab requesting session for "+  user.nickname +", Assigned session_id: " + session_id)
     print "Assigned session_id: %s" % session_id
     print "See:",link
     return json.dumps({ 'url' : link, 'session_id' : session_id })
@@ -620,7 +622,7 @@ def status(session_id):
         if (datetime.now() - user.last_poll).seconds >= 15:
             # app.logger.info(user.nickname + " did not poll in", (datetime.now() - user.last_poll).seconds, "seconds")
             return json.dumps({'should_finish' : -1})
-        app.logger.info( "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds))
+        #app.logger.info( "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds))
         print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
         if user.max_date<=datetime.now():
             print "Time expired"

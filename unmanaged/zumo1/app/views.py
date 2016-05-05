@@ -115,6 +115,9 @@ def home():
         demo_files.append(demo.split(".")[0])
     #app.logger.info(g.user.nickname +'starting experiment')
     print 'im here 4'
+    print time
+    print demo_files
+    print g.user
     return render_template('index.html',
                            title='Home',
                            user=g.user,

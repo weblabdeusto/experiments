@@ -46,7 +46,7 @@ Blockly.Arduino['countsGeneric'] = function(block) {
         code += 'FrontWith';
     }
 
-    if(led='RIGHT'){
+    if(led=='RIGHT'){
         code+='RightLeds()';
     }
     else{

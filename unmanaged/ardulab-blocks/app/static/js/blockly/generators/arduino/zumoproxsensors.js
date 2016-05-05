@@ -43,7 +43,7 @@ Blockly.Arduino['countsGeneric'] = function(block) {
         code += 'LeftWith';
     }
     else{
-        code += 'CenterWith';
+        code += 'FrontWith';
     }
 
     if(led='RIGHT'){

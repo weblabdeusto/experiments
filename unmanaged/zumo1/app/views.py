@@ -214,7 +214,7 @@ def startSerial():
         if serialThread.isAlive():
             print 'serial thread running...stop'
             serialThread.join()
-            time.sleep(1)
+            time.sleep(2)
             print 'Serial thread stopped'
         else:
             print 'serial thread is not running'
@@ -236,7 +236,7 @@ def stopSerial():
             if serialThread.isAlive():
                 print 'serial thread running...stop'
                 serialThread.join()
-                time.sleep(1)
+                time.sleep(2)
                 print 'Serial thread stopped'
             else:
                 print 'Serial thread not running'
@@ -347,11 +347,13 @@ def eraseThread():
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
         f.seek(0)
+        time.sleep(0.1)
         f.write("1")
         f.seek(0)
         time.sleep(0.1)
         f.write("0")
         f.seek(0)
+        time.sleep(0.1)
         f.write("1")
         f.close()
         print "reset done"
@@ -360,7 +362,7 @@ def eraseThread():
         print "Error enabling bootloader"
         return
 
-    time.sleep(1)
+    time.sleep(2)
     try:
         #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
         result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
@@ -428,11 +430,13 @@ def launch_binary(basedir,file_name,demo,board):
         f = open("/sys/class/gpio/gpio21/value","w")
         f.write("0")
         f.seek(0)
+        time.sleep(0.1)
         f.write("1")
         f.seek(0)
         time.sleep(0.1)
         f.write("0")
         f.seek(0)
+        time.sleep(0.1)
         f.write("1")
         f.close()
         print "reset done"
@@ -440,7 +444,7 @@ def launch_binary(basedir,file_name,demo,board):
         print "Error enabling bootloader"
         return
     print 'Loading code'
-    time.sleep(1)
+    time.sleep(2)
     if(demo):
         #try:
             print file_name

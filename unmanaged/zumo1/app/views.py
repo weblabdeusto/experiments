@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, g, jsonify,session, Blueprint
+from flask import render_template, redirect, url_for, request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 from flask_socketio import  emit, join_room, leave_room, \
@@ -37,7 +37,6 @@ def check_permission(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
-            dbginfo = repr(g.user)
             if not g.user.permission:
                 g.user.session_id = ""
                 url = g.user.back
@@ -45,11 +44,11 @@ def check_permission(func):
                 db.session.commit()
                 print 'non Authorized'
                 logout_user()
-                return jsonify(error=False, auth=False, dbginfo=dbginfo)
+                return jsonify(error=False, auth=False)
             return func(*args, **kwargs)
         except:
             print 'non found'
-            return jsonify(error=True, auth=False, dbginfo=dbginfo)
+            return jsonify(error=True, auth=False)
     return wrapper
 
 @lm.user_loader
@@ -66,8 +65,8 @@ def before_request():
         db.session.commit()
 
 @zumo.route('/home')
-@check_permission
 @login_required
+@check_permission
 def home():
 
     #Check if users has his code on the IDE

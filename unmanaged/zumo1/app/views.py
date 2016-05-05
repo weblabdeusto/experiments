@@ -66,7 +66,7 @@ def before_request():
         db.session.commit()
 
 @zumo.route('/home')
-@check_permission
+#@check_permission
 @login_required
 def home():
 

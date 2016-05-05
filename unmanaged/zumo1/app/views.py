@@ -584,22 +584,19 @@ def start_experiment():
 
     if user is None:
         user = User(nickname=server_initial_data['request.username'], max_date=max_date, last_poll= datetime.now(),
-                    back=request_data['back'], session_id=session_id, permission=True, ide_folder_id=ide_folder_id,
-                    ide_sketch=ide_sketch, blockly_folder_id=blockly_folder_id, blockly_sketch=blockly_sketch)
+                    back=request_data['back'], session_id=session_id, permission=True)
     else:
         print 'User exists'
         user.session_id = session_id
         user.back = request_data['back']
         user.last_poll= datetime.now()
         user.max_date = max_date
-        user.ide_folder_id = ide_folder_id
-        user.ide_sketch = ide_sketch
-        user.blockly_folder_id = blockly_folder_id
-        user.blockly_sketch = blockly_sketch
+        user.permission = True
+
 
     db.session.add(user)
     db.session.commit()
-    link = url_for('index', session_id=session_id, _external = True)
+    link = url_for('index', session_id=session_id)
     #app.logger.info("Weblab requesting session for "+  user.nickname +", Assigned session_id: " + session_id)
     print "Assigned session_id: %s" % session_id
     print "See:",link
@@ -648,7 +645,7 @@ def status(session_id):
 @app.route('/labs/zumoline/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
 
-    app.logger.info('Weblab trying to kick user')
+    #app.logger.info('Weblab trying to kick user')
     print "Weblab trying to delete user"
     erase()
     request_data = get_json()
@@ -659,8 +656,8 @@ def dispose_experiment(session_id):
             user.permission = False
             db.session.add(user)
             db.session.commit()
-            app.logger.info( user.nickname +' deleted')
+            #app.logger.info( user.nickname +' deleted')
             return 'deleted'
-        app.logger.info( 'User not found')
+        #app.logger.info( 'User not found')
         return 'not found'
     return 'unknown op'

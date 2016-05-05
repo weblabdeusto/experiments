@@ -66,7 +66,7 @@ def before_request():
         db.session.commit()
 
 @zumo.route('/home')
-#@check_permission
+@check_permission
 @login_required
 def home():
 
@@ -526,14 +526,14 @@ def poll():
 def index(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is None:
-        app.logger.info('%s session id not found' % session_id)
+        #app.logger.info('%s session id not found' % session_id)
         return "Session identifier not found"
     user.last_poll = datetime.now()
     user.permission=True
     db.session.add(user)
     db.session.commit()
     login_user(user)
-    app.logger.info('Redirecting %s to the experiment' % user.nickname)
+    #app.logger.info('Redirecting %s to the experiment' % user.nickname)
     return redirect(url_for('zumo.home'))
 
 def get_json():

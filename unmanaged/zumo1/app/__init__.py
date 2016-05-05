@@ -14,10 +14,10 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 app.config.from_object('config')
 
-#zumo = Blueprint('zumo',
-#                 __name__,
-#                 template_folder='templates',
-#                 static_folder='static')
+zumo = Blueprint('zumo',
+                 __name__,
+                 template_folder='templates',
+                 static_folder='static')
 
 db = SQLAlchemy(app)
 lm = LoginManager()
@@ -37,8 +37,7 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('weblab zumo robot startup')
 
-from app import views, models
+from app import views, models, zumo
 
+app.register_blueprint(zumo, url_prefix='/labs/zumoline')
 lm.init_app(app)
-
-#app.register_blueprint(zumo, url_prefix='/labs/zumoline')

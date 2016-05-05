@@ -33,23 +33,22 @@
         <script type="text/javascript" src="{{ url_for('zumo.static', filename='js/widgets.js') }}"></script>
         <script>
 
-            var BACK_URL = "{{g.user.back}}";
+            var BACK_URL = "{{user.back}}";
             var TIME_LEFT = {{timeleft-1}};
-            var BASE_URL = "{{base_url}}";
-            var CAM_URL = "{{ cam_url }}";
+
 
         </script>
         <script>
             var USER_FILE = "";
             var DEMO_FILES = [];
 
-            {% if g.user.ide_sketch != None %}
-                USER_FILE = "{{g.user.ide_sketch}}";
+            {% if user.ide_sketch != None %}
+                USER_FILE = "{{user.ide_sketch}}";
             {% else %}
                 USER_FILE = "None";
             {% endif %}
-            {% if g.user.blockly_sketch != None %}
-                USER_BLOCKLY_FILE = "{{g.user.blockly_sketch}}";
+            {% if user.blockly_sketch != None %}
+                USER_BLOCKLY_FILE = "{{user.blockly_sketch}}";
             {% else %}
                 USER_BLOCKLY_FILE = "None";
             {% endif %}

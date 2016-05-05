@@ -21,7 +21,7 @@ zumo = Blueprint('zumo',
 
 db = SQLAlchemy(app)
 lm = LoginManager()
-lm.init_app(app)
+
 
 socketio = SocketIO(app, async_mode=async_mode, resource = "/labs/zumoline/socket.io")
 
@@ -40,3 +40,4 @@ if not app.debug:
 from app import views, models, zumo
 
 app.register_blueprint(zumo, url_prefix='/labs/zumoline')
+lm.init_app(app)

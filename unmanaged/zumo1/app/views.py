@@ -40,7 +40,6 @@ def check_permission(func):
             print 'User has permission??'
             if not g.user.permission:
                 g.user.session_id = ""
-                url = g.user.back
                 db.session.add(g.user)
                 db.session.commit()
                 print 'non Authorized'
@@ -68,7 +67,6 @@ def before_request():
 @app.route('/labs/zumoline/home')
 @check_permission
 @login_required
-
 def home():
 
     #Check if users has his code on the IDE
@@ -538,6 +536,7 @@ def index(session_id):
     user.permission=True
     db.session.add(user)
     db.session.commit()
+    print g.user
     login_user(user)
 
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)

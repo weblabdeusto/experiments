@@ -24,7 +24,7 @@ loadThread = None
 serialArdu = serial.Serial()
 
 
-@zumo.route('/labs/zumoline/test')
+@zumo.route('/test')
 def test():
     return 'SUCCESS!!'
 
@@ -68,7 +68,7 @@ def before_request():
         db.session.add(g.user)
         db.session.commit()
 
-@zumo.route('/labs/zumoline/home')
+@zumo.route('/home')
 @check_permission
 @login_required
 def home():
@@ -255,7 +255,7 @@ def stopSerial():
         print 'Error closing serial'
         return False
 
-@zumo.route('/labs/zumoline/sendserial', methods=['POST'])
+@zumo.route('/sendserial', methods=['POST'])
 @login_required
 def sendSerial():
     global serialThread
@@ -491,7 +491,7 @@ def launch_binary(basedir,file_name,demo,board):
 #############################################
 
 
-@zumo.route('/labs/zumoline/logout')
+@zumo.route('/logout')
 @login_required
 def logout():
 
@@ -506,7 +506,7 @@ def logout():
     return jsonify(error=False,auth=True)
 
 
-@zumo.route('/labs/zumoline/poll')
+@zumo.route('/poll')
 @login_required
 @check_permission
 
@@ -615,7 +615,7 @@ def start_experiment():
 # This method provides the current status of a particular 
 # user.
 # 
-@zumo.route('/labs/zumoline/weblab/sessions/<session_id>/status')
+@zumo.route('/weblab/sessions/<session_id>/status')
 def status(session_id):
     print "Weblab status check"
     user = User.query.filter_by(session_id=session_id).first()
@@ -647,7 +647,7 @@ def status(session_id):
 # when an administrator defines so, or when the assigned time
 # is over.
 # 
-@zumo.route('/labs/zumoline/weblab/sessions/<session_id>', methods=['POST'])
+@zumo.route('/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
 
     #app.logger.info('Weblab trying to kick user')

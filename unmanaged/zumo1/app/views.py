@@ -36,11 +36,12 @@ def test():
 def check_permission(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        try:
+#        try:
             print 'User has permission??'
             print current_user.nickname
             g.user = current_user
             print g.user.nickname
+
             if not g.user.permission:
                 g.user.session_id = ""
                 db.session.add(g.user)
@@ -49,9 +50,9 @@ def check_permission(func):
                 logout_user()
                 return jsonify(error=False, auth=False)
             return func(*args, **kwargs)
-        except:
-            print 'non found'
-            return jsonify(error=True, auth=False)
+#        except:
+ #           print 'non found'
+#            return jsonify(error=True, auth=False)
     return wrapper
 
 @lm.user_loader

@@ -85,7 +85,6 @@ def logout():
 @login_required
 def poll():
     g.user.last_poll = datetime.now()
-    #g.user.last_poll = datetime.now()
     db.session.add(g.user)
     db.session.commit()
     print 'polled'

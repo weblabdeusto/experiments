@@ -247,5 +247,9 @@ $(document).ready(function(){
     timerDisplayer = new TimerDisplayer("timer");
     timerDisplayer.setTimeLeft(TIME_LEFT);
     timerDisplayer.startCountDown();
+    var FIRST_CAMERA_URL = "https://cams.weblab.deusto.es/webcam/proxied.py/zumoline";
+    cameraRefresher = new CameraRefresher("cam_img");
+    cameraRefresher.start(FIRST_CAMERA_URL);
+
 
 });

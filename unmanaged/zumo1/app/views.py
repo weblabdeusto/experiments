@@ -97,24 +97,17 @@ def home():
         print "Error doing request"
         g.user.blockly_folder_id = "None"
         g.user.blockly_sketch = "None"
-    print 'im here'
     db.session.add(g.user)
     db.session.commit()
-    print 'im here2'
     if g.user.max_date > datetime.now():
         time = (g.user.max_date - datetime.now()).seconds
     else:
         time = 0
-    print 'im here 3'
     demo_files2 = os.listdir(basedir+'/binaries/demo')
     demo_files=[]
     for demo in demo_files2:
         demo_files.append(demo.split(".")[0])
     #app.logger.info(g.user.nickname +'starting experiment')
-    print 'im here 4'
-    print time
-    print demo_files
-    print g.user
     return render_template('index.html',
                            title='Home',
                            user=g.user,
@@ -543,7 +536,6 @@ def index(session_id):
     user.permission=True
     db.session.add(user)
     db.session.commit()
-    print g.user
     login_user(user)
 
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)

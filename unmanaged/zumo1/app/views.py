@@ -539,7 +539,7 @@ def index(session_id):
     login_user(user)
     time.sleep(1)
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)
-    return redirect(url_for('zumo.home'))
+    return redirect(url_for('home'))
 
 def get_json():
     # Retrieve the submitted JSON

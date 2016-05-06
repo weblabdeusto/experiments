@@ -196,6 +196,7 @@ class myThread(threading.Thread):
             except:
                 serialArdu.close()
                 time.sleep(1)
+                opened=False
                 while not opened:
                     try:
                         serialArdu.port='/dev/ttyACM'+str(count)

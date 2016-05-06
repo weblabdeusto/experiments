@@ -212,6 +212,7 @@ class myThread(threading.Thread):
                         else:
                             print('CANT OPEN RETRY...')
                     except:
+                        time.sleep(0.5)
                         count=count+1
                         if count == 5:
                             count = 0

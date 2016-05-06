@@ -220,6 +220,9 @@ class myThread(threading.Thread):
                         if count == 5:
                             count = 0
                         print('Cant open serial...retry on /dev/ttyACM'+str(count))
+                    if self._stopevent.isSet():
+                        self._stopevent.set()
+                        break
 
             self._stopevent.wait(0.5)
         print "%s ends" % (self.getName( ),)

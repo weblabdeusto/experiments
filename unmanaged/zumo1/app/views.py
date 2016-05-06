@@ -194,14 +194,25 @@ class myThread(threading.Thread):
                               {'data':out},
                               broadcast=True)
             except:
-                print 'Serial error retry..'
-                serialArdu.close()
-                serialArdu.open()
-                time.sleep(1)
-                if serialArdu.isOpen():
-                    print 'Serial restarted'
-                else:
-                    print 'Cant open serial'
+                while not opened:
+                    try:
+                        serialArdu.port='/dev/ttyACM'+str(count)
+                        print serialArdu.port
+                        serialArdu.baudrate=9600
+                        serialArdu.parity="N"
+                        serialArdu.bytesize=8
+
+                        serialArdu.open()
+                        if serialArdu.isOpen():
+                            opened = True
+                            print 'serial opened'
+                        else:
+                            print('CANT OPEN RETRY...')
+                    except:
+                        count=count+1
+                        if count == 5:
+                            count = 0
+                        print('Cant open serial...retry on /dev/ttyACM'+str(count))
 
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)

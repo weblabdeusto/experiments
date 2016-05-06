@@ -183,15 +183,18 @@ class myThread(threading.Thread):
                 print('Cant open serial...retry on /dev/ttyACM'+str(count))
 
         while not self._stopevent.isSet( ):
-            if serialArdu.isOpen():
-                out=""
-                while serialArdu.inWaiting() > 0:
-                    out += serialArdu.read(1)
-                if out!="":
-                    print "Sending serial data to client"
-                    socketio.emit('Serial event',
-                          {'data':out},
-                          broadcast=True)
+            try:
+                if serialArdu.isOpen():
+                    out=""
+                    while serialArdu.inWaiting() > 0:
+                        out += serialArdu.read(1)
+                    if out!="":
+                        print "Sending serial data to client"
+                        socketio.emit('Serial event',
+                              {'data':out},
+                              broadcast=True)
+            except:
+                print 'Serial error retry..'
 
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)

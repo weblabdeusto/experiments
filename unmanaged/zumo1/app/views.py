@@ -217,7 +217,7 @@ class myThread(threading.Thread):
                             count = 0
                         print('Cant open serial...retry on /dev/ttyACM'+str(count))
 
-            self._stopevent.wait(0.2)
+            self._stopevent.wait(0.5)
         print "%s ends" % (self.getName( ),)
         serialArdu.close()
 

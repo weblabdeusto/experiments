@@ -195,6 +195,13 @@ class myThread(threading.Thread):
                               broadcast=True)
             except:
                 print 'Serial error retry..'
+                serialArdu.close()
+                serialArdu.open()
+                time.sleep(1)
+                if serialArdu.isOpen():
+                    print 'Serial restarted'
+                else:
+                    print 'Cant open serial'
 
             self._stopevent.wait(0.2)
         print "%s ends" % (self.getName( ),)

@@ -566,13 +566,15 @@ def poll():
 def index(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is None:
+        print 'User is none'
         #app.logger.info('%s session id not found' % session_id)
         return "Session identifier not found"
+    print 'login user'
     user.last_poll = datetime.now()
     user.permission=True
     db.session.add(user)
     db.session.commit()
-    #print 'Login '+ current_user
+    print 'Login '+ current_user
     login_user(user)
 
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)

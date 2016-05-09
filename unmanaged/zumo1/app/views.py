@@ -572,7 +572,7 @@ def index(session_id):
     user.permission=True
     db.session.add(user)
     db.session.commit()
-    print 'Login '+ current_user
+    #print 'Login '+ current_user
     login_user(user)
 
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)

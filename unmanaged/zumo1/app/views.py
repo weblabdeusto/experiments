@@ -574,7 +574,7 @@ def index(session_id):
     user.permission=True
     db.session.add(user)
     db.session.commit()
-    while not current_user.is_authenticated():
+    while not current_user.is_authenticated:
         login_user(current_user)
         time.sleep(0.1)
     print current_user

@@ -61,7 +61,7 @@ def load_user(id):
 
 @app.before_request
 def before_request():
-    print 'request from '+ current_user
+
     g.user = current_user
     if g.user.is_authenticated:
         g.user.last_poll = datetime.now()

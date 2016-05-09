@@ -574,7 +574,9 @@ def index(session_id):
     user.permission=True
     db.session.add(user)
     db.session.commit()
-    login_user(user)
+    while not current_user.is_authenticated():
+        login_user(current_user)
+        time.sleep(0.1)
     print current_user
 
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)

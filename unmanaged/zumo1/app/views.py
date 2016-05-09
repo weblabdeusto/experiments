@@ -574,6 +574,7 @@ def index(session_id):
     user.permission=True
     db.session.add(user)
     db.session.commit()
+    time.sleep(0.5)
     login_user(user)
     current_user=user
     time.sleep(0.1)

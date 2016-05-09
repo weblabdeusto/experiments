@@ -69,8 +69,8 @@ def before_request():
         db.session.commit()
 
 @zumo.route('/home')
-@check_permission
 @login_required
+@check_permission
 def home():
 
     #Check if users has his code on the IDE
@@ -355,7 +355,6 @@ def turnOff(button):
 #############################################
 
 @zumo.route("/eraseflash", methods=['POST'])
-#@login_required
 def erase():
     global loadThread
     global serialArdu

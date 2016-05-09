@@ -575,7 +575,7 @@ def index(session_id):
     db.session.add(user)
     db.session.commit()
     time.sleep(0.5)
-    login_user(user)
+    login_user(user,remember=True)
     current_user=user
     time.sleep(0.1)
     print current_user

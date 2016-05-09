@@ -37,5 +37,5 @@ $(document).ready(function(){
         });
 
     });
-    var polling = setInterval(poll, 4000);
+    var polling = setTimeout(setInterval(poll, 4000),5000);
 });

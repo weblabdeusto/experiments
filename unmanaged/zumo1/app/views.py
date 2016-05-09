@@ -59,7 +59,7 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-@zumo.before_request
+@app.before_request
 def before_request():
     print 'request from '+ current_user
     g.user = current_user

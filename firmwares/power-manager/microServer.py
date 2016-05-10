@@ -22,7 +22,7 @@ def launchHTTPServer(manager):
                     else:
                         self.send_response(200)
                         self.end_headers()
-                        print 'Asking for position on lab: ' + manager.labs[labIndex]['name']
+                        print 'Asking for restart: ' + manager.labs[labIndex]['name']
                         self.wfile.write(json.dumps(manager.restart(labIndex)))
                 except:
                     print 'Bad request'

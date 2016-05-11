@@ -8,8 +8,4 @@ if DEBUG:
 else:
     labs = [
         {'name': 'zumoline', 'ip':'192.168.0.130', 'path':'/labs/zumoline/test', 'relay':0 ,'lastDown': None}
-<<<<<<< HEAD
-    ]
-=======
-    ]
->>>>>>> db2ff2dbd7c30a746a67584c6c3994cc9d1cc184
+

@@ -25,7 +25,7 @@ class Manager(object):
         #Atributtes
         self.run = True
         self.checkingTime = 1 #Time in minutes for status checking
-        self.timeout = 3  #Time in minutes for restarting after server down detected
+        self.timeout = 2  #Time in minutes for restarting after server down detected
 
         #Start thread
         self.checkingThread = Thread(target=self.checker)

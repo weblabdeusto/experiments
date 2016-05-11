@@ -16,7 +16,7 @@ class Manager(object):
         #get lab data
         self.labs = labs
         #Settup logging handler
-        logging.basicConfig(filename='logs/status.log',
+        logging.basicConfig(filename='/home/pi/experiments/firmwares/power-manager/logs/status.log',
                             level=logging.INFO,
                             format='%(asctime)s %(levelname)s: %(message)s'
                             )

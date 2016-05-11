@@ -1,4 +1,4 @@
-DEBUG=True
+DEBUG=False
 
 if DEBUG:
     labs = [
@@ -7,5 +7,5 @@ if DEBUG:
     ]
 else:
     labs = [
-        {'name': 'zumoline', 'ip':'192.168.0.130', 'path':'/labs/zumoline', 'relay':0 ,'lastDown': None}
+        {'name': 'zumoline', 'ip':'192.168.0.130', 'path':'/labs/zumoline/test', 'relay':0 ,'lastDown': None}
     ]

@@ -7,7 +7,7 @@
             <div class="panel panel-default" style="margin-top: 5%">
                 <div class="panel-heading">User Code: </div>
                 <div class="panel-body">
-                {% if user.ide_sketch != "None" %}
+                {% if user.ide_sketch!= "None" %}
                     <p class="file" id="user-{{ user.ide_sketch }}">{{ user.ide_sketch }}</p>
                 {% endif %}
                 {% if user.blockly_sketch != "None" %}

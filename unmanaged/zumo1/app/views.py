@@ -70,7 +70,7 @@ def before_request():
 
 @zumo.route('/home')
 @login_required
-@check_permission
+#@check_permission
 def home():
 
     #Check if users has his code on the IDE

@@ -18,8 +18,8 @@ ALLOWED_EXTENSIONS = ['txt', 'ino', 'cpp', 'h', 'c', 'h']
 IGNORED_FILES = ['.gitignore']
 
 #Celery config
-CELERY_BROKER_URL = 'redis://localhost:6379/3'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/3'
+CELERY_BROKER_URL = 'redis://localhost:6379/6'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/6'
 
 
 #compiler config

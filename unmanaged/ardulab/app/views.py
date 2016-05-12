@@ -104,7 +104,7 @@ def poll():
 ################################
 
 @celery.task(bind=True)
-def compile(self,user_folder,board):
+def compileArdulab(self,user_folder,board):
 
     #user_folder = "3037b2d4-bb35-4ad6-a9c8-daa2f489ae69"
     #board="leonardo"
@@ -189,14 +189,14 @@ def compile(self,user_folder,board):
 def compile():
     if not os.path.exists(basedir+'/app/static/binaries/'+g.user.folder_id):
         os.makedirs(basedir+'/app/static/binaries/'+g.user.folder_id)
-    task = compile.apply_async(args=[g.user.folder_id, "leonardo"])
+    task = compileArdulab.apply_async(args=[g.user.folder_id, "leonardo"])
     return jsonify({}), 202, {'Location': url_for('taskstatus',
                                                   task_id=task.id)}
 
 
 @app.route('/status/<task_id>')
 def taskstatus(task_id):
-    task = compile.AsyncResult(task_id)
+    task = compileArdulab.AsyncResult(task_id)
     if task.state == 'PENDING':
         response = {
             'state': task.state,

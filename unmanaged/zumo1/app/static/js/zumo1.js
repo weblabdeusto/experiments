@@ -113,7 +113,7 @@ function FileManager(){
             console.log(data);
             if(!data['success']){
                 console.log('Error!');
-                status_div.html("No time for loading code...");
+                status_div.html("<p>No time for loading code...</p>");
             }
         };
 

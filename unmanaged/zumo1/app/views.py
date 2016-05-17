@@ -25,7 +25,7 @@ import os
 import time
 import subprocess
 import serial
-from threading import Thread
+from threading import Thread, Event
 
 serialThread = None
 loadThread = None
@@ -158,8 +158,8 @@ def test_disconnect():
 class myThread(Thread):
     def __init__(self, name='TestThread'):
         """ constructor, setting initial variables """
-        self._stopevent = threading.Event( )
-        threading.Thread.__init__(self, name=name)
+        self._stopevent = Event()
+        Thread.__init__(self, name=name)
 
     def run(self):
         global serialArdu
@@ -246,7 +246,7 @@ class myThread(Thread):
     def join(self, timeout=None):
         """ Stop the thread and wait for it to end. """
         self._stopevent.set( )
-        threading.Thread.join(self, timeout)
+        Thread.join(self, timeout)
 
 #############################################
 #### --------> Lap-Manager <-------------####

@@ -436,10 +436,12 @@ def load():
     global loadThread
     global ArduinoErased
 
-    ArduinoErased = False
+
     if g.user.max_date<=datetime.now()+timedelta(seconds=20):
         print 'Not time enough'
         return jsonify(success=False)
+
+    ArduinoErased = False
 
     print 'Stop serial'
     stopSerial()

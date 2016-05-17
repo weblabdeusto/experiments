@@ -559,6 +559,7 @@ def logout():
     db.session.add(g.user)
     db.session.commit()
     logout_user()
+    print "User close session and memory is going to be erased"
     erase()
     return jsonify(error=False,auth=True)
 
@@ -709,6 +710,7 @@ def dispose_experiment(session_id):
 
     #app.logger.info('Weblab trying to kick user')
     print "Weblab trying to delete user"
+    print "Weblab erasing memory"
     erase()
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':

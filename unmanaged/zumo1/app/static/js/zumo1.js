@@ -109,8 +109,12 @@ function FileManager(){
             'demo': file.demo
         };
 
-        var callback = function(data, status, request){
+        var callback = function(data){
             console.log(data);
+            if(!data['success']){
+                console.log('Error!');
+                status_div.html("No time for loading code...");
+            }
         };
 
         $.ajax({

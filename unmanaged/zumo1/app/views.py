@@ -1,8 +1,17 @@
+#TODO: - Replace os.system by subprocess.check_output
+#TODO: - Memory erase on logout(CHECK)
+#TODO: - Timming executions and add timeouts for erasing memory
+#TODO: - Analize outputs and detect programming errors
+#TODO: - Send message to power manager on critical errors
+#TODO: - Send programming error to client
+#TODO: - Detect session finish on polling and erase robot's flash memory
+#TODO: - Improve logging adding rotating file handlers
+
+
 from flask import render_template, redirect, url_for, request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
-from flask_socketio import  emit, join_room, leave_room, \
-    close_room, disconnect
+from flask_socketio import disconnect
 
 from datetime import datetime, timedelta
 from app import app, db, lm, socketio, zumo
@@ -15,19 +24,17 @@ import requests
 import os
 import time
 import subprocess
-
 import serial
 from threading import Thread
 
 serialThread = None
 loadThread = None
 serialArdu = serial.Serial()
-
+ArduinoErased = False
 
 @zumo.route('/test')
 def test():
     return 'SUCCESS!!'
-
 
 ##################################
 #######------>WEBLAB<-------######
@@ -117,10 +124,10 @@ def home():
                            timeleft=time,
                            demo_files=demo_files)
 
-#############################################
-### --------> SERIAL-SOCKET <---------#######
-#############################################
 
+#############################################
+### -----------> SocketIO <-----------#######
+#############################################
 
 @socketio.on('disconnect request')
 def disconnect_request():
@@ -143,10 +150,12 @@ def test_disconnect():
     print 'user desconected'
     print('Client disconnected', request.sid)
 
+#############################################
+### --------> Event thread <----------#######
+### Sends Serial and LapCounter events  #####
+#############################################
 
-import threading
-
-class myThread(threading.Thread):
+class myThread(Thread):
     def __init__(self, name='TestThread'):
         """ constructor, setting initial variables """
         self._stopevent = threading.Event( )
@@ -239,6 +248,15 @@ class myThread(threading.Thread):
         self._stopevent.set( )
         threading.Thread.join(self, timeout)
 
+#############################################
+#### --------> Lap-Manager <-------------####
+#############################################
+
+
+
+#############################################
+### --------> Serial-Manager <-----------####
+#############################################
 def startSerial():
 
     global serialThread
@@ -301,7 +319,7 @@ def sendSerial():
         return jsonify(success=False)
 
 
-#############################3################
+#############################################
 ##### ----------> BUTTONS <-----------#######
 #############################################
 
@@ -358,6 +376,14 @@ def turnOff(button):
 def erase():
     global loadThread
     global serialArdu
+    global ArduinoErased
+
+    if ArduinoErased:
+        print 'Bootloader is aleready running...'
+        return jsonify(success=False)
+
+    print 'Enabling bootloader permanently'
+    ArduinoErased = True
 
     stopSerial()
 
@@ -412,6 +438,12 @@ def eraseThread():
 @login_required
 def load():
     global loadThread
+    global ArduinoErased
+
+    ArduinoErased = False
+    if g.user.max_date<=datetime.now()+timedelta(seconds=20):
+        print 'Not time enough'
+        return jsonify(success=False)
 
     print 'Stop serial'
     stopSerial()
@@ -484,8 +516,7 @@ def launch_binary(basedir,file_name,demo,board):
             print file_name
             print 'flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex'
             #subprocess.call('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
-            res = os.system('ls /dev/tty* -all')
-            print res
+
             result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
             print "Success!"
 
@@ -528,6 +559,7 @@ def logout():
     db.session.add(g.user)
     db.session.commit()
     logout_user()
+    erase()
     return jsonify(error=False,auth=True)
 
 
@@ -547,11 +579,6 @@ def poll():
     # Save in User or Redis or whatever that the user has just polled
     return jsonify(error=False,auth=True)
 
-
-
-#################################
-### ----->    WEBLAB    <-----###
-#################################
 
 #####################################
 # 

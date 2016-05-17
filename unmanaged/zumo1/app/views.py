@@ -1,6 +1,7 @@
+
+#TODO: - Check last poll for erasing memory
+#TODO: - kick user out when time is out for not depending on weblab
 #TODO: - Replace os.system by subprocess.check_output
-#TODO: - Memory erase on logout(CHECK)
-#TODO: - Timming executions and add timeouts for erasing memory
 #TODO: - Analize outputs and detect programming errors
 #TODO: - Send message to power manager on critical errors
 #TODO: - Send programming error to client
@@ -570,10 +571,17 @@ def poll():
     global serialThread
 
     g.user.last_poll = datetime.now()
-    db.session.add(g.user)
-    db.session.commit()
     print 'polled'
     app.logger.info(g.user.nickname + ' polled')
+    if(g.user.max_date<=datetime.now()):
+        g.user.permission = False
+        g.user.session_id = ""
+        db.session.add(g.user)
+        db.session.commit()
+        logout_user()
+        return jsonify(error=False,auth=False)
+    db.session.add(g.user)
+    db.session.commit()
     # In JavaScript, use setTimeout() to call this method every 5 seconds or whatever
     # Save in User or Redis or whatever that the user has just polled
     return jsonify(error=False,auth=True)

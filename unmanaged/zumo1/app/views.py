@@ -44,10 +44,6 @@ def check_permission(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
-            print current_user
-            g.user = current_user
-            print g.user
-            print g.user.nickname + ' connected'
             if not g.user.permission:
                 g.user.session_id = ""
                 db.session.add(g.user)

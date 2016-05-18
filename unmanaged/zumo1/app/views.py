@@ -196,18 +196,19 @@ class myThread(Thread):
             try:
                 if serialArdu.isOpen():
                     out=""
-                    buff_len = serialArdu.inWaiting()
-                    if buff_len:
-                        while buff_len > 0:
-                            out += serialArdu.read(1)
-                            buff_len=buff_len-1
-                        if out!="":
-                            print "Sending serial data to client"
-                            socketio.emit('Serial event',
-                                  {'data':out},
-                                  broadcast=True)
-                    else:
-                        time.sleep(0.2)
+                    if serialArdu.inWaiting != 0:
+                        buff_len = serialArdu.inWaiting()
+                        if buff_len:
+                            while buff_len > 0:
+                                out += serialArdu.read(1)
+                                buff_len=buff_len-1
+                            if out!="":
+                                print "Sending serial data to client"
+                                socketio.emit('Serial event',
+                                      {'data':out},
+                                      broadcast=True)
+                        else:
+                            time.sleep(0.2)
             except:
                 serialArdu.close()
                 time.sleep(1)

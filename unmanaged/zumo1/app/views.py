@@ -578,6 +578,7 @@ def poll():
         g.user.session_id = ""
         db.session.add(g.user)
         db.session.commit()
+        erase()
         logout_user()
         return jsonify(error=False,auth=False)
     db.session.add(g.user)

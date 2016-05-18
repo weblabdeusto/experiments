@@ -223,15 +223,15 @@ class myThread(Thread):
                         serialArdu.open()
                         if serialArdu.isOpen():
                             opened = True
-                            print 'serial opened'
+                            print 'serial opened after exception'
                         else:
                             print('CANT OPEN RETRY...')
                     except:
                         time.sleep(0.5)
+                        print('Cant open serial...retry on /dev/ttyACM'+str(count))
                         count=count+1
                         if count == 5:
                             count = 0
-                        print('Cant open serial...retry on /dev/ttyACM'+str(count))
                     if self._stopevent.isSet():
                         self._stopevent.set()
                         break

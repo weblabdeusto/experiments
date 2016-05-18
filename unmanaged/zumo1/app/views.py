@@ -209,6 +209,8 @@ class myThread(Thread):
                                       broadcast=True)
                         else:
                             time.sleep(0.2)
+                    else:
+                        time.sleep(0.2)
             except:
                 serialArdu.close()
                 time.sleep(1)

@@ -130,6 +130,10 @@ function FileManager(){
 
         //$("#stop-btn").prop( "disabled", true );
         $("#launch-btn").prop( "disabled", true );
+        $("#btn-A").prop( "disabled", true );
+        $("#btn-B").prop( "disabled", true );
+        $("#btn-C").prop( "disabled", true );
+        $("#send-data").prop( "disabled", true );
         var status_div = $("#output");
 
         status_div.html("<p>Starting validation</p>");
@@ -203,6 +207,10 @@ $(document).ready(function(){
             console.log('recived: ' + msg.data);
             if (msg.data == 'ready') {
                 launch_btn.prop("disabled", false);
+                $("#btn-A").prop( "disabled", false );
+                $("#btn-B").prop( "disabled", false );
+                $("#btn-C").prop( "disabled", false );
+                $("#send-data").prop( "disabled", false );
                 status_div.html("<p>Ready!!</p>")
             }
             else {
@@ -232,6 +240,10 @@ $(document).ready(function(){
             if (msg.data == 'ready') {
                 console.log('READYYYY');
                 launch_btn.prop("disabled", false);
+                $("#btn-A").prop( "disabled", false );
+                $("#btn-B").prop( "disabled", false );
+                $("#btn-C").prop( "disabled", false );
+                $("#send-data").prop( "disabled", false );
                 status_div.html("<p>Ready!!</p>")
             }
             else{
@@ -294,6 +306,10 @@ $(document).ready(function(){
         launch_btn.click(function(){
 
             launch_btn.prop( "disabled", true );
+            $("#btn-A").prop( "disabled", true );
+            $("#btn-B").prop( "disabled", true );
+            $("#btn-C").prop( "disabled", true );
+            $("#send-data").prop( "disabled", true );
 
             if(file_manager.user_file!=null){
                 if(file_manager.user_file.active){

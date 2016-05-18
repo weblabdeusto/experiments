@@ -340,44 +340,43 @@ $(document).ready(function(){
 
     btn_A_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_A_div.mousedown(function(){
-        $(this).attr("src", "/labs/zumoline/static/img/A-on.png");
+        $("#img-btn-A").attr("src", "/labs/zumoline/static/img/A-on.png");
         turnOn('A');
     });
     btn_A_div.mouseup(function(){
-        $(this).attr("src", "/labs/zumoline/static/img/A-off.png");
+        $("#img-btn-A").attr("src", "/labs/zumoline/static/img/A-off.png");
         turnOff('A');
     });
     btn_A_div.mouseout(function(){
-        $(this).attr("src", "/labs/zumoline/static/img/A-off.png");
+        $("#img-btn-A").attr("src", "/labs/zumoline/static/img/A-off.png");
         turnOff('A');
     });
 
     btn_B_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_B_div.mousedown(function(){
-        $(this).attr("src", "/labs/zumoline/static/img/B-on.png");
+        $("#img-btn-B").attr("src", "/labs/zumoline/static/img/B-on.png");
         turnOn('B');
     });
     btn_B_div.mouseup(function(){
-        $(this).attr("src", "/labs/zumoline/static/img/B-off.png");
+        $("#img-btn-B").attr("src", "/labs/zumoline/static/img/B-off.png");
         turnOff('B');
     });
     btn_B_div.mouseout(function(){
-        $(this).attr("src", "/labs/zumoline/static/img/B-off.png");
-        $(this).attr("src", "/labs/zumoline/static/img/B-off.png");
+        $("#img-btn-B").attr("src", "/labs/zumoline/static/img/B-off.png");
         turnOff('B');
     });
 
     btn_C_div.on('dragstart', function(event) { event.preventDefault(); });
     btn_C_div.mousedown(function(){
-        $(this).attr("src", "/labs/zumoline/static/img/C-on.png");
+        $("#img-btn-C").attr("src", "/labs/zumoline/static/img/C-on.png");
         turnOn('C');
     });
     btn_C_div.mouseup(function(){
-        $(this).attr("src", "/labs/zumoline/static/img/C-off.png");
+        $("#img-btn-C").attr("src", "/labs/zumoline/static/img/C-off.png");
         turnOff('C');
     });
     btn_C_div.mouseout(function(){
-        $(this).attr("src", "/labs/zumoline/static/img/C-off.png");
+        $("#img-btn-C").attr("src", "/labs/zumoline/static/img/C-off.png");
         turnOff('C');
     });
 

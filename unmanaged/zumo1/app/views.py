@@ -34,10 +34,10 @@ ArduinoErased = False
 
 redis_client = redis.Redis()
 
-test_blueprint = Blueprint("test", __name__)
+checker_blueprint = Blueprint("checker", __name__)
 
-@test_blueprint.route('/test')
-def test():
+@checker_blueprint.route('/check')
+def check():
     return 'SUCCESS!!'
 
 ##################################

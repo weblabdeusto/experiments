@@ -9,14 +9,14 @@
 #TODO: - Improve logging adding rotating file handlers
 
 
-from flask import render_template, redirect, url_for, request, g, jsonify, Blueprint, current_app, session
+from flask import render_template, redirect, url_for, request, g, jsonify, Blueprint, current_app, session, Response
 from flask_socketio import disconnect
+from functools import wraps
 
 from datetime import datetime, timedelta
 from app import app, socketio, zumo
 from config import basedir, ideIP, blocklyIP
-from .models import User
-from functools import wraps
+
 import json
 import random
 import requests
@@ -44,25 +44,30 @@ def check():
 #######------>WEBLAB<-------######
 ##################################
 
-@zumo.before_request
-def require_session():
-    session_id = session.get('zumo_session_id')
-    if not session_id:
-        return jsonify(error=False, auth=False, reason="No zumo_session_id found in cookies")
+def check_permission(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        session_id = session.get('zumo_session_id')
+        if not session_id:
+            return jsonify(error=False, auth=False, reason="No zumo_session_id found in cookies")
 
-    user_data = get_user_data(session_id)
-    if user_data is None:
-        return jsonify(error=False, auth=False, reason="session_id not found in Redis")
+        user_data = get_user_data(session_id)
+        if user_data is None:
+            return jsonify(error=False, auth=False, reason="session_id not found in Redis")
 
-    if user_data['exited'] == 'true':
-        return jsonify(error=False, auth=False, reason="User had previously clicked on logout")
+        if user_data['exited'] == 'true':
+            return jsonify(error=False, auth=False, reason="User had previously clicked on logout")
 
-    user_data['session_id'] = session_id
+        user_data['session_id'] = session_id
 
-    renew_poll(session_id)
-    g.user = user_data
+        renew_poll(session_id)
+        g.user = user_data
+        return func(*args, **kwargs)
+
+    return wrapper
 
 @zumo.route('/home')
+@check_permission
 def home():
 
     #Check if users has his code on the IDE
@@ -93,14 +98,16 @@ def home():
         session['blockly_folder_id'] = "None"
         session['blockly_sketch'] = "None"
 
-    time = int(get_time_left())
+    time = int(get_time_left(session['zumo_session_id']))
     demo_files2 = os.listdir(basedir+'/binaries/demo')
     demo_files=[]
     for demo in demo_files2:
         demo_files.append(demo.split(".")[0])
+    print g.user
     #app.logger.info(g.user.nickname +'starting experiment')
     return render_template('index.html',
                            title='Home',
+                           back=g.user['back'],
                            timeleft=time,
                            demo_files=demo_files)
 
@@ -281,6 +288,7 @@ def stopSerial():
         return False
 
 @zumo.route('/sendserial', methods=['POST'])
+@check_permission
 def sendSerial():
     global serialThread
     global serialArdu
@@ -304,6 +312,7 @@ def sendSerial():
 #############################################
 
 @zumo.route("/buttonon/<button>",methods=['GET'])
+@check_permission
 def turnOn(button):
     try:
         if button == 'A':
@@ -326,6 +335,7 @@ def turnOn(button):
          return jsonify(success=False)
 
 @zumo.route("/buttonoff/<button>",methods=['GET'])
+@check_permission
 def turnOff(button):
     try:
         if button == 'A':
@@ -352,7 +362,6 @@ def turnOff(button):
 ### --------> BOOTLOADER <------------#######
 #############################################
 
-@zumo.route("/eraseflash", methods=['POST'])
 def erase():
     global loadThread
     global serialArdu
@@ -415,6 +424,7 @@ def eraseThread():
 
 
 @zumo.route("/loadbinary", methods=['POST'])
+@check_permission
 def load():
     global loadThread
     global ArduinoErased
@@ -528,6 +538,7 @@ def launch_binary(basedir,file_name,demo,board):
 #############################################
 
 @zumo.route('/logout')
+@check_permission
 def logout():
     print g.user['username'] +' going out'
     app.logger.info(g.user['username'] + ' logout')
@@ -535,25 +546,14 @@ def logout():
     force_exited(g.user['session_id'])
     print "User close session and memory is going to be erased"
     erase()
-    return jsonify(error=False,auth=True)
+    return jsonify(error=False,auth=False)
 
 
 @zumo.route('/poll')
 @check_permission
 def poll():
-    g.user.last_poll = datetime.now()
-    print 'polled'
-    app.logger.info(g.user.nickname + ' polled')
-    if(g.user.max_date<=datetime.now()):
-        g.user.permission = False
-        g.user.session_id = ""
-        db.session.add(g.user)
-        db.session.commit()
-        erase()
-        logout_user()
-        return jsonify(error=False,auth=False)
-    db.session.add(g.user)
-    db.session.commit()
+    print g.user['username'] +' polled'
+    app.logger.info(g.user['username'] + ' polled')
     # In JavaScript, use setTimeout() to call this method every 5 seconds or whatever
     # Save in User or Redis or whatever that the user has just polled
     return jsonify(error=False,auth=True)
@@ -621,7 +621,7 @@ def get_time_left(session_id):
 
 @zumo.route("/lab/<session_id>/")
 def index(session_id):
-    user_data = get_user_data()
+    user_data = get_user_data(session_id)
     if user_data is None:
         print 'User is none'
         return "Session identifier not found"
@@ -649,20 +649,20 @@ def get_json():
 
 weblab = Blueprint("weblab", __name__)
 
-@weblab.before_request
-def require_http_credentials():
-    auth = request.authorization
-    if auth:
-        username = auth.username
-        password = auth.password
-    else:
-        username = password = "No credentials"
-
-    weblab_username = current_app.config['WEBLAB_USERNAME']
-    weblab_password = current_app.config['WEBLAB_PASSWORD']
-    if username != weblab_username or password != weblab_password:
-        print("In theory this is weblab. However, it provided as credentials: {} : {}".format(username, password))
-        return Response(response=("You don't seem to be a WebLab-Instance"), status=401, headers = {'WWW-Authenticate':'Basic realm="Login Required"'})
+# @weblab.before_request
+# def require_http_credentials():
+#     auth = request.authorization
+#     if auth:
+#         username = auth.username
+#         password = auth.password
+#     else:
+#         username = password = "No credentials"
+#
+#     weblab_username = current_app.config['WEBLAB_USERNAME']
+#     weblab_password = current_app.config['WEBLAB_PASSWORD']
+#     if username != weblab_username or password != weblab_password:
+#         print("In theory this is weblab. However, it provided as credentials: {} : {}".format(username, password))
+#         return Response(response=("You don't seem to be a WebLab-Instance"), status=401, headers = {'WWW-Authenticate':'Basic realm="Login Required"'})
 
 @weblab.route("/weblab/sessions/", methods=['POST'])
 def start_experiment():
@@ -689,7 +689,7 @@ def start_experiment():
     pipeline.hset('weblab:active:{}'.format(session_id), 'max_date', max_date_int)
     pipeline.hset('weblab:active:{}'.format(session_id), 'last_poll', last_poll_int)
     pipeline.hset('weblab:active:{}'.format(session_id), 'username', server_initial_data['request.username'])
-    pipeline.hset('weblab:active:{}'.format(session_id), 'back_url', request_data['back'])
+    pipeline.hset('weblab:active:{}'.format(session_id), 'back', request_data['back'])
     pipeline.hset('weblab:active:{}'.format(session_id), 'exited', 'false')
     pipeline.expire('weblab:active:{}'.format(session_id), 30 + int(server_initial_data['priority.queue.slot.length']))
     pipeline.execute()

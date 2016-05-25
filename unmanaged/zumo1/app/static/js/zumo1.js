@@ -262,6 +262,7 @@ $(document).ready(function(){
 
             socket.emit('disconnect request');
             var callback = function (data) {
+                console.log(BACK_URL);
                 window.location.replace(BACK_URL);
             };
 

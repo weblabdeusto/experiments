@@ -7,7 +7,6 @@ elif async_mode == 'gevent':
     monkey.patch_all()
 
 from flask import Flask,Blueprint
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 
 app = Flask(__name__)
@@ -17,8 +16,6 @@ zumo = Blueprint('zumo',
                  __name__,
                  template_folder='templates',
                  static_folder='static')
-
-db = SQLAlchemy(app)
 
 socketio = SocketIO(app, async_mode=async_mode, resource = "/labs/zumoline/socket.io")
 
@@ -34,7 +31,7 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('weblab zumo robot startup')
 
-from app import views, models, zumo
+from app import views, zumo
 from app.views import weblab, checker_blueprint
 
 app.register_blueprint(zumo, url_prefix='/labs/zumoline')

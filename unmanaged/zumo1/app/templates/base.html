@@ -33,7 +33,7 @@
         <script type="text/javascript" src="{{ url_for('zumo.static', filename='js/widgets.js') }}"></script>
         <script>
 
-            var BACK_URL = "{{user.back}}";
+            var BACK_URL = "{{back}}";
             var TIME_LEFT = {{timeleft-1}};
 
 
@@ -42,13 +42,13 @@
             var USER_FILE = "";
             var DEMO_FILES = [];
 
-            {% if user.ide_sketch != None %}
-                USER_FILE = "{{user.ide_sketch}}";
+            {% if session['ide_sketch'] != None %}
+                USER_FILE = "{{session['ide_sketch']}}";
             {% else %}
                 USER_FILE = "None";
             {% endif %}
-            {% if user.blockly_sketch != None %}
-                USER_BLOCKLY_FILE = "{{user.blockly_sketch}}";
+            {% if session['blockly_sketch'] != None %}
+                USER_BLOCKLY_FILE = "{{session['blockly_sketch']}}";
             {% else %}
                 USER_BLOCKLY_FILE = "None";
             {% endif %}

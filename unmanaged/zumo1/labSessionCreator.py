@@ -71,7 +71,7 @@ def createSession(user,ip):
     url=json.loads(resp.content).get('url','')
     session_id = json.loads(resp.content).get('session_id','')
 
-    os.system('nohup firefox '+url+ ' &')
+    os.system('nohup google-chrome '+url+ ' &')
     os.system('clear')
     return session_id, url
 

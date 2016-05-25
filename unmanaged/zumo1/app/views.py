@@ -14,7 +14,7 @@ from flask_socketio import disconnect
 from functools import wraps
 
 from datetime import datetime, timedelta
-from app import app, socketio, zumo
+from app import app, socketio, zumo, checker, weblab
 from config import basedir, ideIP, blocklyIP
 
 import json
@@ -34,9 +34,9 @@ ArduinoErased = False
 
 redis_client = redis.Redis()
 
-checker_blueprint = Blueprint("checker", __name__)
 
-@checker_blueprint.route('/check')
+
+@checker.route('/check')
 def check():
     return 'SUCCESS!!'
 
@@ -647,7 +647,7 @@ def get_json():
 # sessions on memory in this dummy example.
 # 
 
-weblab = Blueprint("weblab", __name__)
+
 
 # @weblab.before_request
 # def require_http_credentials():
@@ -664,7 +664,7 @@ weblab = Blueprint("weblab", __name__)
 #         print("In theory this is weblab. However, it provided as credentials: {} : {}".format(username, password))
 #         return Response(response=("You don't seem to be a WebLab-Instance"), status=401, headers = {'WWW-Authenticate':'Basic realm="Login Required"'})
 
-@weblab.route("/weblab/sessions/", methods=['POST'])
+@weblab.route("/sessions/", methods=['POST'])
 def start_experiment():
     # Parse it: it is a JSON file containing two fields:
     request_data = get_json()
@@ -708,7 +708,7 @@ def start_experiment():
 # This method provides the current status of a particular 
 # user.
 # 
-@weblab.route('/weblab/sessions/<session_id>/status')
+@weblab.route('/sessions/<session_id>/status')
 def status(session_id):
     print "Weblab status check"
 
@@ -753,7 +753,7 @@ def status(session_id):
 # when an administrator defines so, or when the assigned time
 # is over.
 # 
-@weblab.route('/weblab/sessions/<session_id>', methods=['POST'])
+@weblab.route('/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
     print "Weblab trying to delete user"
     print "Weblab erasing memory"

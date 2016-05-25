@@ -17,6 +17,9 @@ zumo = Blueprint('zumo',
                  template_folder='templates',
                  static_folder='static')
 
+weblab = Blueprint("weblab", __name__)
+checker = Blueprint("checker", __name__)
+
 socketio = SocketIO(app, async_mode=async_mode, resource = "/labs/zumoline/socket.io")
 
 if not app.debug:
@@ -31,9 +34,8 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('weblab zumo robot startup')
 
-from app import views, zumo
-from app.views import weblab, checker_blueprint
+from app import views, zumo, weblab, checker
 
 app.register_blueprint(zumo, url_prefix='/labs/zumoline')
-app.register_blueprint(weblab, url_prefix='/weblab/labs/zumoline')
-app.register_blueprint(checker_blueprint, url_prefix='/checker/')
+app.register_blueprint(weblab, url_prefix='/labs/zumoline/weblab')
+app.register_blueprint(checker, url_prefix='/checker/')

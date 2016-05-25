@@ -9,6 +9,8 @@ workspace.xml
 #ignore user files
 #src/
 
+config.py
+
 #ignore database files
 *.db
 db_repository/

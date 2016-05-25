@@ -66,6 +66,7 @@ def check_permission(func):
 
     return wrapper
 
+
 @zumo.route('/home')
 @check_permission
 def home():
@@ -454,9 +455,9 @@ def load():
                     os.remove(basedir+'/binaries/user/'+f)
                 if name == "blocks":
                     print 'https://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/' + session['blockly_sketch'] +'.hex'
-                    response = requests.get('http://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/'+ session['blockly_sketch'] +'.hex',timeout=10)
+                    response = requests.get('https://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/'+ session['blockly_sketch'] +'.hex',timeout=10)
                 else:
-                    response = requests.get('http://'+ideIP+'/static/binaries/'+ session['ide_folder_id']+'/'+ session['ide_sketch'] +'.hex',timeout=10)
+                    response = requests.get('https://'+ideIP+'/static/binaries/'+ session['ide_folder_id']+'/'+ session['ide_sketch'] +'.hex',timeout=10)
                 f=open(basedir+'/binaries/user/'+name+'.hex','a')
                 f.write(response.content)
                 f.close()
@@ -649,20 +650,20 @@ def get_json():
 
 
 
-# @weblab.before_request
-# def require_http_credentials():
-#     auth = request.authorization
-#     if auth:
-#         username = auth.username
-#         password = auth.password
-#     else:
-#         username = password = "No credentials"
-#
-#     weblab_username = current_app.config['WEBLAB_USERNAME']
-#     weblab_password = current_app.config['WEBLAB_PASSWORD']
-#     if username != weblab_username or password != weblab_password:
-#         print("In theory this is weblab. However, it provided as credentials: {} : {}".format(username, password))
-#         return Response(response=("You don't seem to be a WebLab-Instance"), status=401, headers = {'WWW-Authenticate':'Basic realm="Login Required"'})
+@weblab.before_request
+def require_http_credentials():
+    auth = request.authorization
+    if auth:
+        username = auth.username
+        password = auth.password
+    else:
+        username = password = "No credentials"
+
+    weblab_username = current_app.config['WEBLAB_USERNAME']
+    weblab_password = current_app.config['WEBLAB_PASSWORD']
+#    if username != weblab_username or password != weblab_password:
+#        print("In theory this is weblab. However, it provided as credentials: {} : {}".format(username, password))
+#        return Response(response=("You don't seem to be a WebLab-Instance"), status=401, headers = {'WWW-Authenticate':'Basic realm="Login Required"'})
 
 @weblab.route("/sessions/", methods=['POST'])
 def start_experiment():

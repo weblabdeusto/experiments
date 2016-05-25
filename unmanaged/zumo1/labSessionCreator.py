@@ -45,8 +45,6 @@ def createSession(user,ip):
 
     client_initial_data = {
         'back':'http://weblab.deusto.es',
-        #'url':'http://weblab.deusto.es/labs/aquariumg/weblab/sessions/'
-        #'url':'http://192.168.0.191/weblab/sessions/'
         'url':'http://'+ip+'/weblab/sessions/'
     }
 

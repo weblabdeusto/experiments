@@ -431,7 +431,7 @@ def load():
     global ArduinoErased
 
 
-    if get_time_left() <= 20:
+    if get_time_left(session['zumo_session_id']) <= 20:
         print 'Not time enough'
         return jsonify(success=False)
 

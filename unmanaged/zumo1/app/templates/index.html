@@ -7,13 +7,13 @@
             <div class="panel panel-default" style="margin-top: 5%">
                 <div class="panel-heading">User Code: </div>
                 <div class="panel-body">
-                {% if user.ide_sketch!= "None" %}
-                    <p class="file" id="user-{{ user.ide_sketch }}">{{ user.ide_sketch }}</p>
+                {% if session['ide_sketch'] != "None" %}
+                    <p class="file" id="user-{{ session['ide_sketch'] }}">{{ session['ide_sketch'] }}</p>
                 {% endif %}
-                {% if user.blockly_sketch != "None" %}
-                    <p class="file" id="user-{{ user.blockly_sketch }}">{{ user.blockly_sketch }}</p>
+                {% if session['blockly_sketch'] != "None" %}
+                    <p class="file" id="user-{{ session['blockly_sketch'] }}">{{ session['blockly_sketch'] }}</p>
                 {% endif %}
-                {% if user.blockly_sketch == "None" and user.ide_sketch=="None"%}
+                {% if session['blockly_sketch'] == "None" and session['ide_sketch'] =="None"%}
                      <p>No user code available</p>
                 {% endif %}
                 </div>

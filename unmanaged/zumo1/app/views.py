@@ -9,13 +9,11 @@
 #TODO: - Improve logging adding rotating file handlers
 
 
-from flask import render_template, redirect, url_for, request, g, jsonify
-from flask.ext.login import login_user, logout_user, current_user, \
-    login_required
+from flask import render_template, redirect, url_for, request, g, jsonify, Blueprint, current_app, session
 from flask_socketio import disconnect
 
 from datetime import datetime, timedelta
-from app import app, db, lm, socketio, zumo
+from app import app, socketio, zumo
 from config import basedir, ideIP, blocklyIP
 from .models import User
 from functools import wraps
@@ -34,7 +32,11 @@ loadThread = None
 serialArdu = serial.Serial()
 ArduinoErased = False
 
-@zumo.route('/test')
+redis_client = redis.Redis()
+
+test_blueprint = Blueprint("test", __name__)
+
+@test_blueprint.route('/test')
 def test():
     return 'SUCCESS!!'
 
@@ -42,75 +44,56 @@ def test():
 #######------>WEBLAB<-------######
 ##################################
 
-def check_permission(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        try:
-            if not g.user.permission:
-                g.user.session_id = ""
-                db.session.add(g.user)
-                db.session.commit()
-                print 'non Authorized'
-                logout_user()
-                return jsonify(error=False, auth=False, reason="check_permission")
-            return func(*args, **kwargs)
-        except:
-            print 'non found'
-            return jsonify(error=True, auth=False)
-    return wrapper
+@zumo.before_request
+def require_session():
+    session_id = session.get('zumo_session_id')
+    if not session_id:
+        return jsonify(error=False, auth=False, reason="No zumo_session_id found in cookies")
 
-@lm.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+    user_data = get_user_data(session_id)
+    if user_data is None:
+        return jsonify(error=False, auth=False, reason="session_id not found in Redis")
 
+    if user_data['exited'] == 'true':
+        return jsonify(error=False, auth=False, reason="User had previously clicked on logout")
 
-@app.before_request
-def before_request():
+    user_data['session_id'] = session_id
 
-    g.user = current_user
-    if g.user.is_authenticated:
-        g.user.last_poll = datetime.now()
-        db.session.add(g.user)
-        db.session.commit()
+    renew_poll(session_id)
+    g.user = user_data
 
 @zumo.route('/home')
-@login_required
-#@check_permission
 def home():
 
     #Check if users has his code on the IDE
     try:
         print "doing request to "+ ideIP
-        resp = requests.get('http://'+ ideIP +'/binary/'+g.user.nickname,timeout=4)
+        resp = requests.get('http://'+ ideIP +'/binary/'+g.user['username'],timeout=4)
         print resp.content
         data= json.loads(resp.content)
-        g.user.ide_folder_id =  data["folder"]
-        g.user.ide_sketch = data["sketch"]
+        session['ide_folder_id'] =  data["folder"]
+        session['ide_sketch'] = data["sketch"]
 
     except:
         print "Error doing request"
-        g.user.ide_folder_id = "None"
-        g.user.ide_sketch = "None"
+        session['ide_folder_id'] = "None"
+        session['ide_sketch'] = "None"
 
     #Check if users has his code on the IDE
     try:
         print "doing request to "+ blocklyIP
-        resp = requests.get('http://'+ blocklyIP +'/binary/'+g.user.nickname,timeout=4)
+        resp = requests.get('http://'+ blocklyIP +'/binary/'+g.user['username'],timeout=4)
         print resp.content
         data = json.loads(resp.content)
-        g.user.blockly_folder_id =  data["folder"]
-        g.user.blockly_sketch = data["sketch"]
+        session['blockly_folder_id'] =  data["folder"]
+        session['blockly_sketch'] = data["sketch"]
 
     except:
         print "Error doing request"
-        g.user.blockly_folder_id = "None"
-        g.user.blockly_sketch = "None"
-    db.session.add(g.user)
-    db.session.commit()
-    if g.user.max_date > datetime.now():
-        time = (g.user.max_date - datetime.now()).seconds
-    else:
-        time = 0
+        session['blockly_folder_id'] = "None"
+        session['blockly_sketch'] = "None"
+
+    time = int(get_time_left())
     demo_files2 = os.listdir(basedir+'/binaries/demo')
     demo_files=[]
     for demo in demo_files2:
@@ -118,7 +101,6 @@ def home():
     #app.logger.info(g.user.nickname +'starting experiment')
     return render_template('index.html',
                            title='Home',
-                           user=g.user,
                            timeleft=time,
                            demo_files=demo_files)
 
@@ -129,7 +111,6 @@ def home():
 
 @socketio.on('disconnect request')
 def disconnect_request():
-
     disconnect()
 
 @socketio.on('reconnect')
@@ -144,7 +125,6 @@ def test_connect():
 
 @socketio.on('disconnect')
 def test_disconnect():
-
     print 'user desconected'
     print('Client disconnected', request.sid)
 
@@ -301,7 +281,6 @@ def stopSerial():
         return False
 
 @zumo.route('/sendserial', methods=['POST'])
-@login_required
 def sendSerial():
     global serialThread
     global serialArdu
@@ -436,13 +415,12 @@ def eraseThread():
 
 
 @zumo.route("/loadbinary", methods=['POST'])
-@login_required
 def load():
     global loadThread
     global ArduinoErased
 
 
-    if g.user.max_date<=datetime.now()+timedelta(seconds=20):
+    if get_time_left() <= 20:
         print 'Not time enough'
         return jsonify(success=False)
 
@@ -457,7 +435,7 @@ def load():
     print "loading "+ name
 
     if demo == "false":
-        if(g.user.ide_folder_id=="None" and g.user.blockly_folder_id=="None"):
+        if(session['ide_folder_id'] =="None" and session['blockly_folder_id'] =="None"):
             print "No users code"
         else:
             try:
@@ -465,10 +443,10 @@ def load():
                 for f in files:
                     os.remove(basedir+'/binaries/user/'+f)
                 if name == "blocks":
-                    print 'https://'+blocklyIP+'/static/binaries/'+g.user.blockly_folder_id+'/'+g.user.blockly_sketch+'.hex'
-                    response = requests.get('http://'+blocklyIP+'/static/binaries/'+g.user.blockly_folder_id+'/'+g.user.blockly_sketch+'.hex',timeout=10)
+                    print 'https://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/' + session['blockly_sketch'] +'.hex'
+                    response = requests.get('http://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/'+ session['blockly_sketch'] +'.hex',timeout=10)
                 else:
-                    response = requests.get('http://'+ideIP+'/static/binaries/'+g.user.ide_folder_id+'/'+g.user.ide_sketch+'.hex',timeout=10)
+                    response = requests.get('http://'+ideIP+'/static/binaries/'+ session['ide_folder_id']+'/'+ session['ide_sketch'] +'.hex',timeout=10)
                 f=open(basedir+'/binaries/user/'+name+'.hex','a')
                 f.write(response.content)
                 f.close()
@@ -549,28 +527,19 @@ def launch_binary(basedir,file_name,demo,board):
 ### ------------> WEBLAB <------------#######
 #############################################
 
-
 @zumo.route('/logout')
-@login_required
 def logout():
+    print g.user['username'] +' going out'
+    app.logger.info(g.user['username'] + ' logout')
 
-    print g.user.nickname +' going out'
-    app.logger.info(g.user.nickname + ' logout')
-    g.user.session_id = ""
-    g.user.permission = False
-    back = g.user.back
-    db.session.add(g.user)
-    db.session.commit()
-    logout_user()
+    force_exited(g.user['session_id'])
     print "User close session and memory is going to be erased"
     erase()
     return jsonify(error=False,auth=True)
 
 
 @zumo.route('/poll')
-@login_required
 @check_permission
-
 def poll():
     g.user.last_poll = datetime.now()
     print 'polled'
@@ -590,6 +559,58 @@ def poll():
     return jsonify(error=False,auth=True)
 
 
+def get_user_data(session_id):
+    pipeline = redis_client.pipeline()
+    pipeline.hget("weblab:active:{}".format(session_id), "back")
+    pipeline.hget("weblab:active:{}".format(session_id), "last_poll")
+    pipeline.hget("weblab:active:{}".format(session_id), "max_date")
+    pipeline.hget("weblab:active:{}".format(session_id), "username")
+    pipeline.hget("weblab:active:{}".format(session_id), "exited")
+    back, last_poll, max_date, username, exited = pipeline.execute()
+    if last_poll is None:
+        return None
+
+    return {
+        'back': back,
+        'last_poll': last_poll,
+        'max_date': max_date,
+        'username': username,
+        'exited': exited
+    }
+
+def get_last_poll():
+    last_poll = datetime.now()
+    last_poll_int = last_poll.strftime('%s') + str(last_poll.microsecond / 1e6)[1:]
+    return last_poll_int
+
+def renew_poll(session_id):
+    last_poll_int = get_last_poll()
+    pipeline = redis_client.pipeline()
+    pipeline.hget("weblab:active:{}".format(session_id), "max_date")
+    pipeline.hset("weblab:active:{}".format(session_id), "last_poll", last_poll_int)
+    max_date, _ = pipeline.execute()
+    if max_date is None:
+        pipeline.delete("weblab:active:{}".format(session_id))
+
+def force_exited(session_id):
+    pipeline = redis_client.pipeline()
+    pipeline.hget("weblab:active:{}".format(session_id), "max_date")
+    pipeline.hset("weblab:active:{}".format(session_id), "exited", "true")
+    max_date, _ = pipeline.execute()
+    if max_date is None:
+        pipeline.delete("weblab:active:{}".format(session_id))
+
+def get_time_left(session_id):
+    current_time = datetime.now()
+    current_time = float(current_time.strftime('%s') + str(current_time.microsecond / 1e6)[1:])
+
+    max_date = redis_client.hget("weblab:active:{}".format(session_id), "max_date")
+    if max_date is None:
+        return 0
+
+    return float(max_date) - current_time
+
+
 #####################################
 # 
 # Main method. Authorized users
@@ -600,24 +621,14 @@ def poll():
 
 @zumo.route("/lab/<session_id>/")
 def index(session_id):
-    user = User.query.filter_by(session_id=session_id).first()
-    if user is None:
+    user_data = get_user_data()
+    if user_data is None:
         print 'User is none'
-        #app.logger.info('%s session id not found' % session_id)
         return "Session identifier not found"
-    print 'login user'
-    user.last_poll = datetime.now()
-    user.permission=True
-    db.session.add(user)
-    db.session.commit()
-    time.sleep(0.5)
-    login_user(user,remember=True)
-    # current_user=user
-    time.sleep(0.1)
-    # print current_user
 
-    #app.logger.info('Redirecting %s to the experiment' % user.nickname)
-    return redirect(url_for('zumo.home'))
+    renew_poll(session_id)
+    session['zumo_session_id'] = session_id
+    return redirect(url_for('.home'))
 
 def get_json():
     # Retrieve the submitted JSON
@@ -636,7 +647,24 @@ def get_json():
 # sessions on memory in this dummy example.
 # 
 
-@zumo.route("/weblab/sessions/", methods=['POST'])
+weblab = Blueprint("weblab", __name__)
+
+@weblab.before_request
+def require_http_credentials():
+    auth = request.authorization
+    if auth:
+        username = auth.username
+        password = auth.password
+    else:
+        username = password = "No credentials"
+
+    weblab_username = current_app.config['WEBLAB_USERNAME']
+    weblab_password = current_app.config['WEBLAB_PASSWORD']
+    if username != weblab_username or password != weblab_password:
+        print("In theory this is weblab. However, it provided as credentials: {} : {}".format(username, password))
+        return Response(response=("You don't seem to be a WebLab-Instance"), status=401, headers = {'WWW-Authenticate':'Basic realm="Login Required"'})
+
+@weblab.route("/weblab/sessions/", methods=['POST'])
 def start_experiment():
     # Parse it: it is a JSON file containing two fields:
     request_data = get_json()
@@ -652,22 +680,20 @@ def start_experiment():
 
     # Create a global session
     session_id = str(random.randint(0, 10e8)) # Not especially secure 0:-)
-    user=User.query.filter_by(nickname=server_initial_data['request.username']).first()
 
-    if user is None:
-        user = User(nickname=server_initial_data['request.username'], max_date=max_date, last_poll= datetime.now(),
-                    back=request_data['back'], session_id=session_id, permission=True)
-    else:
-        print 'User exists'
-        user.session_id = session_id
-        user.back = request_data['back']
-        user.last_poll= datetime.now()
-        user.max_date = max_date
-        user.permission = True
+    # Prepare adding this to redis
+    max_date_int = max_date.strftime('%s') + str(max_date.microsecond / 1e6)[1:]
+    last_poll_int = get_last_poll()
+    
+    pipeline = redis_client.pipeline()
+    pipeline.hset('weblab:active:{}'.format(session_id), 'max_date', max_date_int)
+    pipeline.hset('weblab:active:{}'.format(session_id), 'last_poll', last_poll_int)
+    pipeline.hset('weblab:active:{}'.format(session_id), 'username', server_initial_data['request.username'])
+    pipeline.hset('weblab:active:{}'.format(session_id), 'back_url', request_data['back'])
+    pipeline.hset('weblab:active:{}'.format(session_id), 'exited', 'false')
+    pipeline.expire('weblab:active:{}'.format(session_id), 30 + int(server_initial_data['priority.queue.slot.length']))
+    pipeline.execute()
 
-
-    db.session.add(user)
-    db.session.commit()
     link = url_for('zumo.index', session_id=session_id, _external = True)
     #app.logger.info("Weblab requesting session for "+  user.nickname +", Assigned session_id: " + session_id)
     print "Assigned session_id: %s" % session_id
@@ -682,21 +708,34 @@ def start_experiment():
 # This method provides the current status of a particular 
 # user.
 # 
-@zumo.route('/weblab/sessions/<session_id>/status')
+@weblab.route('/weblab/sessions/<session_id>/status')
 def status(session_id):
     print "Weblab status check"
-    user = User.query.filter_by(session_id=session_id).first()
-    if user is not None: 
-        print "Did not poll in", (datetime.now() - user.last_poll).seconds, "seconds"
-        if (datetime.now() - user.last_poll).seconds >= 15:
-            # app.logger.info(user.nickname + " did not poll in", (datetime.now() - user.last_poll).seconds, "seconds")
+
+    last_poll = redis_client.hget("weblab:active:{}".format(session_id), "last_poll")
+    max_date = redis_client.hget("weblab:active:{}".format(session_id), "max_date")
+    username = redis_client.hget("weblab:active:{}".format(session_id), "username")
+    exited = redis_client.hget("weblab:active:{}".format(session_id), "exited")
+    
+    if exited == 'true':
+        return json.dumps({'should_finish' : -1})
+
+    if last_poll is not None:
+        current_time = datetime.now()
+        current_time = float(current_time.strftime('%s') + str(current_time.microsecond / 1e6)[1:])
+        difference = current_time - float(last_poll)
+        print "Did not poll in", difference, "seconds"
+        if difference >= 15:
             return json.dumps({'should_finish' : -1})
-        #app.logger.info( "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds))
-        print "User %s still has %s seconds" % (user.nickname, (user.max_date - datetime.now()).seconds)
-        if user.max_date<=datetime.now():
+
+        print "User %s still has %s seconds" % (username, (float(max_date) - current_time))
+
+        if float(max_date) <= current_time:
             print "Time expired"
             return json.dumps({'should_finish' : -1})
+
         return json.dumps({'should_finish' : 5})
+
     print "User not found"
     # 
     # If the user is considered expired here, we can return -1 instead of 10. 
@@ -714,23 +753,23 @@ def status(session_id):
 # when an administrator defines so, or when the assigned time
 # is over.
 # 
-@zumo.route('/weblab/sessions/<session_id>', methods=['POST'])
+@weblab.route('/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
-
-    #app.logger.info('Weblab trying to kick user')
     print "Weblab trying to delete user"
     print "Weblab erasing memory"
     erase()
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':
-        user=User.query.filter_by(session_id=session_id).first()
-        if user is not None:
-            print user.nickname +" deleted"
-            user.permission = False
-            db.session.add(user)
-            db.session.commit()
-            #app.logger.info( user.nickname +' deleted')
+        back = redis_client.hget("weblab:active:{}".format(session_id), "back")
+        if back is not None:
+            pipeline = redis_client.pipeline()
+            pipeline.delete("weblab:active:{}".format(session_id))
+            pipeline.hset("weblab:inactive:{}".format(session_id), "back", back)
+            # During half an hour after being created, the user is redirected to
+            # the original URL. After that, every record of the user has been deleted
+            pipeline.expire("weblab:inactive:{}".format(session_id), 3600)
+            pipeline.execute()
             return 'deleted'
-        #app.logger.info( 'User not found')
         return 'not found'
     return 'unknown op'
+

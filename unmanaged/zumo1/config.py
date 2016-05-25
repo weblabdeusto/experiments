@@ -8,9 +8,11 @@ CSRF_ENABLED = True
 SECRET_KEY = 'gO57w=09]SBP:x(<\lP~t>5mD@F;@]8|ZhE<k+B\T|0jD8azhXc.X[GwE}h0x7+0k:G)E%d^-0drgM%sw`fi/_Zle^Jp;*~<t?OV0kICBs-}u\<R,\TI<DCdXJg(DGnt,TwDl@*Ebc{~XO>h,XSq]HX}rL<va"r2Z=2edZl[X_P8v=^PKpbG-g2a1yponhRk]n%l:c7%2.ha:)kEZF[K{=fZ&a.-=*dA&;C5,mS}<e!O>|[^zhOzwl#W'
 
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+# SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+SQLALCHEMY_DATABASE_URI = 'mysql://zumo:zumo@localhost/zumo'
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 SQLALCHEMY_TRACK_MODIFICATIONS = True
+# SQLALCHEMY_POOL_SIZE = 1 # If SQLite. If MySQL, higher is fine. Better with Redis
 
 
 #Ardulab config

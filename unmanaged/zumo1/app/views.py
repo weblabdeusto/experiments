@@ -26,6 +26,7 @@ import os
 import time
 import subprocess
 import serial
+import redis
 from threading import Thread, Event
 
 serialThread = None
@@ -51,7 +52,7 @@ def check_permission(func):
                 db.session.commit()
                 print 'non Authorized'
                 logout_user()
-                return jsonify(error=False, auth=False)
+                return jsonify(error=False, auth=False, reason="check_permission")
             return func(*args, **kwargs)
         except:
             print 'non found'
@@ -571,8 +572,6 @@ def logout():
 @check_permission
 
 def poll():
-    global serialThread
-
     g.user.last_poll = datetime.now()
     print 'polled'
     app.logger.info(g.user.nickname + ' polled')
@@ -613,9 +612,9 @@ def index(session_id):
     db.session.commit()
     time.sleep(0.5)
     login_user(user,remember=True)
-    current_user=user
+    # current_user=user
     time.sleep(0.1)
-    print current_user
+    # print current_user
 
     #app.logger.info('Redirecting %s to the experiment' % user.nickname)
     return redirect(url_for('zumo.home'))

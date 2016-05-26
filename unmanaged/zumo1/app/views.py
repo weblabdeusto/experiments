@@ -454,10 +454,10 @@ def load():
                 for f in files:
                     os.remove(basedir+'/binaries/user/'+f)
                 if name == "blocks":
-                    print 'https://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/' + session['blockly_sketch'] +'.hex'
-                    response = requests.get('https://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/'+ session['blockly_sketch'] +'.hex',timeout=10)
+                    print 'http://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/' + session['blockly_sketch'] +'.hex'
+                    response = requests.get('http://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/'+ session['blockly_sketch'] +'.hex',timeout=10)
                 else:
-                    response = requests.get('https://'+ideIP+'/static/binaries/'+ session['ide_folder_id']+'/'+ session['ide_sketch'] +'.hex',timeout=10)
+                    response = requests.get('http://'+ideIP+'/static/binaries/'+ session['ide_folder_id']+'/'+ session['ide_sketch'] +'.hex',timeout=10)
                 f=open(basedir+'/binaries/user/'+name+'.hex','a')
                 f.write(response.content)
                 f.close()

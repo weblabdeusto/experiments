@@ -64,8 +64,8 @@ def createSession(user,ip):
         'server_initial_data' : serialized_server_initial_data,
         'back' : back_url,
     } 
-    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    resp = requests.post(url, data=json.dumps(data), headers=headers)
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain','authorization':'weblab:rodela'}
+    resp = requests.post(url, data=json.dumps(data), headers=headers, auth=('test','rodela'))
     url=json.loads(resp.content).get('url','')
     session_id = json.loads(resp.content).get('session_id','')
 
@@ -76,7 +76,7 @@ def createSession(user,ip):
 def checkStatus(ip, session_id):
     os.system('clear')
     url = 'http://'+ ip +'/weblab/sessions/'+ session_id + '/status'
-    resp = requests.get(url)
+    resp = requests.get(url, auth=('test','rodela'))
     print 'Response: '+ resp.text
 
 def kickOut(ip, session_id):
@@ -84,7 +84,7 @@ def kickOut(ip, session_id):
     url = 'http://'+ ip +'/weblab/sessions/'+ session_id
     data = {'action' : "delete"} 
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    resp = requests.post(url, data=json.dumps(data), headers=headers)
+    resp = requests.post(url, data=json.dumps(data), headers=headers, auth=('test','rodela'))
     print 'Response: '+ resp.text
 
 

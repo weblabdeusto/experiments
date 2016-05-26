@@ -661,9 +661,9 @@ def require_http_credentials():
 
     weblab_username = current_app.config['WEBLAB_USERNAME']
     weblab_password = current_app.config['WEBLAB_PASSWORD']
-#    if username != weblab_username or password != weblab_password:
-#        print("In theory this is weblab. However, it provided as credentials: {} : {}".format(username, password))
-#        return Response(response=("You don't seem to be a WebLab-Instance"), status=401, headers = {'WWW-Authenticate':'Basic realm="Login Required"'})
+    if username != weblab_username or password != weblab_password:
+        print("In theory this is weblab. However, it provided as credentials: {} : {}".format(username, password))
+        return Response(response=("You don't seem to be a WebLab-Instance"), status=401, headers = {'WWW-Authenticate':'Basic realm="Login Required"'})
 
 @weblab.route("/sessions/", methods=['POST'])
 def start_experiment():
@@ -692,7 +692,7 @@ def start_experiment():
     pipeline.hset('weblab:active:{}'.format(session_id), 'username', server_initial_data['request.username'])
     pipeline.hset('weblab:active:{}'.format(session_id), 'back', request_data['back'])
     pipeline.hset('weblab:active:{}'.format(session_id), 'exited', 'false')
-    pipeline.expire('weblab:active:{}'.format(session_id), 30 + int(server_initial_data['priority.queue.slot.length']))
+    pipeline.expire('weblab:active:{}'.format(session_id), 30 + int(float(server_initial_data['priority.queue.slot.length'])))
     pipeline.execute()
 
     link = url_for('zumo.index', session_id=session_id, _external = True)

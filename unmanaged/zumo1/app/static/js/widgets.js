@@ -136,7 +136,7 @@ TimerDisplayer = function (timer_id) {
 // stop().
 CameraRefresher = function (img_id) {
 
-    var INTERVAL = 500; // Seconds to wait between image changes.
+    var INTERVAL = 200; // Seconds to wait between image changes.
 
     var $img = $("#" + img_id);
     var _url;

@@ -629,7 +629,7 @@ def index(session_id):
 
     renew_poll(session_id)
     session['zumo_session_id'] = session_id
-    return redirect(url_for('.home',_scheme="https"))
+    return redirect(url_for('.home', _external = True,_scheme="https"))
 
 def get_json():
     # Retrieve the submitted JSON

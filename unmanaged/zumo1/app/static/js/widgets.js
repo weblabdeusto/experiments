@@ -255,12 +255,12 @@ $(document).ready(function(){
 
     $("#mjpeg").click(function() {
         cameraRefresher.stop();
-        $("#cam_img").attr("src", "https://admin:@cams.weblab.deusto.es/webcam/zumoline/video.mjpeg");
+        $("#cam").attr("src", "https://admin:@cams.weblab.deusto.es/webcam/zumoline/video.mjpeg");
         $("#jpg").show();
         $("#mjpeg").hide();
                 });
     $("#jpg").click(function() {
-        $("#cam_img").attr("src", FIRST_CAMERA_URL);
+        $("#cam").attr("src", FIRST_CAMERA_URL);
         cameraRefresher.start(FIRST_CAMERA_URL);
         $("#jpg").hide();
         $("#mjpeg").show();

@@ -695,7 +695,7 @@ def start_experiment():
     pipeline.expire('weblab:active:{}'.format(session_id), 30 + int(float(server_initial_data['priority.queue.slot.length'])))
     pipeline.execute()
 
-    link = url_for('zumo.index', session_id=session_id, _external = True)
+    link = url_for('zumo.index', session_id=session_id, _external = True, _scheme="https")
     #app.logger.info("Weblab requesting session for "+  user.nickname +", Assigned session_id: " + session_id)
     print "Assigned session_id: %s" % session_id
     print "See:",link

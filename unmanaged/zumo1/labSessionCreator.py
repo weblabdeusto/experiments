@@ -44,8 +44,8 @@ def main(argv):
 def createSession(user,ip):
 
     client_initial_data = {
-        'back':'http://weblab.deusto.es',
-        'url':'http://'+ip+'/weblab/sessions/'
+        'back':'https://weblab.deusto.es',
+        'url':'https://'+ip+'/weblab/sessions/'
     }
 
     server_initial_data = {
@@ -75,13 +75,13 @@ def createSession(user,ip):
 
 def checkStatus(ip, session_id):
     os.system('clear')
-    url = 'http://'+ ip +'/weblab/sessions/'+ session_id + '/status'
+    url = 'https://'+ ip +'/weblab/sessions/'+ session_id + '/status'
     resp = requests.get(url, auth=('test','rodela'))
     print 'Response: '+ resp.text
 
 def kickOut(ip, session_id):
     os.system('clear')
-    url = 'http://'+ ip +'/weblab/sessions/'+ session_id
+    url = 'https://'+ ip +'/weblab/sessions/'+ session_id
     data = {'action' : "delete"} 
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     resp = requests.post(url, data=json.dumps(data), headers=headers, auth=('test','rodela'))

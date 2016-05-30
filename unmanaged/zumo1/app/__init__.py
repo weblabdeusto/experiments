@@ -38,4 +38,4 @@ from app import views, zumo, weblab, checker
 
 app.register_blueprint(zumo, url_prefix='/labs/zumoline')
 app.register_blueprint(weblab, url_prefix='/labs/zumoline/weblab')
-app.register_blueprint(checker, url_prefix='/checker/')
+app.register_blueprint(checker, url_prefix='/checker')

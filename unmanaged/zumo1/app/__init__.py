@@ -11,7 +11,7 @@ from flask_socketio import SocketIO
 from flask_sslify import SSLify
 
 app = Flask(__name__)
-sslify = SSLify(app)
+#sslify = SSLify(app)
 app.config.from_object('config')
 
 zumo = Blueprint('zumo',

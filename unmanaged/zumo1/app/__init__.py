@@ -18,7 +18,7 @@ zumo = Blueprint('zumo',
 weblab = Blueprint("weblab", __name__)
 checker = Blueprint("checker", __name__)
 
-socketio = SocketIO(app, async_mode=async_mode, resource = "/labs/zumoline/socket.io")
+socketio = SocketIO(app, async_mode='eventlet', resource = "/labs/zumoline/socket.io")
 #sslify = SSLify(app)
 
 if not app.debug:

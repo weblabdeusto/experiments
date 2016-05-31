@@ -1,14 +1,10 @@
-async_mode = 'eventlet'
-if async_mode == 'eventlet':
-    import eventlet
-    eventlet.monkey_patch()
-elif async_mode == 'gevent':
-    from gevent import monkey
-    monkey.patch_all()
+
+import eventlet
+eventlet.monkey_patch()
 
 from flask import Flask,Blueprint
 from flask_socketio import SocketIO
-from flask_sslify import SSLify
+#from flask_sslify import SSLify
 
 app = Flask(__name__)
 

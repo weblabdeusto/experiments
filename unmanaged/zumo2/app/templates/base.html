@@ -35,13 +35,10 @@
 
             var BACK_URL = "{{back}}";
             var TIME_LEFT = {{timeleft-1}};
-
-
-        </script>
-        <script>
             var USER_FILE = "";
             var DEMO_FILES = [];
-
+            var DEBUG = ("{{ debug }}"== "True");
+            console.log(DEBUG);
             {% if session['ide_sketch'] != None %}
                 USER_FILE = "{{session['ide_sketch']}}";
             {% else %}

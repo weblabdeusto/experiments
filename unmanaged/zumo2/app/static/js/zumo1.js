@@ -190,11 +190,21 @@ $(document).ready(function(){
 
             // the socket.io documentation recommends sending an explicit package upon connection
             // this is specially important when using the global namespace   + ':' + location.port + namespace
-            window.socket = io.connect('https://' + document.domain,
-                {path: "/labs/zumoline/socket.io", 'multiplex': false,'transports':['polling']})
-                .on('connect', function () {
-                    console.log('connecteeed');
+            if(DEBUG){
+                window.socket = io.connect('http://' + document.domain + ':' + location.port,
+                    {path: "/labs/zumoline/socket.io", 'multiplex': false,'transports':['polling']})
+                    .on('connect', function () {
+                        console.log('connecteeed');
                 });
+            }
+            else{
+                window.socket = io.connect('https://' + document.domain + ':' + location.port,
+                    {path: "/labs/zumoline/socket.io", 'multiplex': false,'transports':['polling']})
+                    .on('connect', function () {
+                        console.log('connecteeed');
+                });
+            }
+
 
 
         } catch (ex) {
@@ -205,13 +215,21 @@ $(document).ready(function(){
         socket.on('General', function (msg) {
 
             console.log('recived: ' + msg.data);
-            if (msg.data == 'ready') {
+            if (msg.data == 'Ready') {
                 launch_btn.prop("disabled", false);
                 $("#btn-A").prop( "disabled", false );
                 $("#btn-B").prop( "disabled", false );
                 $("#btn-C").prop( "disabled", false );
                 $("#send-data").prop( "disabled", false );
                 status_div.html("<p>Ready!!</p>")
+            }
+             else if(msg.data == 'Error') {
+                launch_btn.prop("disabled", false);
+                $("#btn-A").prop( "disabled", false );
+                $("#btn-B").prop( "disabled", false );
+                $("#btn-C").prop( "disabled", false );
+                $("#send-data").prop( "disabled", false );
+                status_div.html("<p>Error!!</p>")
             }
             else {
                 serialDiv.append('<p>General: ' + msg.data + '</p>');
@@ -237,16 +255,7 @@ $(document).ready(function(){
 
         socket.on('Serial event', function (msg) {
             console.log(msg.data);
-            if (msg.data == 'ready') {
-                console.log('READYYYY');
-                launch_btn.prop("disabled", false);
-                $("#btn-A").prop( "disabled", false );
-                $("#btn-B").prop( "disabled", false );
-                $("#btn-C").prop( "disabled", false );
-                $("#send-data").prop( "disabled", false );
-                status_div.html("<p>Ready!!</p>")
-            }
-            else{
+
                 var messages = msg.data.split("\n");
                 for (var i = 0; i <= messages.length; i++) {
                     if (messages[i] != undefined) {
@@ -254,7 +263,7 @@ $(document).ready(function(){
                         serialDiv.scrollTop(serialDiv.children().length * 1000)
                     }
                 }
-            }
+
 
         });
 

@@ -1,10 +1,13 @@
 
 import eventlet
+
 eventlet.monkey_patch()
 
 from flask import Flask,Blueprint
 from flask_socketio import SocketIO
-#from flask_sslify import SSLify
+import redis
+from boardManager import BoardManager
+from config import GPIOS
 
 app = Flask(__name__)
 
@@ -19,7 +22,8 @@ weblab = Blueprint("weblab", __name__)
 checker = Blueprint("checker", __name__)
 
 socketio = SocketIO(app, async_mode='eventlet', resource = "/labs/zumoline/socket.io")
-#sslify = SSLify(app)
+redisClient = redis.Redis()
+board_manager = BoardManager(socketio=socketio,redis=redisClient, gpios=GPIOS)
 
 if not app.debug:
     import logging

@@ -54,23 +54,21 @@ class BoardManager(object):
             try:
                 if self.serial.isOpen():
                     out=""
-                    if self.serial.inWaiting != 0:
-                        buff_len = self.serial.inWaiting()
-                        if buff_len:
-                            while buff_len > 0:
-                                out += self.serial.read(buff_len)
-                            if out!="":
-                                print "Sending serial data to client"
-                                if self.socketio is not None:
-                                    self.socketio.emit('Serial event',
-                                          {'data':out},
-                                          broadcast=True)
-
+                    buff_len = self.serial.inWaiting()
+                    if buff_len != 0:
+                        out += self.serial.read(buff_len)
+                        if out!="":
+                            print "Sending serial data to client"
+                            if self.socketio is not None:
+                                self.socketio.emit('Serial event',
+                                      {'data':out},
+                                      broadcast=True)
+                                time.sleep(0.5)
                         else:
                             time.sleep(0.2)
                     else:
                         time.sleep(0.2)
-                time.sleep(0.5)
+
             except:
                 self.serial.close()
                 time.sleep(1)

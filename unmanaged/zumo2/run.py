@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#!/usr/bin/python
-=======
 #!usr/bin/python
->>>>>>> 11aa72c89dbfda48c983777c050c56531488a88e
 
 from app import app,socketio
 

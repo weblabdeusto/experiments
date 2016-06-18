@@ -1,7 +1,5 @@
 
-#TODO: - Check last poll for erasing memory
-#TODO: - Send message to power board_manager on critical errors
-#TODO: - Detect session finish on polling and erase robot's flash memory
+#TODO: - Check last poll for erasing memory ONLY IF NECESARY
 #TODO: - Improve logging
 
 
@@ -10,7 +8,7 @@ from flask_socketio import disconnect
 from functools import wraps
 
 from datetime import datetime, timedelta
-from app import app, socketio, zumo, checker, weblab, redisClient, board_manager
+from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono
 from config import basedir, ideIP, blocklyIP, DEBUG
 
 import json
@@ -18,10 +16,15 @@ import random
 import requests
 import os
 
-
+#TODO: Improve error checking tasks and report critical errors here
 @checker.route('/check')
 def check():
-    return 'SUCCESS!!'
+    error = redisClient.hget('zumo:board','error')
+
+    if error == 'Arduino not responding':
+        return 'REBOOT'
+    else:
+        return 'SUCCESS!!'
 
 ##################################
 #######------>WEBLAB<-------######
@@ -53,6 +56,9 @@ def check_permission(func):
 @zumo.route('/home')
 @check_permission
 def home():
+    #TODO: Change this
+    #chrono.startChrono()
+
     #Check if users has his code on the IDE
     try:
         print "doing request to "+ ideIP
@@ -156,6 +162,7 @@ def load():
 
     name = request.form['name']
     demo = request.form['demo'] == "true"
+    ide = request.form['ide']
 
     if not demo:
         if(session['ide_folder_id'] =="None" and session['blockly_folder_id'] =="None"):
@@ -167,11 +174,12 @@ def load():
                 files = os.listdir(basedir+'/binaries/user')
                 for f in files:
                     os.remove(basedir+'/binaries/user/'+f)
-                if name == "blocks":
-                    print 'http://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/' + session['blockly_sketch'] +'.hex'
-                    response = requests.get('http://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/'+ session['blockly_sketch'] +'.hex',timeout=10)
+                if ide == "blockly":
+                    filepath =  'http://'+blocklyIP+'/static/binaries/'+ session['blockly_folder_id'] +'/' + session['blockly_sketch'] +'.hex'
                 else:
-                    response = requests.get('http://'+ideIP+'/static/binaries/'+ session['ide_folder_id']+'/'+ session['ide_sketch'] +'.hex',timeout=10)
+                    filepath = 'http://'+ideIP+'/static/binaries/'+ session['ide_folder_id']+'/'+ session['ide_sketch'] +'.hex'
+
+                response = requests.get(filepath,timeout=10)
                 f=open(basedir+'/binaries/user/'+name+'.hex','a')
                 f.write(response.content)
                 f.close()
@@ -200,6 +208,7 @@ def logout():
     force_exited(g.user['session_id'])
     print "User close session and memory is going to be erased"
 
+    chrono.stopChrono()
     board_manager.eraseMemory()
     return jsonify(error=False,auth=False)
 
@@ -304,9 +313,6 @@ def get_json():
 # First, this method creates new sessions. We store the 
 # sessions on memory in this dummy example.
 # 
-
-
-
 @weblab.before_request
 def require_http_credentials():
     auth = request.authorization
@@ -417,6 +423,7 @@ def status(session_id):
 def dispose_experiment(session_id):
     print "Weblab trying to delete user"
     print "Weblab erasing memory"
+    chrono.stopChrono()
     board_manager.eraseMemory()
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':

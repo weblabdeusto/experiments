@@ -13,6 +13,7 @@ class BoardManager(object):
         self.serialThread = None
         self.socketio = socketio
         self.redis = redis
+        self.redis.hset('zumo:board','error','none')
         self.erased = False
         self.avrThread = None
         self.gpios = gpios
@@ -61,9 +62,10 @@ class BoardManager(object):
                                 buff_len=buff_len-1
                             if out!="":
                                 print "Sending serial data to client"
-                                self.socketio.emit('Serial event',
-                                      {'data':out},
-                                      broadcast=True)
+                                if self.socketio is not None:
+                                    self.socketio.emit('Serial event',
+                                          {'data':out},
+                                          broadcast=True)
                         else:
                             time.sleep(0.2)
                     else:
@@ -192,7 +194,6 @@ class BoardManager(object):
         return True, "Done"
 
     def eraseTask(self):
-
         success = self.enableBootloader()
         try:
             resp = subprocess.check_output(["ls","/dev"])
@@ -203,11 +204,13 @@ class BoardManager(object):
                     port = dev
             if port != "":
                 result = subprocess.check_output(['avrdude', '-c' , 'avr109', '-p', 'atmega32U4', '-P', '/dev/'+port, '-e'], stderr=subprocess.STDOUT)
+                self.redis.hset('zumo:board','error','none')
                 print result
                 self.erased = True
             else:
                 print "Device not found"
                 #TODO: activate error flag
+                self.redis.hset('zumo:board','error','Arduino not responding')
 
         except subprocess.CalledProcessError, ex:
             # error code <> 0
@@ -216,7 +219,6 @@ class BoardManager(object):
 
 
     def loadBinary(self,path):
-
         success = self.stopSerial()
 
         if self.avrThread is None:
@@ -247,25 +249,29 @@ class BoardManager(object):
             if port != "":
                 result = subprocess.check_output(['avrdude', '-c' , 'avr109', '-p', 'atmega32U4', '-P', '/dev/'+port, '-U',binary], stderr=subprocess.STDOUT)
                 print result
-                self.socketio.emit('General',
-                          {'data':"Ready"},
-                          broadcast=True)
-                print "Starting serial"
-                time.sleep(1)
-                self.erased = False
-                self.startSerial()
+                if self.redis is not None:
+                    self.redis.hset('zumo:board','error','none')
+                if self.socketio is not None:
+                    self.socketio.emit('General',
+                              {'data':"Ready"},
+                              broadcast=True)
+                    print "Starting serial"
+                    time.sleep(1)
+                    self.erased = False
+                    self.startSerial()
             else:
                 print "Device not found"
-                self.socketio.emit('General',
+                if self.socketio is not None:
+                    self.socketio.emit('General',
                               {'data':"Error"},
                               broadcast=True)
-                #TODO: activate error flag
+                if self.redis is not None:
+                    self.redis.hset('zumo:board','error','Arduino not responding')
                 return -1
 
         except subprocess.CalledProcessError, ex:
             print "Exception loading code"
+            self.redis.hset('zumo:board','error','AVR not working')
             self.socketio.emit('General',
                               {'data':"Error"},
                               broadcast=True)
-
-

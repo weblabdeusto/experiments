@@ -7,6 +7,7 @@ from flask import Flask,Blueprint
 from flask_socketio import SocketIO
 import redis
 from boardManager import BoardManager
+from lineFollowerTools import Chrono
 from config import GPIOS
 
 app = Flask(__name__)
@@ -23,13 +24,15 @@ checker = Blueprint("checker", __name__)
 
 socketio = SocketIO(app, async_mode='eventlet', resource = "/labs/zumoline/socket.io")
 redisClient = redis.Redis()
+
 board_manager = BoardManager(socketio=socketio,redis=redisClient, gpios=GPIOS)
+chrono = Chrono(socketio=socketio,redis=redisClient)
 
 if not app.debug:
     import logging
     from logging.handlers import RotatingFileHandler
     file_handler = RotatingFileHandler('logs/zumo.log', 'a',
-                                       1 * 1024 * 1024, 10)
+                                       1 * 1024 * 1024, 5)
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))

@@ -66,10 +66,12 @@ class BoardManager(object):
                                     self.socketio.emit('Serial event',
                                           {'data':out},
                                           broadcast=True)
+
                         else:
                             time.sleep(0.2)
                     else:
                         time.sleep(0.2)
+                time.sleep(0.2)
             except:
                 self.serial.close()
                 time.sleep(1)

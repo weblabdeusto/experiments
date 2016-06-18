@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import json, requests
 from time import strftime
 import os, sys, getopt

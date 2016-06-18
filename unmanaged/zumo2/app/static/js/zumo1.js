@@ -3,10 +3,11 @@
  * FILE MANAGER
  */
 
-function File(name,demo){
+function File(name,demo,ide){
     this.name = name;
     this.active = false;
     this.demo = demo;
+    this.ide = ide;
 
     if(demo){
         this.div = $("#"+name);
@@ -37,16 +38,16 @@ function FileManager(){
 
     this.init = function(){
         for(var i=0;i<DEMO_FILES.length;i++){
-            this.demo_files.push(new File(DEMO_FILES[i],true))
+            this.demo_files.push(new File(DEMO_FILES[i],true,'None'))
         }
         console.log(USER_BLOCKLY_FILE);
         if(USER_FILE!="None"){
-            this.user_file = new File(USER_FILE,false);
+            this.user_file = new File(USER_FILE,false,'ace');
             this.setActive(USER_FILE,false);
         }
 
         if(USER_BLOCKLY_FILE!="None"){
-            this.blockly_file = new File(USER_BLOCKLY_FILE,false);
+            this.blockly_file = new File(USER_BLOCKLY_FILE,false,'blockly');
             console.log(this.blockly_file);
             if(USER_FILE=='None')
                 this.setActive(USER_BLOCKLY_FILE,false);
@@ -106,7 +107,8 @@ function FileManager(){
 
         var file_data = {
             'name': file.name,
-            'demo': file.demo
+            'demo': file.demo,
+            'ide': file.ide
         };
 
         var callback = function(data){
@@ -265,6 +267,10 @@ $(document).ready(function(){
                 }
 
 
+        });
+
+        socket.on('Chrono event' ,function(msg){
+            console.log(msg.data);
         });
 
         $("#button_finish").click(function () {

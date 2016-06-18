@@ -31,6 +31,11 @@
     overflow-y: scroll;
     overflow-x: scroll;
 }
+#chrono-panel{
+    line-height: 10px;
+    height: 150px;
+    overflow-y: scroll;
+}
 
 .file{
     cursor:pointer;

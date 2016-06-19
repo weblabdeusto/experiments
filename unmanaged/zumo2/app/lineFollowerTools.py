@@ -60,7 +60,7 @@ class Chrono(object):
                     self.socketio.emit('Chrono event',
                         {'data':str(response)},
                         broadcast=True)
-            sleep(0.05)
+            sleep(0.3)
 
 
     def stopChrono(self):

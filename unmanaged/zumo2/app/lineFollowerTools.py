@@ -1,5 +1,27 @@
 from threading import Thread
 from time import sleep
+from serial import Serial
+class RFID_Reader(object):
+
+    def __init__(self):
+        self.serial = Serial()
+        self.port = '/dev/serial0'
+        self.baudrate = 9600
+        self.parity = "N"
+        self.bytesize = 8
+        self.serial.open()
+
+    def read(self):
+        out = ""
+        buff_len = self.serial.inWaiting()
+        if buff_len != 0:
+            out += self.serial.read(buff_len)
+            if out!="":
+                return True, out[1:11]
+            else:
+                return False,'none'
+        else:
+            return False, "none"
 
 class Chrono(object):
     
@@ -9,6 +31,7 @@ class Chrono(object):
         self.chronoThread = None
         self.redis = redis
         self.socketio = socketio
+        self.RFID_reader = RFID_Reader()
         
     def startChrono(self):
         
@@ -31,11 +54,14 @@ class Chrono(object):
 
     def chronoTask(self):
         while self.runChrono:
-            if self.socketio is not None:
-                self.socketio.emit('Chrono event',
-                      {'data':'Testing chrono sockets'},
-                      broadcast=True)
-            sleep(2)
+            success, response = self.RFID_reader.read()
+            if success:
+                print str(response)
+                if self.socketio is not None:
+                    self.socketio.emit('Chrono event',
+                        {'data':str(response)},
+                        broadcast=True)
+            sleep(0.1)
 
 
     def stopChrono(self):

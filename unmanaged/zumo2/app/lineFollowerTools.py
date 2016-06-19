@@ -9,7 +9,13 @@ class RFID_Reader(object):
         self.serial.baudrate = 9600
         self.serial.parity = "N"
         self.serial.bytesize = 8
+
+
+    def start(self):
         self.serial.open()
+
+    def stop(self):
+        self.serial.close()
 
     def read(self):
         out = ""
@@ -52,6 +58,7 @@ class Chrono(object):
         return True
 
     def chronoTask(self):
+        self.RFID_reader.start()
         while self.runChrono:
             success, response = self.RFID_reader.read()
             if success:
@@ -61,6 +68,7 @@ class Chrono(object):
                         {'data':str(response)},
                         broadcast=True)
             sleep(0.3)
+        self.RFID_reader.stop()
 
 
     def stopChrono(self):

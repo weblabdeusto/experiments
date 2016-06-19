@@ -63,7 +63,7 @@ class BoardManager(object):
                                 self.socketio.emit('Serial event',
                                       {'data':out},
                                       broadcast=True)
-                                time.sleep(0.5)
+                                time.sleep(0.2)
                         else:
                             time.sleep(0.2)
                     else:

@@ -20,9 +20,8 @@ class RFID_Reader(object):
     def read(self):
         out = ""
         buffer_len = self.serial.inWaiting()
-        print buffer_len
-        if buffer_len >= 12:
-            out += self.serial.read(12)
+        if buffer_len >= 16:
+            out += self.serial.read(16)
             if out!="":
                 return True, out[1:11]
             else:

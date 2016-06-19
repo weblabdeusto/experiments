@@ -20,8 +20,9 @@ class RFID_Reader(object):
     def read(self):
         out = ""
         buffer_len = self.serial.inWaiting()
-        if buffer_len >= 16:
-            out += self.serial.read(16)
+        print buffer_len
+        if buffer_len >= 0:
+            out += self.serial.read(12)
             if out!="":
                 return True, out[1:11]
             else:
@@ -68,7 +69,7 @@ class Chrono(object):
                     self.socketio.emit('Chrono event',
                         {'data':str(response)},
                         broadcast=True)
-            sleep(0.3)
+            sleep(0.1)
         self.RFID_reader.stop()
 
 

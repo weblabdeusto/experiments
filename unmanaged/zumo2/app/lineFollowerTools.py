@@ -5,10 +5,10 @@ class RFID_Reader(object):
 
     def __init__(self):
         self.serial = Serial()
-        self.port = '/dev/serial0'
-        self.baudrate = 9600
-        self.parity = "N"
-        self.bytesize = 8
+        self.serial.port = '/dev/serial0'
+        self.serial.baudrate = 9600
+        self.serial.parity = "N"
+        self.serial.bytesize = 8
         self.serial.open()
 
     def read(self):

@@ -57,7 +57,7 @@ def check_permission(func):
 @check_permission
 def home():
     #TODO: Change this
-    #chrono.startChrono()
+    chrono.startChrono()
 
     #Check if users has his code on the IDE
     try:

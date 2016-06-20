@@ -16,6 +16,7 @@ import json
 import random
 import requests
 import os
+import time
 
 #TODO: Improve error checking tasks and report critical errors here
 @checker.route('/check')
@@ -138,9 +139,14 @@ def sendSerial():
 def gen(camera):
     """Video streaming generator function."""
     while True:
-        frame = camera.get_frame()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        try:
+            time.sleep(0.3)
+            frame = camera.get_frame()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        except:
+            break
+
 
 
 @zumo.route('/video_feed')

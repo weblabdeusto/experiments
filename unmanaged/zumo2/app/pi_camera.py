@@ -39,11 +39,10 @@ class Camera(object):
 
         time.sleep(1)
         stream = io.BytesIO()
-        for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
             time.sleep(0.1)
-            img = frame.array
-            imgRGB=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-            jpg = Image.fromarray(imgRGB)
+
+            jpg = Image.fromarray(frame.array)
             jpg.save(stream,'JPEG')
 
             # store frame
@@ -59,5 +58,4 @@ class Camera(object):
             if time.time() - cls.last_access > 10:
                 break
 
-        camera.release()
         cls.thread = None

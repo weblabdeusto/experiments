@@ -246,6 +246,11 @@ CameraRefresher = function (img_id) {
 
 
 $(document).ready(function(){
+    var cam = $("#cam");
+    var board_cam = $("#board-cam");
+    var jpg_button = $("#jpg");
+    var mjpeg_button = $("#mjpeg");
+
     timerDisplayer = new TimerDisplayer("timer");
     timerDisplayer.setTimeLeft(TIME_LEFT);
     timerDisplayer.startCountDown();
@@ -253,24 +258,27 @@ $(document).ready(function(){
     cameraRefresher = new CameraRefresher("cam");
     cameraRefresher.start(FIRST_CAMERA_URL);
 
-    $("#mjpeg").click(function() {
+    mjpeg_button.click(function() {
         cameraRefresher.stop();
-        $("#cam").attr("src", "https://admin:@cams.weblab.deusto.es/webcam/zumoline/video.mjpeg");
-        $("#jpg").show();
-        $("#mjpeg").hide();
-        $("#cam").show();
-                });
-    $("#jpg").click(function() {
-        $("#cam").attr("src", FIRST_CAMERA_URL);
+        cam.attr("src", "https://admin:@cams.weblab.deusto.es/webcam/zumoline/video.mjpeg");
+        jpg_button.show();
+        mjpeg_button.hide();
+        board_cam.hide();
+        cam.show();
+    });
+    jpg_button.click(function() {
+
+        cam.attr("src", FIRST_CAMERA_URL);
         cameraRefresher.start(FIRST_CAMERA_URL);
-        $("#jpg").hide();
-        $("#mjpeg").show();
-        $("#cam").show();
+        jpg_button.hide();
+        mjpeg_button.show();
+        board_cam.hide();
+        cam.show();
     });
     $("#onboard").click(function() {
         cameraRefresher.stop();
-        $("#cam").hide();
-        $("#board-cam").show()
+        cam.hide();
+        board_cam.show()
     });
 
 });

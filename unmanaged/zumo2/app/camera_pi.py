@@ -46,7 +46,6 @@ class Camera(object):
                 # reset stream for next frame
                 stream.seek(0)
                 stream.truncate()
-                time.sleep(0.1)
 
                 # if there hasn't been any clients asking for frames in
                 # the last 10 seconds stop the thread

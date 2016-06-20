@@ -35,12 +35,12 @@ class Camera(object):
         time.sleep(1)
         stream = io.BytesIO()
         while True:
+            time.sleep(0.1)
             rc,img = camera.read()
             if not rc:
                 continue
             imgRGB=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
             jpg = Image.fromarray(imgRGB)
-            time.sleep(0.1)
             jpg.save(stream,'JPEG')
 
             # store frame

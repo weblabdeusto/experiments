@@ -40,11 +40,10 @@ class Camera(object):
         time.sleep(1)
         stream = io.BytesIO()
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+            time.sleep(0.1)
             img = frame.array
-
             imgRGB=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
             jpg = Image.fromarray(imgRGB)
-            time.sleep(0.1)
             jpg.save(stream,'JPEG')
 
             # store frame

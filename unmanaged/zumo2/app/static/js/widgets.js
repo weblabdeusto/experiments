@@ -265,5 +265,9 @@ $(document).ready(function(){
         $("#jpg").hide();
         $("#mjpeg").show();
     });
+    $("#onboard").click(function() {
+        cameraRefresher.stop();
+        $("#cam").attr("src", "http://" + document.domain + ':' + location.port +"/labs/zumoline/video_feed");
+    });
 
 });

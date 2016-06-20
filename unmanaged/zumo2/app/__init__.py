@@ -8,7 +8,7 @@ from flask_socketio import SocketIO
 import redis
 from boardManager import BoardManager
 from lineFollowerTools import Chrono
-from config import GPIOS
+from config import GPIOS, CARDS
 
 app = Flask(__name__)
 
@@ -26,7 +26,7 @@ socketio = SocketIO(app, async_mode='eventlet', resource = "/labs/zumoline/socke
 redisClient = redis.Redis()
 
 board_manager = BoardManager(socketio=socketio,redis=redisClient, gpios=GPIOS)
-chrono = Chrono(socketio=socketio,redis=redisClient)
+chrono = Chrono(socketio=socketio,redis=redisClient, cards=CARDS)
 
 if not app.debug:
     import logging

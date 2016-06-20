@@ -9,6 +9,7 @@ from functools import wraps
 
 from datetime import datetime, timedelta
 from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono
+from camera_pi import Camera
 from config import basedir, ideIP, blocklyIP, DEBUG
 
 import json
@@ -20,7 +21,6 @@ import os
 @checker.route('/check')
 def check():
     error = redisClient.hget('zumo:board','error')
-
     if error == 'Arduino not responding':
         return 'REBOOT'
     else:
@@ -56,9 +56,8 @@ def check_permission(func):
 @zumo.route('/home')
 @check_permission
 def home():
-    #TODO: Change this
-    chrono.startChrono()
 
+    chrono.startChrono()
     #Check if users has his code on the IDE
     try:
         print "doing request to "+ ideIP
@@ -132,6 +131,23 @@ def sendSerial():
         return jsonify(success=True)
     else:
         return jsonify(success=False)
+
+#############################################
+#### ----------> VIDEO <--------------#######
+#############################################
+def gen(camera):
+    """Video streaming generator function."""
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+
+@zumo.route('/video_feed')
+def video_feed():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 #############################################

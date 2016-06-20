@@ -1,6 +1,7 @@
 from threading import Thread
 from time import sleep
 from serial import Serial
+
 class RFID_Reader(object):
 
     def __init__(self):
@@ -31,14 +32,16 @@ class RFID_Reader(object):
 
 class Chrono(object):
     
-    def __init__(self,socketio=None, redis=None):
+    def __init__(self,socketio=None, redis=None, cards=5):
 
         self.runChrono = False
         self.chronoThread = None
         self.redis = redis
         self.socketio = socketio
         self.RFID_reader = RFID_Reader()
-        
+        self.card_ids = []
+        self.times = []
+
     def startChrono(self):
         
         if self.chronoThread is None:
@@ -51,7 +54,8 @@ class Chrono(object):
                 print 'Chrono thread stopped'
             else:
                 print 'Chrono thread is not running'
-
+        self.card_ids = []
+        self.times = []
         self.chronoThread = Thread(target=self.chronoTask)
         self.runChrono = True
         print 'Starting chrono'
@@ -59,6 +63,7 @@ class Chrono(object):
         return True
 
     def chronoTask(self):
+        #TODO: Chrono here
         self.RFID_reader.start()
         while self.runChrono:
             success, response = self.RFID_reader.read()

@@ -309,16 +309,6 @@ $(document).ready(function(){
 
         });
 
-        $('#start-serial').click(function (event) {
-            socket.emit('Serial start');
-            return false;
-        });
-
-        $('#close-serial').click(function (event) {
-            socket.emit('Serial close');
-            return false;
-        });
-
         launch_btn.click(function(){
 
             launch_btn.prop( "disabled", true );

@@ -259,21 +259,22 @@ $(document).ready(function(){
     cameraRefresher.start(FIRST_CAMERA_URL);
 
     mjpeg_button.click(function() {
+        board_cam.hide();
+        cam.show();
         cameraRefresher.stop();
         cam.attr("src", "https://admin:@cams.weblab.deusto.es/webcam/zumoline/video.mjpeg");
         jpg_button.show();
         mjpeg_button.hide();
-        board_cam.hide();
-        cam.show();
+
     });
     jpg_button.click(function() {
-
+        board_cam.hide();
+        cam.show();
         cam.attr("src", FIRST_CAMERA_URL);
         cameraRefresher.start(FIRST_CAMERA_URL);
         jpg_button.hide();
         mjpeg_button.show();
-        board_cam.hide();
-        cam.show();
+
     });
     $("#onboard").click(function() {
         cameraRefresher.stop();

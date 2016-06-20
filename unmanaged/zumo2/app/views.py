@@ -9,7 +9,7 @@ from functools import wraps
 
 from datetime import datetime, timedelta
 from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono
-from camera_pi import Camera
+from camera import Camera
 from config import basedir, ideIP, blocklyIP, DEBUG
 
 import json
@@ -139,6 +139,7 @@ def sendSerial():
 def gen(camera):
     """Video streaming generator function."""
     while True:
+        time.sleep(0.2)
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')

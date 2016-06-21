@@ -9,7 +9,7 @@ from functools import wraps
 
 from datetime import datetime, timedelta
 from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono
-from camera import Camera
+from pi_camera import Camera
 from config import basedir, ideIP, blocklyIP, DEBUG
 
 import json

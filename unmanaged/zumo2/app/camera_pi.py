@@ -12,6 +12,7 @@ class Camera(object):
     thread = None  # background thread that reads frames from camera
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
+    camera = None
 
     def initialize(self):
         if Camera.thread is None:
@@ -30,18 +31,18 @@ class Camera(object):
 
     @classmethod
     def _thread(cls):
-        with picamera.PiCamera() as camera:
+        with picamera.PiCamera() as cls.camera:
             # camera setup
-            camera.resolution = (320, 180)
-            camera.hflip = True
-            camera.vflip = True
+            cls.camera.resolution = (320, 180)
+            cls.camera.hflip = True
+            cls.camera.vflip = True
 
             # let camera warm up
-            camera.start_preview()
+            cls.camera.start_preview()
             time.sleep(2)
 
             stream = io.BytesIO()
-            for foo in camera.capture_continuous(stream, 'jpeg',
+            for foo in cls.camera.capture_continuous(stream, 'jpeg',
                                                  use_video_port=True):
                 # store frame
                 stream.seek(0)
@@ -55,5 +56,6 @@ class Camera(object):
                 # the last 10 seconds stop the thread
                 if time.time() - cls.last_access > 3:
                     break
-        camera.close()
+
+        cls.camera.close()
         cls.thread = None

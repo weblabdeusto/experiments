@@ -148,6 +148,7 @@ def gen(camera):
 
 
 @zumo.route('/video_feed')
+@check_permission
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(Camera()),

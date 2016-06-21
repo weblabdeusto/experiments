@@ -31,31 +31,35 @@ class Camera(object):
 
     @classmethod
     def _thread(cls):
-        with picamera.PiCamera() as cls.camera:
-            # camera setup
-            cls.camera.resolution = (320, 180)
-            cls.camera.hflip = True
-            cls.camera.vflip = True
+        try:
+            with picamera.PiCamera() as cls.camera:
+                # camera setup
+                cls.camera.resolution = (320, 180)
+                cls.camera.hflip = True
+                cls.camera.vflip = True
 
-            # let camera warm up
-            cls.camera.start_preview()
-            time.sleep(2)
+                # let camera warm up
+                cls.camera.start_preview()
+                time.sleep(2)
 
-            stream = io.BytesIO()
-            for foo in cls.camera.capture_continuous(stream, 'jpeg',
-                                                 use_video_port=True):
-                # store frame
-                stream.seek(0)
-                cls.frame = stream.read()
+                stream = io.BytesIO()
+                for foo in cls.camera.capture_continuous(stream, 'jpeg',
+                                                     use_video_port=True):
+                    # store frame
+                    stream.seek(0)
+                    cls.frame = stream.read()
 
-                # reset stream for next frame
-                stream.seek(0)
-                stream.truncate()
+                    # reset stream for next frame
+                    stream.seek(0)
+                    stream.truncate()
 
-                # if there hasn't been any clients asking for frames in
-                # the last 10 seconds stop the thread
-                if time.time() - cls.last_access > 3:
-                    break
+                    # if there hasn't been any clients asking for frames in
+                    # the last 10 seconds stop the thread
+                    if time.time() - cls.last_access > 3:
+                        break
 
-        cls.camera.close()
-        cls.thread = None
+            cls.camera.close()
+            cls.thread = None
+        except:
+            cls.camera.close()
+            cls.thread = None

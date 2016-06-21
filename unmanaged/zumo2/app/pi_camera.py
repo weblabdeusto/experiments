@@ -32,15 +32,15 @@ class Camera(object):
     @classmethod
     def _thread(cls):
         camera =  PiCamera()
-        camera.resolution = (320, 180)
+        camera.resolution = (320, 240)
         camera.hflip = True
         camera.vflip = True
-        rawCapture = PiRGBArray(camera, size=(320, 180))
+        rawCapture = PiRGBArray(camera, size=(320, 240))
 
         time.sleep(1)
         stream = io.BytesIO()
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
-            time.sleep(0.1)
+            time.sleep(0.2)
 
             jpg = Image.fromarray(frame.array)
             jpg.save(stream,'JPEG')

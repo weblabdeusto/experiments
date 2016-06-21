@@ -8,6 +8,16 @@
         <link rel="stylesheet" href="{{url_for('zumo.static', filename='css/zumo1.css')}}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+            window.msgs = {
+                'READY': '{{ gettext('READY') }}'
+            };
+
+            function i18n(msg_id) {
+                return window.msgs[msg_id];
+            }
+        </script>
     </head>
     <body>
         <div class="row">

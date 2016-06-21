@@ -2,7 +2,7 @@ import io
 import threading
 import time
 import cv2
-import Image
+from PIL import Image
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 

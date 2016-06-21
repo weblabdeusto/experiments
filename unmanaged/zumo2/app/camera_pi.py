@@ -55,4 +55,5 @@ class Camera(object):
                 # the last 10 seconds stop the thread
                 if time.time() - cls.last_access > 3:
                     break
+        camera.close()
         cls.thread = None

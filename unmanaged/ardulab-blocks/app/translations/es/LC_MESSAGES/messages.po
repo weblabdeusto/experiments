@@ -1,0 +1,96 @@
+# Spanish translations for ardulab.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the ardulab project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ardulab 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-06-22 12:45+0200\n"
+"PO-Revision-Date: 2016-06-21 13:25+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: app/templates/base.html:19
+msgid "READY"
+msgstr ""
+
+#: app/templates/base.html:38
+msgid "Finish"
+msgstr "Terminar"
+
+#: app/templates/index.html:8
+msgid "Save"
+msgstr "Guardar"
+
+#: app/templates/index.html:12
+msgid "Load"
+msgstr "Abrir"
+
+#: app/templates/index.html:17
+msgid "Discard"
+msgstr "Descartar"
+
+#: app/templates/index.html:21
+msgid "Validate"
+msgstr "Validar"
+
+#: app/templates/index.html:32
+msgid "Logic"
+msgstr "Lógica"
+
+#: app/templates/index.html:41
+msgid "Loops"
+msgstr "Búcles"
+
+#: app/templates/index.html:69
+msgid "Math"
+msgstr "Matemáticas"
+
+#: app/templates/index.html:112
+msgid "Text"
+msgstr "Texto"
+
+#: app/templates/index.html:126
+msgid "Variables"
+msgstr "Variables"
+
+#: app/templates/index.html:130
+msgid "Functions"
+msgstr "Funciones"
+
+#: app/templates/index.html:132
+msgid "Input/Output"
+msgstr "Entradas/Salidas"
+
+#: app/templates/index.html:161
+msgid "Time"
+msgstr "Tiempo"
+
+#: app/templates/index.html:180
+msgid "Comms"
+msgstr "Comunicaciones"
+
+#: app/templates/index.html:190
+msgid "Buttons"
+msgstr "Botones"
+
+#: app/templates/index.html:196
+msgid "Motors"
+msgstr "Motores"
+
+#: app/templates/index.html:201
+msgid "Proximity"
+msgstr "Sensores de Proximidad"
+
+#: app/templates/index.html:205
+msgid "Line sensors"
+msgstr "Sensores de Linea"
+

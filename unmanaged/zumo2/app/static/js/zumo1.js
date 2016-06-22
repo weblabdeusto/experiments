@@ -115,7 +115,7 @@ function FileManager(){
             console.log(data);
             if(!data['success']){
                 console.log('Error!');
-                status_div.html("<p>No time for loading code...</p>");
+                status_div.html("<p>"+ msgs.NOTIME +"</p>");
             }
         };
 
@@ -223,7 +223,7 @@ $(document).ready(function(){
                 $("#btn-B").prop( "disabled", false );
                 $("#btn-C").prop( "disabled", false );
                 $("#send-data").prop( "disabled", false );
-                status_div.html("<p>Ready!!</p>")
+                status_div.html("<p>"+ msgs.READY +"</p>")
             }
              else if(msg.data == 'Error') {
                 launch_btn.prop("disabled", false);
@@ -231,7 +231,7 @@ $(document).ready(function(){
                 $("#btn-B").prop( "disabled", false );
                 $("#btn-C").prop( "disabled", false );
                 $("#send-data").prop( "disabled", false );
-                status_div.html("<p>Error!!</p>")
+                status_div.html("<p>"+ msgs.ERROR +"</p>")
             }
             else {
                 serialDiv.append('<p>General: ' + msg.data + '</p>');

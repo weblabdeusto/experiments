@@ -1,9 +1,9 @@
-from flask import render_template, redirect, url_for, request, g, jsonify
+from flask import render_template, redirect, url_for, request, g, jsonify, session
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 
 from datetime import datetime, timedelta
-from app import app, db, lm, celery
+from app import app, db, lm, celery, get_locale
 from config import basedir
 from .models import User
 from functools import wraps
@@ -23,19 +23,15 @@ def test():
 def check_permission(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        try:
-            if not g.user.permission:
-                g.user.session_id = ""
-                url = g.user.back
-                db.session.add(g.user)
-                db.session.commit()
-                print 'non Authorized'
-                logout_user()
-                return jsonify(error=False, auth=False)
-            return func(*args, **kwargs)
-        except:
-            print 'non found'
-            return jsonify(error=True, auth=False)
+        if not g.user.permission:
+            g.user.session_id = ""
+            url = g.user.back
+            db.session.add(g.user)
+            db.session.commit()
+            print 'non Authorized'
+            logout_user()
+            return jsonify(error=False, auth=False)
+        return func(*args, **kwargs)
     return wrapper
 
 @lm.user_loader
@@ -55,6 +51,7 @@ def before_request():
 @login_required
 @check_permission
 def home():
+    session['locale'] = get_locale()
     if g.user.max_date > datetime.now():
         time = (g.user.max_date - datetime.now()).seconds
     else:

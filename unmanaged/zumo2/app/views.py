@@ -8,8 +8,13 @@ from flask_socketio import disconnect
 from functools import wraps
 
 from datetime import datetime, timedelta
+<<<<<<< HEAD
 from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono
 from camera_pi import Camera
+=======
+from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale
+from camera import Camera
+>>>>>>> 97ab4690621ffacef6af97cc8a8ee5d307667863
 from config import basedir, ideIP, blocklyIP, DEBUG
 
 import json
@@ -57,7 +62,7 @@ def check_permission(func):
 @zumo.route('/home')
 @check_permission
 def home():
-
+    session['locale'] = get_locale()
     chrono.startChrono()
     #Check if users has his code on the IDE
     try:
@@ -116,7 +121,7 @@ def test_reconnect():
 @socketio.on('connect')
 def test_connect():
     print 'Conected to general channel'
-    socketio.emit('General', {'data': 'Connected'},broadcast=True)
+    #socketio.emit('General', {'data': 'Connected'},broadcast=True)
 
 @socketio.on('disconnect')
 def test_disconnect():

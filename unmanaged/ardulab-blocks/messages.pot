@@ -1,0 +1,95 @@
+# Translations template for ardulab.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the ardulab project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ardulab 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-06-22 12:45+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: app/templates/base.html:19
+msgid "READY"
+msgstr ""
+
+#: app/templates/base.html:38
+msgid "Finish"
+msgstr ""
+
+#: app/templates/index.html:8
+msgid "Save"
+msgstr ""
+
+#: app/templates/index.html:12
+msgid "Load"
+msgstr ""
+
+#: app/templates/index.html:17
+msgid "Discard"
+msgstr ""
+
+#: app/templates/index.html:21
+msgid "Validate"
+msgstr ""
+
+#: app/templates/index.html:32
+msgid "Logic"
+msgstr ""
+
+#: app/templates/index.html:41
+msgid "Loops"
+msgstr ""
+
+#: app/templates/index.html:69
+msgid "Math"
+msgstr ""
+
+#: app/templates/index.html:112
+msgid "Text"
+msgstr ""
+
+#: app/templates/index.html:126
+msgid "Variables"
+msgstr ""
+
+#: app/templates/index.html:130
+msgid "Functions"
+msgstr ""
+
+#: app/templates/index.html:132
+msgid "Input/Output"
+msgstr ""
+
+#: app/templates/index.html:161
+msgid "Time"
+msgstr ""
+
+#: app/templates/index.html:180
+msgid "Comms"
+msgstr ""
+
+#: app/templates/index.html:190
+msgid "Buttons"
+msgstr ""
+
+#: app/templates/index.html:196
+msgid "Motors"
+msgstr ""
+
+#: app/templates/index.html:201
+msgid "Proximity"
+msgstr ""
+
+#: app/templates/index.html:205
+msgid "Line sensors"
+msgstr ""
+

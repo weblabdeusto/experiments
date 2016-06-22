@@ -5,20 +5,20 @@
 
         <span class="btn btn-success" id="save-btn" onclick="save()" style="margin-left: 15%">
             <i class="glyphicon glyphicon-download"></i>
-            <span>Save</span>
+            <span>{{ gettext('Save') }}</span>
         </span>
         <span class="btn btn-primary" id="fakeload" >
             <i class="glyphicon glyphicon-upload"></i>
-            <span>Load</span>
+            <span>{{ gettext('Load') }}</span>
         </span>
         <input type="file" id="load" style="display: none;">
         <button class="btn btn-danger" onclick="discard()">
             <i class="glyphicon glyphicon-remove"></i>
-            <span>Discard</span>
+            <span>{{ gettext('Discard') }}</span>
         </button>
         <button class="btn btn-default" id="validate-btn">
             <i class="glyphicon glyphicon-check"></i>
-            <span>Validate</span>
+            <span>{{ gettext('Validate') }}</span>
         </button>
         <div id="blocklyDiv" style="height: 600px;margin-top: 1%"></div>
     </div>
@@ -28,8 +28,8 @@
 
 </div>
 
-    <xml id="toolbox" style="display: none">
-    <category id="catLogic" name="Logic" colour="150">
+<xml id="toolbox" style="display: none">
+  <category id="catLogic" name="{{ gettext('Logic') }}" colour="150">
     <block type="controls_if"></block>
     <block type="logic_compare"></block>
     <block type="logic_operation"></block>
@@ -38,7 +38,7 @@
     <block type="logic_null"></block>
     <block type="logic_ternary"></block>
   </category>
-  <category id="catLoops" name="Loops" colour="170">
+  <category id="catLoops" name="{{ gettext('Loops') }}" colour="170">
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
@@ -66,7 +66,7 @@
     </block>
     <block type="controls_flow_statements"></block>
   </category>
-  <category id="catMath" name="Math" colour="190">
+  <category id="catMath" name="{{ gettext('Math') }}" colour="190">
     <block type="math_number"></block>
     <block type="math_arithmetic"></block>
     <block type="math_single"></block>
@@ -109,7 +109,7 @@
     <block type="math_random_float"></block>
     <block type="base_map"></block>
   </category>
-  <category id="catText" name="Text" colour="210">
+  <category id="catText" name="{{ gettext('Text') }}" colour="210">
     <block type="text"></block>
     <block type="text_join"></block>
     <block type="text_append">
@@ -123,13 +123,13 @@
 //    <!--block type="text_print"></block Part of the serial comms -->
   </category>
   <sep></sep>
-  <category id="catVariables" name="Variables" colour="230">
+  <category id="catVariables" name="{{ gettext('Variables') }}" colour="230">
     <block type="variables_get"></block>
     <block type="variables_set"></block>
   </category>
-  <category id="catFunctions" name="Functions" custom="PROCEDURE" colour="250"></category>
+  <category id="catFunctions" name="{{ gettext('Functions') }}" custom="PROCEDURE" colour="250"></category>
   <sep></sep>
-  <category id="catInputOutput" name="Input/Output" colour="270">
+  <category id="catInputOutput" name="{{ gettext('Input/Output') }}" colour="270">
     <block type="io_digitalwrite">
       <value name="STATE">
         <block type="io_highlow"></block>
@@ -158,7 +158,7 @@
       </value>+
     </block>
   </category>
-  <category id="catTime" name="Time" colour="290">
+  <category id="catTime" name="{{ gettext('Time') }}" colour="290">
     <block type="time_delay">
       <value name="DELAY_TIME_MILI">
         <block type="math_number">
@@ -177,7 +177,7 @@
     <block type="time_micros"></block>
     <block type="infinite_loop"></block>
   </category>
-  <category id="catComms" name="Comms" colour="310">
+  <category id="catComms" name="{{ gettext('Comms') }}" colour="310">
     <block type="serial_setup"></block>
     <block type="serial_print"></block>
     <block type="text_prompt_ext">
@@ -187,22 +187,22 @@
     </block>
   </category>
     <sep></sep>
- <category id="catButtons" name="Buttons">
+ <category id="catButtons" name="{{ gettext('Buttons') }}">
    <block type="Button_config"></block>
    <block type="Button_isPressed"></block>
    <block type="Button_waitFor"></block>
    <block type="Button_singlePressed"></block>
  </category>
- <category id="catMotors" name="Motors">
+ <category id="catMotors" name="{{ gettext('Motors') }}">
    <block type="motorrightspeed"></block>
    <block type="motorleftspeed"></block>
    <block type="motorsspeed"></block>
  </category>
- <category id="catProxSens" name="Proximity">
+ <category id="catProxSens" name="{{ gettext('Proximity') }}">
    <block type="readProximity"></block>
    <block type="countsGeneric"></block>
  </category>
-<category id="catLineSens" name="Line sensors">
+<category id="catLineSens" name="{{ gettext('Line sensors') }}">
    <block type="basicReadLine"></block>
    <block type="getLineSensorValue"></block>
 </category>

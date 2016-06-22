@@ -3,7 +3,7 @@ import eventlet
 
 eventlet.monkey_patch()
 
-from flask import Flask,Blueprint
+from flask import Flask, Blueprint, request, session
 from flask_socketio import SocketIO
 import redis
 from boardManager import BoardManager
@@ -39,6 +39,27 @@ if not app.debug:
     app.logger.addHandler(file_handler)
     app.logger.setLevel(logging.INFO)
     app.logger.info('weblab zumo robot startup')
+
+from babel import Babel
+
+if Babel is None:
+    print "Not using Babel. Everything will be in English"
+else:
+    babel = Babel(app)
+
+    supported_languages = ['en','es']
+    supported_languages.extend([translation.language for translation in babel.list_translations()])
+
+    @babel.localeselector
+    def get_locale():
+        locale = request.args.get('locale', None)
+        if locale is None:
+            locale = request.accept_languages.best_match(supported_languages)
+        if locale is None:
+            locale = 'en'
+        session['locale'] = locale
+        return locale
+
 
 from app import views, zumo, weblab, checker
 

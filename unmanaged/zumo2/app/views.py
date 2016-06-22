@@ -8,7 +8,7 @@ from flask_socketio import disconnect
 from functools import wraps
 
 from datetime import datetime, timedelta
-from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono
+from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale
 from pi_camera import Camera
 from config import basedir, ideIP, blocklyIP, DEBUG
 
@@ -57,7 +57,7 @@ def check_permission(func):
 @zumo.route('/home')
 @check_permission
 def home():
-
+    session['locale'] = get_locale()
     chrono.startChrono()
     #Check if users has his code on the IDE
     try:

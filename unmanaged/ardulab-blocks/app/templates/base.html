@@ -14,6 +14,16 @@
         <script src="{{ url_for('static', filename='js/blockly/arduino_compressed.js') }}"></script>
         <script src="{{ url_for('static', filename='js/blockly/msg/js/' + session["locale"]+'.js') }}"></script>
 
+        <script type="text/javascript">
+            window.msgs = {
+                'READY': '{{ gettext('READY') }}'
+            };
+
+            function i18n(msg_id) {
+                return window.msgs[msg_id];
+            }
+        </script>
+
     </head>
     <body>
         <br>

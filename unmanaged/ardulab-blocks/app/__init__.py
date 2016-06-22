@@ -29,7 +29,6 @@ if not app.debug:
 
 from babel import Babel
 
-
 if Babel is None:
     print "Not using Babel. Everything will be in English"
 else:

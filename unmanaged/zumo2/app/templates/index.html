@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-3">
             <div class="panel panel-default" style="margin-top: 5%">
-                <div class="panel-heading">User Code: </div>
+                <div class="panel-heading">{{ gettext('User code:') }} </div>
                 <div class="panel-body">
                 {% if session['ide_sketch'] != "None" %}
                     <p class="file" id="user-{{ session['ide_sketch'] }}">{{ session['ide_sketch'] }}</p>
@@ -14,12 +14,12 @@
                     <p class="file" id="user-{{ session['blockly_sketch'] }}">{{ session['blockly_sketch'] }}</p>
                 {% endif %}
                 {% if session['blockly_sketch'] == "None" and session['ide_sketch'] =="None"%}
-                     <p>No user code available</p>
+                     <p>{{ gettext('No user code available') }}</p>
                 {% endif %}
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading">Demo Code: </div>
+                <div class="panel-heading">{{ gettext('Demo Code:') }} </div>
                 <div class="panel-body" id="demo-files">
                 {% for file in demo_files %}
                     <p class="file" id="{{ file }}">{{ file }}</p>
@@ -30,7 +30,7 @@
             <div style="margin-top: 2%;text-align: center">
                 <button class="btn btn-default" id="launch-btn">
                     <i class="glyphicon glyphicon-save"></i>
-                    <span>Load</span>
+                    <span>{{ gettext('Program') }}</span>
                 </button>
             </div>
         <br>
@@ -49,7 +49,7 @@
             <br>
             <div class="row">
                 <div class="col-lg-6">
-                    <h3 style="margin-top: 5%;text-align: center">Buttons:</h3>
+                    <h3 style="margin-top: 5%;text-align: center">{{ gettext('Buttons:') }}</h3>
                     <div >
                         <img class="remote-btn" id="btn-A" width="25%" src="/labs/zumoline/static/img/A-off.png" style="margin-left: 12%">
                         <img class="remote-btn" id="btn-B" width="25%" src="/labs/zumoline/static/img/B-off.png">
@@ -67,14 +67,14 @@
         <div class="col-lg-3">
             <div class="panel panel-default" style="margin-top: 5%">
                 <div class="panel-heading">
-                    Serial Monitor
+                    {{ gettext('Serial Monitor') }}
                 </div>
                 <div class="panel-body" id="serial-monitor">
 
                 </div>
                 <div class="panel-footer" style="text-align: center">
                     <span style="margin-right: 2%">
-                        Send:
+                        {{ gettext('Send:') }}
                     </span>
                     <span>
                         <input type="text" id="serial-dada" style="width: 60%">
@@ -89,7 +89,7 @@
 
             <div class="panel panel-default" style="margin-top: 5%">
                 <div class="panel-heading">
-                    Chrono
+                    {{ gettext('Chrono') }}
                 </div>
                 <div class="panel-body" id="chrono-panel">
 

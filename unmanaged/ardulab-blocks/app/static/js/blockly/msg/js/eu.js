@@ -2,7 +2,7 @@
 
 'use strict';
 
-goog.provide('Blockly.Msg.es');
+goog.provide('Blockly.Msg.eu');
 
 goog.require('Blockly.Msg');
 
@@ -116,7 +116,7 @@ Blockly.Msg.ARD_TYPE_UNDEF = "Indefinido";
 Blockly.Msg.ARD_VALUE = "value";  // untranslated
 Blockly.Msg.ARD_VAR_AS = "como";
 Blockly.Msg.ARD_VAR_AS_TIP = "Sets a value to a specific type";
-Blockly.Msg.ARD_WRITE_TO = "a";
+Blockly.Msg.ARD_WRITE_TO = "to";
 Blockly.Msg.AUTH = "Autoriza a esta aplicación para guardar tu trabajo y permitir que lo compartas.";
 Blockly.Msg.CHANGE_VALUE_TITLE = "Cambiar el valor:";
 Blockly.Msg.CHAT = "¡Chatea con tu colaborador escribiendo en este cuadro!";
@@ -403,9 +403,9 @@ Blockly.Msg.REMOVE_COMMENT = "Eliminar comentario";
 Blockly.Msg.RENAME_VARIABLE = "Renombrar la variable…";
 Blockly.Msg.RENAME_VARIABLE_TITLE = "Renombrar todas las variables «%1» a:";
 Blockly.Msg.REPLACE_EXISTING_BLOCKS = "Replace existing blocks? 'Cancel' will merge.";
-Blockly.Msg.TEXT_APPEND_APPENDTEXT = "";
+Blockly.Msg.TEXT_APPEND_APPENDTEXT = "añadir texto";
 Blockly.Msg.TEXT_APPEND_HELPURL = "https://github.com/google/blockly/wiki/Text#text-modification";  // untranslated
-Blockly.Msg.TEXT_APPEND_TO = "Añadir texto a";
+Blockly.Msg.TEXT_APPEND_TO = "a";
 Blockly.Msg.TEXT_APPEND_TOOLTIP = "Añadir texto a la variable '%1'.";
 Blockly.Msg.TEXT_CHANGECASE_HELPURL = "https://github.com/google/blockly/wiki/Text#adjusting-text-case";  // untranslated
 Blockly.Msg.TEXT_CHANGECASE_OPERATOR_LOWERCASE = "a minúsculas";
@@ -498,7 +498,7 @@ Blockly.Msg.ZUM_LINE_GET_1 = "Lectura en sensor situado en";
 Blockly.Msg.ZUM_LINE_GET_2 = "";
 Blockly.Msg.ZUM_LINE_GET_TIP = "Devuelve un valor comprendido entre 0-2000 en función de la reflectancia de la superficie(0-Superficie clara y 2000-Superficie oscura), Es necesario emplear antes el bloque 'Leer Sensores de linea'.";
 Blockly.Msg.ZUM_LINE_HELP = "http://pololu.github.io/zumo-32u4-arduino-library/class_zumo32_u4_line_sensors.html";
-Blockly.Msg.ZUM_LINE_READ = "Leer sensores de linea";
+Blockly.Msg.ZUM_LINE_READ = "Irakurri lerro sentsoreak";
 Blockly.Msg.ZUM_LINE_READ_TIP = "Lee los sensores de linea";
 Blockly.Msg.ZUM_MOT_SET_2S = "Cambiar la velocidad de los motores";
 Blockly.Msg.ZUM_MOT_SET_2S_HELP = "http://pololu.github.io/zumo-32u4-arduino-library/class_zumo32_u4_motors.html";
@@ -512,12 +512,12 @@ Blockly.Msg.ZUM_MOT_SET_RS_TIP = "Cambia la velocidad del motor derecho. Introdu
 Blockly.Msg.ZUM_PROX_GET = "detectar a su";
 Blockly.Msg.ZUM_PROX_GET_TIP = "Devuelve un valor comprendido entre 1-6 en función de la proximidad entre el sensor y el objeto más cercano(1-Muy lejos y 6-Muy cerca), Es necesario emplear antes el bloque 'Leer Sensores de proximidad'.";
 Blockly.Msg.ZUM_PROX_HELP = "http://pololu.github.io/zumo-32u4-arduino-library/class_zumo32_u4_proximity_sensors.html#details";
-Blockly.Msg.ZUM_PROX_READ = "Leer sensores de proximidad";
+Blockly.Msg.ZUM_PROX_READ = "Irakurri gertutasun sentsoreak";
 Blockly.Msg.ZUM_PROX_READ_TIP = "Lee los sensores de proximidad. ";
 Blockly.Msg.ZUM_RIGHT = "derecha";
 Blockly.Msg.ZUM_RIGHT_M = "Derecho";
-Blockly.Msg.ZUM_SENSOR_1 = "Sensor";
-Blockly.Msg.ZUM_SENSOR_2 = "";
+Blockly.Msg.ZUM_SENSOR_1 = "sensor";
+Blockly.Msg.ZUM_SENSOR_2 = " ";
 Blockly.Msg.PROCEDURES_DEFRETURN_TITLE = Blockly.Msg.PROCEDURES_DEFNORETURN_TITLE;
 Blockly.Msg.CONTROLS_IF_IF_TITLE_IF = Blockly.Msg.CONTROLS_IF_MSG_IF;
 Blockly.Msg.CONTROLS_WHILEUNTIL_INPUT_DO = Blockly.Msg.CONTROLS_REPEAT_INPUT_DO;

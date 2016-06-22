@@ -9,7 +9,7 @@ from functools import wraps
 
 from datetime import datetime, timedelta
 from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale
-from pi_camera import Camera
+from camera import Camera
 from config import basedir, ideIP, blocklyIP, DEBUG
 
 import json
@@ -116,7 +116,7 @@ def test_reconnect():
 @socketio.on('connect')
 def test_connect():
     print 'Conected to general channel'
-    socketio.emit('General', {'data': 'Connected'},broadcast=True)
+    #socketio.emit('General', {'data': 'Connected'},broadcast=True)
 
 @socketio.on('disconnect')
 def test_disconnect():

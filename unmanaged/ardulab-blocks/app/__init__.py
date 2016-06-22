@@ -34,7 +34,7 @@ if Babel is None:
 else:
     babel = Babel(app)
 
-    supported_languages = ['en','es']
+    supported_languages = ['en','es','eu']
     supported_languages.extend([translation.language for translation in babel.list_translations()])
 
     @babel.localeselector

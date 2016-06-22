@@ -78,14 +78,14 @@ Blockly.Blocks['Button_config'] = {
    * @this Blockly.Block
    */
   init: function() {
-    this.setHelpUrl('https://github.com/pololu/pushbutton-arduino');
+    this.setHelpUrl(Blockly.Msg.ZUM_BUT_HELP);
     this.setColour(Blockly.Blocks.zumobuttons.HUE);
     this.appendDummyInput()
-        .appendField("Button")
+        .appendField(Blockly.Msg.ZUM_BUT)
         .appendField(new Blockly.FieldDropdown([["A", "ButtonA"], ["B", "ButtonB"], ["C", "ButtonC"]]), "BUTTONS")
-        .appendField("as")
+        .appendField(Blockly.Msg.ZUM_AS)
         .appendField(new Blockly.FieldTextInput('MyButton'), 'BUTTON_NAME');
-    this.setTooltip("Block for initializating buttons");
+    this.setTooltip(Blockly.Msg.ZUM_BUT_TIP);
   },
   /**
    * Returns the Button instance name, defined in the 'Button_NAME' input
@@ -119,10 +119,10 @@ Blockly.Blocks['Button_isPressed'] = {
     this.appendDummyInput()
         .appendField(new Blockly.Blocks.zumobuttons.FieldButtonInstance(),
             'BUTTON_NAME')
-        .appendField("is pressed");
+        .appendField(Blockly.Msg.ZUM_BUT_ISPRESSED);
 
-    this.setTooltip('Check if a button is pressed');
-    this.setHelpUrl('https://github.com/pololu/pushbutton-arduino');
+    this.setTooltip(Blockly.Msg.ZUM_BUT_ISPRESSED_TIP);
+    this.setHelpUrl(Blockly.Msg.ZUM_BUT_ISPRESSED_HELP);
     this.setOutput(true);
   },
   /**
@@ -143,7 +143,7 @@ Blockly.Blocks['Button_isPressed'] = {
       if (currentDropdown !== Blockly.Blocks.zumobuttons.noInstance) {
         this.setFieldValue(Blockly.Blocks.zumobuttons.noInstance, 'BUTTON_NAME');
       }
-      this.setWarningText("Buttons must be initializated");
+      this.setWarningText(Blockly.Msg.ZUM_BUT_INIT_WARN);
     } else {
       // Configuration blocks present, check if any selected and contains name
       var existingConfigSelected = false;
@@ -153,7 +153,7 @@ Blockly.Blocks['Button_isPressed'] = {
           // If selected config has no name either, set warning and exit func
           if (currentDropdown === Blockly.Blocks.zumobuttons.noName) {
             //TODO:Change this warning
-            this.setWarningText("Unknown warning");
+            this.setWarningText(Blockly.Msg.ZUM_BUT_UNKNOWN_WARN);
             return;
           }
         } else if (instances[x][0] === currentDropdown) {
@@ -173,7 +173,7 @@ Blockly.Blocks['Button_isPressed'] = {
           this.setWarningText(null);
         } else {
           // Al this point just set a warning to select a valid Button config
-          this.setWarningText("Not valid block configuration");
+          this.setWarningText(Blockly.Msg.ZUM_BUT_BADCON_WARN);
         }
       }
     }
@@ -187,12 +187,12 @@ Blockly.Blocks['Button_waitFor'] = {
    */
   init: function() {
       this.appendDummyInput()
-        .appendField("Wait for")
+        .appendField(Blockly.Msg.ZUM_BUT_WAITFOR)
         .appendField(new Blockly.Blocks.zumobuttons.FieldButtonInstance(),
             'BUTTON_NAME');
 
-    this.setTooltip('Check if a button is pressed');
-    this.setHelpUrl('https://github.com/pololu/pushbutton-arduino');
+    this.setTooltip(Blockly.Msg.ZUM_BUT_WAITFOR_TIP);
+    this.setHelpUrl(Blockly.Msg.ZUM_BUT_WAITFOR_HELP);
     this.setColour(Blockly.Blocks.zumobuttons.HUE);
 
     this.setOutput(false);
@@ -215,7 +215,7 @@ Blockly.Blocks['Button_waitFor'] = {
       if (currentDropdown !== Blockly.Blocks.zumobuttons.noInstance) {
         this.setFieldValue(Blockly.Blocks.zumobuttons.noInstance, 'BUTTON_NAME');
       }
-      this.setWarningText("Buttons must be initializated");
+      this.setWarningText(Blockly.Msg.ZUM_BUT_INIT_WARN);
     } else {
       // Configuration blocks present, check if any selected and contains name
       var existingConfigSelected = false;
@@ -225,7 +225,7 @@ Blockly.Blocks['Button_waitFor'] = {
           // If selected config has no name either, set warning and exit func
           if (currentDropdown === Blockly.Blocks.zumobuttons.noName) {
             //TODO:Change this warning
-            this.setWarningText("Unknown warning");
+            this.setWarningText(Blockly.Msg.ZUM_BUT_UNKNOWN_WARN);
             return;
           }
         } else if (instances[x][0] === currentDropdown) {
@@ -245,7 +245,7 @@ Blockly.Blocks['Button_waitFor'] = {
           this.setWarningText(null);
         } else {
           // Al this point just set a warning to select a valid Button config
-          this.setWarningText("Not valid block configuration");
+          this.setWarningText(Blockly.Msg.ZUM_BUT_BADCON_WARN);
         }
       }
     }
@@ -258,13 +258,13 @@ Blockly.Blocks['Button_singlePressed'] = {
    * @this Blockly.Block
    */
   init: function() {
-    this.setHelpUrl('https://github.com/pololu/pushbutton-arduino');
-    this.setTooltip('Check if button has been signle pressed');
+    this.setHelpUrl(Blockly.Msg.ZUM_BUT_PRES_HELP);
+    this.setTooltip(Blockly.Msg.ZUM_BUT_PRES_TIP);
     this.setColour(Blockly.Blocks.zumobuttons.HUE);
     this.appendDummyInput()
         .appendField(new Blockly.Blocks.zumobuttons.FieldButtonInstance(),
             'BUTTON_NAME')
-        .appendField("single press");
+        .appendField(Blockly.Msg.ZUM_BUT_PRES );
     this.setOutput(true);
   },
   /**
@@ -285,7 +285,7 @@ Blockly.Blocks['Button_singlePressed'] = {
       if (currentDropdown !== Blockly.Blocks.zumobuttons.noInstance) {
         this.setFieldValue(Blockly.Blocks.zumobuttons.noInstance, 'BUTTON_NAME');
       }
-      this.setWarningText("Buttons must be initializated");
+      this.setWarningText(Blockly.Msg.ZUM_BUT_INIT_WARN);
     } else {
       // Configuration blocks present, check if any selected and contains name
       var existingConfigSelected = false;
@@ -295,7 +295,7 @@ Blockly.Blocks['Button_singlePressed'] = {
           // If selected config has no name either, set warning and exit func
           if (currentDropdown === Blockly.Blocks.zumobuttons.noName) {
             //TODO:Change this warning
-            this.setWarningText("Unknown warning");
+            this.setWarningText(Blockly.Msg.ZUM_BUT_UNKNOWN_WARN);
             return;
           }
         } else if (instances[x][0] === currentDropdown) {
@@ -315,7 +315,7 @@ Blockly.Blocks['Button_singlePressed'] = {
           this.setWarningText(null);
         } else {
           // Al this point just set a warning to select a valid Button config
-          this.setWarningText("Not valid block configuration");
+          this.setWarningText(Blockly.Msg.ZUM_BUT_BADCON_WARN);
         }
       }
     }

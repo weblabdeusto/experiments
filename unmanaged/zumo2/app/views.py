@@ -8,13 +8,8 @@ from flask_socketio import disconnect
 from functools import wraps
 
 from datetime import datetime, timedelta
-<<<<<<< HEAD
-from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono
-from camera_pi import Camera
-=======
 from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale
-from camera import Camera
->>>>>>> 97ab4690621ffacef6af97cc8a8ee5d307667863
+from camera_pi import Camera
 from config import basedir, ideIP, blocklyIP, DEBUG
 
 import json

@@ -41,7 +41,7 @@ class Camera(object):
     @classmethod
     def _thread(cls):
         try:
-            print 'Stopping camera thread'
+            print 'Camera thread starting'
             cls.stop = False
             with picamera.PiCamera() as cls.camera:
                 # camera setup

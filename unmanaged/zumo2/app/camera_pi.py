@@ -19,6 +19,7 @@ class Camera(object):
         if Camera.thread is None:
             # start background frame thread
             Camera.thread = threading.Thread(target=self._thread)
+            Camera.thread.daemon = True
             Camera.thread.start()
 
             # wait until frames start to be available
@@ -32,6 +33,8 @@ class Camera(object):
 
     def close(self):
         Camera.stop = True
+        print 'closing camera'
+        Camera.thread.abort()
         Camera.camera.close()
 
     @classmethod

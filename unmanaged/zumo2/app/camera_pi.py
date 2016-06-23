@@ -72,10 +72,11 @@ class Camera(object):
                     if cls.stop:
                         break
 
-
+            cls.stop = True
             cls.camera.close()
             cls.thread = None
         except:
             print 'Camera exception'
+            cls.stop = True
             cls.camera.close()
             cls.thread = None

@@ -1,0 +1,96 @@
+# Basque translations for ardulab.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the ardulab project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ardulab 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-06-22 12:45+0200\n"
+"PO-Revision-Date: 2016-06-22 10:36+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: eu\n"
+"Language-Team: eu <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: app/templates/base.html:19
+msgid "READY"
+msgstr ""
+
+#: app/templates/base.html:38
+msgid "Finish"
+msgstr "Irten"
+
+#: app/templates/index.html:8
+msgid "Save"
+msgstr "Gorde"
+
+#: app/templates/index.html:12
+msgid "Load"
+msgstr "Ireki"
+
+#: app/templates/index.html:17
+msgid "Discard"
+msgstr "Baztertu"
+
+#: app/templates/index.html:21
+msgid "Validate"
+msgstr "Balioztatu"
+
+#: app/templates/index.html:32
+msgid "Logic"
+msgstr "Logika"
+
+#: app/templates/index.html:41
+msgid "Loops"
+msgstr "Begiztak"
+
+#: app/templates/index.html:69
+msgid "Math"
+msgstr "Matematika"
+
+#: app/templates/index.html:112
+msgid "Text"
+msgstr "Testua"
+
+#: app/templates/index.html:126
+msgid "Variables"
+msgstr "Aldagai"
+
+#: app/templates/index.html:130
+msgid "Functions"
+msgstr "Funtzioak"
+
+#: app/templates/index.html:132
+msgid "Input/Output"
+msgstr "Input/Output"
+
+#: app/templates/index.html:161
+msgid "Time"
+msgstr "Denbora"
+
+#: app/templates/index.html:180
+msgid "Comms"
+msgstr "Komuinikazioak"
+
+#: app/templates/index.html:190
+msgid "Buttons"
+msgstr "Botoiak"
+
+#: app/templates/index.html:196
+msgid "Motors"
+msgstr "Motorrak"
+
+#: app/templates/index.html:201
+msgid "Proximity"
+msgstr "Gertutasun sentsoreak"
+
+#: app/templates/index.html:205
+msgid "Line sensors"
+msgstr "Lerro sentsoreak"
+

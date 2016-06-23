@@ -13,7 +13,7 @@ class Camera(object):
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
     camera = None
-    stop = False
+    stop = True
 
     def initialize(self):
         if Camera.thread is None:

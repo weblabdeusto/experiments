@@ -66,7 +66,7 @@ class Camera(object):
 
                     # if there hasn't been any clients asking for frames in
                     # the last 10 seconds stop the thread
-                    if time.time() - cls.last_access > 3:
+                    if time.time() - cls.last_access > 1.5:
                         print 'No client asking for camera'
                         break
                     if cls.stop:

@@ -13,6 +13,7 @@ class Camera(object):
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
     camera = None
+    stop = False
 
     def initialize(self):
         if Camera.thread is None:
@@ -30,11 +31,13 @@ class Camera(object):
         return self.frame
 
     def close(self):
+        Camera.stop = True
         Camera.camera.close()
 
     @classmethod
     def _thread(cls):
         try:
+            cls.stop = False
             with picamera.PiCamera() as cls.camera:
                 # camera setup
                 cls.camera.resolution = (320, 180)
@@ -61,6 +64,9 @@ class Camera(object):
                     if time.time() - cls.last_access > 3:
                         print 'No client asking for camera'
                         break
+                    if cls.stop:
+                        break
+
 
             cls.camera.close()
             cls.thread = None

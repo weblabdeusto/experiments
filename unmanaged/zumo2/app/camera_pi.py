@@ -33,8 +33,9 @@ class Camera(object):
 
     def close(self):
         Camera.stop = True
-        print 'closing camera'
-        Camera.thread.abort()
+        print 'stopping thread'
+        Camera.thread.join()
+        print 'Thread stopped'
         Camera.camera.close()
 
     @classmethod

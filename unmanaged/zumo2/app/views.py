@@ -140,6 +140,7 @@ def gen(camera):
     """Video streaming generator function."""
     while True:
         if camera.stop:
+            print 'Camera stopped'
             break
         time.sleep(0.2)
         frame = camera.get_frame()
@@ -153,7 +154,9 @@ def gen(camera):
 @check_permission
 def video_feed():
     if not camera.stop:
+        print 'camera is running'
         camera.close()
+        print 'camera is clossed'
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')

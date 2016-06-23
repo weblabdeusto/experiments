@@ -139,6 +139,8 @@ def sendSerial():
 def gen(camera):
     """Video streaming generator function."""
     while True:
+        if camera.stop:
+            break
         time.sleep(0.2)
         frame = camera.get_frame()
         yield (b'--frame\r\n'

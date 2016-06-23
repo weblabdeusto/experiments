@@ -8,8 +8,8 @@ from flask_socketio import disconnect
 from functools import wraps
 
 from datetime import datetime, timedelta
-from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale
-from camera_pi import Camera
+from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale, camera
+
 from config import basedir, ideIP, blocklyIP, DEBUG
 
 import json
@@ -151,7 +151,7 @@ def gen(camera):
 @check_permission
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(Camera()),
+    return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 

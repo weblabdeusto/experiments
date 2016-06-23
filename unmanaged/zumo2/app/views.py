@@ -228,9 +228,8 @@ def logout():
 
     force_exited(g.user['session_id'])
     print "User close session and memory is going to be erased"
+    endSession()
 
-    chrono.stopChrono()
-    board_manager.eraseMemory()
     return jsonify(error=False,auth=False)
 
 
@@ -243,6 +242,10 @@ def poll():
     # Save in User or Redis or whatever that the user has just polled
     return jsonify(error=False,auth=True)
 
+def endSession():
+    chrono.stopChrono()
+    camera.close()
+    board_manager.eraseMemory()
 
 def get_user_data(session_id):
     pipeline = redisClient.pipeline()
@@ -444,8 +447,7 @@ def status(session_id):
 def dispose_experiment(session_id):
     print "Weblab trying to delete user"
     print "Weblab erasing memory"
-    chrono.stopChrono()
-    board_manager.eraseMemory()
+    endSession()
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':
         back = redisClient.hget("weblab:active:{}".format(session_id), "back")

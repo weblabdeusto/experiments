@@ -29,6 +29,9 @@ class Camera(object):
         self.initialize()
         return self.frame
 
+    def close(self):
+        Camera.camera.close()
+
     @classmethod
     def _thread(cls):
         try:

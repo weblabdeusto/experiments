@@ -248,8 +248,8 @@ def poll():
 
 def endSession():
     chrono.stopChrono()
-    camera.close()
     board_manager.eraseMemory()
+    camera.close()
 
 def get_user_data(session_id):
     pipeline = redisClient.pipeline()

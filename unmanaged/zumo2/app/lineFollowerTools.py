@@ -74,7 +74,7 @@ class Chrono(object):
             success, response = self.RFID_reader.read()
             if success and len(response)==10:
                 print str(response)
-                #print self._lapInfo
+                print self._lapInfo
                 if response in self._card_ids:
                     if len(self._card_ids)==self._card_quantity and self._card_ids[0]==response:
                         last = timeit.default_timer()

@@ -100,7 +100,7 @@ class Chrono(object):
                     print 'New card detected'
                     if self._lapInfo['First'] is None:
                         print 'first card so... Starting chrono'
-                        self._lapInfo['Fist'] = timeit.default_timer()
+                        self._lapInfo['First'] = timeit.default_timer()
 
             sleep(0.1)
         self.RFID_reader.stop()

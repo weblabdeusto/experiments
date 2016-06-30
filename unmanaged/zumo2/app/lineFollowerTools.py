@@ -93,7 +93,7 @@ class Chrono(object):
                         print 'Bad done.... Restarting counter'
                         self._lapInfo['First'] = None
                         self._card_ids = []
-                        self._lapInfo['Fist'] = timeit.default_timer()
+                        self._lapInfo['First'] = timeit.default_timer()
                         self._card_ids.append(response)
                 else:
                     self._card_ids.append(response)

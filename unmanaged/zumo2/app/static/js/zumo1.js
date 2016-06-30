@@ -180,6 +180,7 @@ $(document).ready(function(){
     file_manager = new FileManager();
     file_manager.init();
     var serialDiv = $('#serial-monitor');
+    var chronoDiv = $('#chrono');
     var status_div = $("#output");
     var launch_btn = $("#launch-btn");
 
@@ -257,7 +258,6 @@ $(document).ready(function(){
 
         socket.on('Serial event', function (msg) {
 
-
             var messages = msg.data.split("\n");
             for (var i = 0; i <= messages.length; i++) {
                 if (messages[i] != undefined) {
@@ -270,7 +270,8 @@ $(document).ready(function(){
         });
 
         socket.on('Chrono event' ,function(msg){
-            console.log(msg.data);
+            //TODO: inject rows on time table
+            chronoDiv.append('<p class="lap_time">' + msg.data + '</p>');
         });
 
         $("#button_finish").click(function () {
@@ -292,8 +293,6 @@ $(document).ready(function(){
         $('#send-data').click(function () {
 
             var value = $('#serial-dada').val();
-            console.log(value);
-
             var params = {'content':value};
 
             var callback = function (data) {

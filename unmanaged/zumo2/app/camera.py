@@ -10,6 +10,7 @@ class Camera(object):
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
     r = redis.StrictRedis(host='localhost', port=6379, db=13)
+    stop = True
 
     def initialize(self):
         if Camera.thread is None:
@@ -26,6 +27,13 @@ class Camera(object):
         self.initialize()
         return self.frame
 
+    def close(self):
+        Camera.stop = True
+        print 'stopping thread'
+        Camera.thread.join()
+        print 'Thread stopped'
+        Camera.camera.close()
+
     @classmethod
     def _thread(cls):
         camera = cv2.VideoCapture(0)
@@ -34,7 +42,8 @@ class Camera(object):
         camera.set(cv2.cv.CV_CAP_PROP_SATURATION,0.2)
         time.sleep(1)
         stream = io.BytesIO()
-        while True:
+        cls.stop = False
+        while not cls.stop:
             time.sleep(0.1)
             rc,img = camera.read()
             if not rc:

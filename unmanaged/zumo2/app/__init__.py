@@ -5,7 +5,7 @@ eventlet.monkey_patch()
 
 from flask import Flask, Blueprint, request, session
 from flask_socketio import SocketIO
-from camera_pi import Camera
+from camera import Camera
 
 import redis
 from boardManager import BoardManager

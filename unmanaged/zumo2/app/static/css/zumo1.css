@@ -44,3 +44,8 @@
 .remote-btn{
     cursor:pointer;
 }
+
+.lap_time{
+    line-height: 14px;
+    font-size:3em;
+}

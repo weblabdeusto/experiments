@@ -1,6 +1,7 @@
 from threading import Thread
 from time import sleep
 from serial import Serial
+import timeit
 
 class RFID_Reader(object):
 
@@ -38,9 +39,13 @@ class Chrono(object):
         self.chronoThread = None
         self.redis = redis
         self.socketio = socketio
+        self._card_quantity = cards
         self.RFID_reader = RFID_Reader()
-        self.card_ids = []
-        self.times = []
+        self._card_ids = []
+        self._lapInfo = {'First': None,
+                         'LapTime': None
+                         }
+
 
     def startChrono(self):
         
@@ -67,14 +72,40 @@ class Chrono(object):
         self.RFID_reader.start()
         while self.runChrono:
             success, response = self.RFID_reader.read()
-            if success:
+            if success and len(response)==10:
                 print str(response)
-                if self.socketio is not None:
-                    self.socketio.emit('Chrono event',
-                        {'data':str(response)},
-                        broadcast=True)
+                if response in self._card_ids:
+                    if len(self._card_ids)==self._card_quantity and self._card_ids[0]==response:
+                        last = timeit.default_timer()
+                        self._lapInfo['LapTime'] = last - self._lapInfo['First']
+                        print 'LAP DONE'
+                        print self._lapInfo
+                        if self.socketio is not None:
+                            self.socketio.emit('Chrono event',
+                                                {'data':str(self._lapInfo['LapTime'])},
+                                                broadcast=True)
+                        self._lapInfo['First'] = last
+                        self._lapInfo['LapTime'] = None
+                        self._card_ids = []
+                        self._card_ids.append(response)
+                    else:
+                        print 'Bad done.... Restarting counter'
+                        self._lapInfo['First'] = None
+                        self._card_ids = []
+                        self._lapInfo['Fist'] = timeit.default_timer()
+                        self._card_ids.append(response)
+                else:
+                    self._card_ids.append(response)
+                    print 'New card detected'
+                    if self._lapInfo['First'] is None:
+                        print 'first card so... Starting chrono'
+                        self._lapInfo['Fist'] = timeit.default_timer()
+
             sleep(0.1)
         self.RFID_reader.stop()
+        self._card_ids = []
+        self._lapInfo['First'] = None
+        self._lapInfo['LapTime'] = None
 
 
     def stopChrono(self):

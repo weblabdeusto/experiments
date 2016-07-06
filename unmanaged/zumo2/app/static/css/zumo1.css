@@ -32,7 +32,7 @@
     overflow-x: scroll;
 }
 #chrono{
-    line-height: 14px;
+    line-height: 16px;
     height: 150px;
     overflow-y: scroll;
 }
@@ -46,6 +46,6 @@
 }
 
 .lap_time{
-    line-height: 14px;
-    font-size:2em;
+    line-height: 16px;
+    font-size:1.2em;
 }

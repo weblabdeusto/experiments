@@ -2,7 +2,6 @@
 #TODO: - Check last poll for erasing memory ONLY IF NECESARY
 #TODO: - Improve logging
 
-
 from flask import render_template, redirect, url_for, request, g, jsonify, current_app, session, Response
 from flask_socketio import disconnect
 from functools import wraps
@@ -458,7 +457,7 @@ def dispose_experiment(session_id):
         if back is not None:
             pipeline = redisClient.pipeline()
             pipeline.delete("weblab:active:{}".format(session_id))
-            pipeline.hset("weblab:inactive:{}".format(session_id), "back", back)
+            pipeline.hset("wetblab:inactive:{}".format(session_id), "back", back)
             # During half an hour after being created, the user is redirected to
             # the original URL. After that, every record of the user has been deleted
             pipeline.expire("weblab:inactive:{}".format(session_id), 3600)

@@ -265,8 +265,10 @@ $(document).ready(function(){
                     serialDiv.scrollTop(serialDiv.children().length * 1000)
                 }
             }
+        });
 
-
+        socket.on('Hardware event', function (msg) {
+            console.log(msg);
         });
 
         socket.on('Chrono event' ,function(msg){

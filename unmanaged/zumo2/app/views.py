@@ -58,6 +58,7 @@ def check_permission(func):
 def home():
     session['locale'] = get_locale()
     chrono.startChrono()
+    board_manager.startLeds()
     #Check if users has his code on the IDE
     try:
         print "doing request to "+ ideIP
@@ -246,6 +247,7 @@ def poll():
     return jsonify(error=False,auth=True)
 
 def endSession():
+    board_manager.stopLeds()
     chrono.stopChrono()
     board_manager.eraseMemory()
     camera.close()

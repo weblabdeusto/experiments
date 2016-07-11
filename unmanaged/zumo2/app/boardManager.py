@@ -43,34 +43,38 @@ class BoardManager(object):
         last_red = l1.read()
         last_green = l2.read()
         last_blue = l3.read()
-
-        while self.runLeds:
-            data = ''
-            l1.seek(0,0)
-            l2.seek(0,0)
-            l3.seek(0,0)
-            status_red = l1.read(1)
-            status_green = l2.read(1)
-            status_blue = l3.read(1)
-            print status_blue + ',' + status_green + ',' + status_red
-            if(status_red != last_red):
-                data = data + 'red:{},'.format(status_red == '0')
-            if(status_green != last_green):
-                data = data + 'green:{},'.format(status_green == '0')
-            if(status_blue != last_blue):
-                data = data + 'blue:{}'.format(status_blue == '1')
-            last_red = status_red
-            last_green = status_green
-            last_blue = status_blue
-            if data != '':
-                if self.socketio is not None:
-                    self.socketio.emit('Led event',
-                          {'data':data},
-                          broadcast=True)
-            time.sleep(0.1)
-        l1.close()
-        l2.close()
-        l3.close()
+        try:
+            while self.runLeds:
+                data = ''
+                l1.seek(0,0)
+                l2.seek(0,0)
+                l3.seek(0,0)
+                status_red = l1.read(1)
+                status_green = l2.read(1)
+                status_blue = l3.read(1)
+                print status_blue + ',' + status_green + ',' + status_red
+                if(status_red != last_red):
+                    data = data + 'red:{},'.format(status_red == '0')
+                if(status_green != last_green):
+                    data = data + 'green:{},'.format(status_green == '0')
+                if(status_blue != last_blue):
+                    data = data + 'blue:{}'.format(status_blue == '1')
+                last_red = status_red
+                last_green = status_green
+                last_blue = status_blue
+                if data != '':
+                    if self.socketio is not None:
+                        self.socketio.emit('Led event',
+                              {'data':data},
+                              broadcast=True)
+                time.sleep(0.1)
+            l1.close()
+            l2.close()
+            l3.close()
+        except:
+            l1.close()
+            l2.close()
+            l3.close()
 
     def stopLeds(self):
         if self.ledThread.isAlive():

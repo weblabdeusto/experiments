@@ -49,15 +49,15 @@ class BoardManager(object):
             l1.seek(0)
             l2.seek(0)
             l3.seek(0)
-            status_red = l1.read()
-            status_green = l2.read()
-            status_blue = l3.read()
+            status_red = l1.read(1)
+            status_green = l2.read(1)
+            status_blue = l3.read(1)
             if(status_red != last_red):
-                data = data + 'red:{},'.format(status_red=='0')
+                data = data + 'red:{},'.format(status_red == '0')
             if(status_green != last_green):
-                data = data + 'green:{},'.format(status_green=='0')
+                data = data + 'green:{},'.format(status_green == '0')
             if(status_blue != last_blue):
-                data = data + 'blue:{}'.format(status_blue=='1')
+                data = data + 'blue:{}'.format(status_blue == '1')
             last_red = status_red
             last_green = status_green
             last_blue = status_blue

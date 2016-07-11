@@ -335,7 +335,7 @@ class BoardManager(object):
 
         except subprocess.CalledProcessError, ex:
             print "Exception loading code"
-            print ex.message
+            print ex.output
             self.redis.hset('zumo:board','error','AVR not working')
             self.socketio.emit('General',
                               {'data':"Error"},

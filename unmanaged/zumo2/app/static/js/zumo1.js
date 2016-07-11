@@ -267,7 +267,7 @@ $(document).ready(function(){
             }
         });
 
-        socket.on('Hardware event', function (msg) {
+        socket.on('Led event', function (msg) {
             console.log(msg);
         });
 

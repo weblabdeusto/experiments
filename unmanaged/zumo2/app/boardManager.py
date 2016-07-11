@@ -17,6 +17,71 @@ class BoardManager(object):
         self.erased = False
         self.avrThread = None
         self.gpios = gpios
+        self.ledThread = None
+        self.runLeds = False
+
+    def startLeds(self):
+        if self.ledThread is None:
+            print 'Led thread not running'
+        else:
+            if self.ledThread.isAlive():
+                print 'led thread running...stop'
+                self.runLeds = False
+                self.ledThread.join()
+                print 'Led thread stopped'
+            else:
+                print 'Led thread is not running'
+        self.runLeds = True
+        self.ledThread = Thread(target= self.ledChecker)
+        self.ledThread.setDaemon(True)
+        self.ledThread.start()
+
+    def ledChecker(self):
+        l1=open(self.gpios['leds']['Red'],'r')
+        l2=open(self.gpios['leds']['Green'],'r')
+        l3=open(self.gpios['leds']['Blue'],'r')
+        last_red = l1.read()
+        last_green = l2.read()
+        last_blue = l3.read()
+
+        while self.runLeds:
+            data = ''
+            l1.seek(0)
+            l2.seek(0)
+            l3.seek(0)
+            status_red = l1.read()
+            status_green = l2.read()
+            status_blue = l3.read()
+            if(status_red != last_red):
+                data = data + 'red:{},'.format(status_red=='0')
+            if(status_green != last_green):
+                data = data + 'green:{},'.format(status_green=='0')
+            if(status_blue != last_blue):
+                data = data + 'blue:{}'.format(status_blue=='1')
+            last_red = status_red
+            last_green = status_green
+            last_blue = status_blue
+            if data != '':
+                if self.socketio is not None:
+                    self.socketio.emit('Led event',
+                          {'data':data},
+                          broadcast=True)
+            time.sleep(0.1)
+        l1.close()
+        l2.close()
+        l3.close()
+
+    def stopLeds(self):
+        if self.ledThread.isAlive():
+            print 'led thread running...stop'
+            self.runLeds = False
+            self.ledThread.join()
+            print 'Led thread stopped'
+        else:
+            print 'Led thread is not running'
+
+
+
 
 
     def connectSerial(self):

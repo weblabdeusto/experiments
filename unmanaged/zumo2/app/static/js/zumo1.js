@@ -271,10 +271,11 @@ $(document).ready(function(){
         });
 
         socket.on('Led event', function (msg) {
-            console.log(msg);
+            //console.log(msg);
             var leds = msg.split(",");
+            console.log(leds);
             leds.forEach(function(led){
-                var inst = leds.split(":");
+                var inst = led.split(":");
                 if(inst[0]=='blue'){
                     if(inst[1]=='True'){
                         blueled.attr("src", "/labs/zumoline/static/img/blue-led.png");

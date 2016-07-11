@@ -271,7 +271,7 @@ $(document).ready(function(){
         });
 
         socket.on('Led event', function (msg) {
-            console.log(typeof (msg));
+            console.log(typeof (msg+''));
             var leds = msg.split(",");
             console.log(leds);
             leds.forEach(function(led){

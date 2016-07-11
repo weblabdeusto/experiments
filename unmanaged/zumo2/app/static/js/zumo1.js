@@ -183,6 +183,9 @@ $(document).ready(function(){
     var chronoDiv = $('#chrono');
     var status_div = $("#output");
     var launch_btn = $("#launch-btn");
+    var redled = $("#red-led");
+    var blueled = $("#blue-led");
+    var greenled = $("#green-led");
 
     //SOCKET MANAGEMENT
     namespace = ''; // change to an empty string to use the global namespace
@@ -269,6 +272,35 @@ $(document).ready(function(){
 
         socket.on('Led event', function (msg) {
             console.log(msg);
+            var leds = msg.split(",");
+            leds.forEach(function(led){
+                var inst = leds.split(":");
+                if(inst[0]=='blue'){
+                    if(inst[1]=='True'){
+                        blueled.attr("src", "/labs/zumoline/static/img/blue-led.png");
+                    }
+                    else{
+                        blueled.attr("src", "/labs/zumoline/static/img/led-off.png");
+                    }
+                }
+               else if(inst[0]=='green') {
+                    if (inst[1] == 'True') {
+                        greenled.attr("src", "/labs/zumoline/static/img/green-led.png");
+                    }
+                    else {
+                        greenled.attr("src", "/labs/zumoline/static/img/led-off.png");
+                    }
+                }
+               else if(inst[0]=='red') {
+                    if (inst[1] == 'True') {
+                        redled.attr("src", "/labs/zumoline/static/img/red-led.png");
+                    }
+                    else {
+                        redled.attr("src", "/labs/zumoline/static/img/led-off.png");
+                    }
+                }
+            });
+
         });
 
         socket.on('Chrono event' ,function(msg){

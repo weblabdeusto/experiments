@@ -52,6 +52,7 @@ class BoardManager(object):
             status_red = l1.read(1)
             status_green = l2.read(1)
             status_blue = l3.read(1)
+            print status_blue + ',' + status_green + ',' + status_red
             if(status_red != last_red):
                 data = data + 'red:{},'.format(status_red == '0')
             if(status_green != last_green):

@@ -185,7 +185,6 @@ $(document).ready(function(){
     var launch_btn = $("#launch-btn");
     var redled = $("#red-led");
     var blueled = $("#blue-led");
-    var greenled = $("#green-led");
 
     //SOCKET MANAGEMENT
     namespace = ''; // change to an empty string to use the global namespace
@@ -281,14 +280,6 @@ $(document).ready(function(){
                     }
                     else{
                         blueled.attr("src", "/labs/zumoline/static/img/led-off.png");
-                    }
-                }
-               else if(inst[0]=='green') {
-                    if (inst[1] == 'True') {
-                        greenled.attr("src", "/labs/zumoline/static/img/green-led.png");
-                    }
-                    else {
-                        greenled.attr("src", "/labs/zumoline/static/img/led-off.png");
                     }
                 }
                else if(inst[0]=='red') {

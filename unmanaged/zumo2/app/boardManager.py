@@ -38,31 +38,23 @@ class BoardManager(object):
 
     def ledChecker(self):
         l1=open(self.gpios['leds']['Red'],'r')
-        l2=open(self.gpios['leds']['Green'],'r')
-        l3=open(self.gpios['leds']['Blue'],'r')
+        l2=open(self.gpios['leds']['Blue'],'r')
         last_red = l1.read()
-        last_green = l2.read()
-        last_blue = l3.read()
+        last_blue = l2.read()
         l1.close()
         l2.close()
-        l3.close()
         try:
             while self.runLeds:
                 data = ''
                 l1=open(self.gpios['leds']['Red'],'r')
-                l2=open(self.gpios['leds']['Green'],'r')
-                l3=open(self.gpios['leds']['Blue'],'r')
+                l2=open(self.gpios['leds']['Blue'],'r')
                 status_red = l1.read(1)
-                status_green = l2.read(1)
-                status_blue = l3.read(1)
+                status_blue = l2.read(1)
                 if(status_red != last_red):
                     data = data + 'red:{},'.format(status_red == '0')
-                if(status_green != last_green):
-                    data = data + 'green:{},'.format(status_green == '0')
                 if(status_blue != last_blue):
                     data = data + 'blue:{}'.format(status_blue == '1')
                 last_red = status_red
-                last_green = status_green
                 last_blue = status_blue
                 if data != '':
                     if self.socketio is not None:
@@ -71,15 +63,12 @@ class BoardManager(object):
                               broadcast=True)
                 l1.close()
                 l2.close()
-                l3.close()
                 time.sleep(0.1)
             l1.close()
             l2.close()
-            l3.close()
         except:
             l1.close()
             l2.close()
-            l3.close()
 
     def stopLeds(self):
         if self.ledThread.isAlive():

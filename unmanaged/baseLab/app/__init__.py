@@ -3,45 +3,39 @@ import eventlet
 
 eventlet.monkey_patch()
 
-from flask import Flask, Blueprint, request, session
+from flask import Flask, Blueprint, session, request
 from flask_socketio import SocketIO
-from camera import Camera
-
 import redis
-from boardManager import BoardManager
-from lineFollowerTools import Chrono
-from config import GPIOS, CARDS
+from dummy.controller import DummyController
+from config import APPLICATION_ROOT
 
 app = Flask(__name__)
-
 app.config.from_object('config')
 
-zumo = Blueprint('zumo',
-                 __name__,
-                 template_folder='templates',
-                 static_folder='static')
-
+lab = Blueprint('lab', __name__)
+dummy = Blueprint('dummy', __name__)
 weblab = Blueprint("weblab", __name__)
-checker = Blueprint("checker", __name__)
+checker = Blueprint("errorReporter", __name__)
 
-socketio = SocketIO(app, async_mode='eventlet', resource = "/labs/zumoline/socket.io")
+socketio = SocketIO(app, async_mode='eventlet', resource = APPLICATION_ROOT + "/socket.io")
 redisClient = redis.Redis()
-camera = Camera()
 
-board_manager = BoardManager(socketio=socketio,redis=redisClient, gpios=GPIOS)
-chrono = Chrono(socketio=socketio,redis=redisClient, cards=CARDS)
+controller = DummyController(socketio, redisClient)
+
 
 if not app.debug:
     import logging
     from logging.handlers import RotatingFileHandler
-    file_handler = RotatingFileHandler('logs/zumo.log', 'a',
-                                       1 * 1024 * 1024, 5)
+    file_handler = RotatingFileHandler('logs/dummy.log', 'a',
+                                       1 * 1024 * 1024, 10)
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
     app.logger.addHandler(file_handler)
     app.logger.setLevel(logging.INFO)
-    app.logger.info('weblab zumo robot startup')
+    app.logger.info('sessionManager dummy startup')
+
+
 
 from babel import Babel
 
@@ -63,9 +57,12 @@ else:
         session['locale'] = locale
         return locale
 
+from app import views
+from app.sessionManager import views
+from app.errorReporter import views
+from dummy import views
 
-from app import views, zumo, weblab, checker
-
-app.register_blueprint(zumo, url_prefix='/labs/zumoline')
-app.register_blueprint(weblab, url_prefix='/labs/zumoline/weblab')
-app.register_blueprint(checker, url_prefix='/checker')
+app.register_blueprint(lab, url_prefix=APPLICATION_ROOT)
+app.register_blueprint(dummy, url_prefix=APPLICATION_ROOT+'/controller')
+app.register_blueprint(weblab, url_prefix=APPLICATION_ROOT+'/weblab')
+app.register_blueprint(checker, url_prefix=APPLICATION_ROOT+'/checker')

@@ -1,0 +1,37 @@
+# Spanish translations for dummy.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the dummy project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dummy 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-07-17 22:46+0200\n"
+"PO-Revision-Date: 2016-07-17 22:40+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: app/templates/base.html:5
+msgid "Dummy Lab"
+msgstr "Laboratorio Dummy"
+
+#: app/templates/base.html:23
+msgid "Dummy lab"
+msgstr "Laboratorio dummy"
+
+#: app/templates/base.html:34
+msgid "Finish"
+msgstr "Terminar"
+
+#: app/templates/index.html:6
+msgid "multilanguage"
+msgstr "multilenguaje"
+
+

@@ -48,7 +48,7 @@ class DummyController(object):
     def fakeEventGenerator(self):
         while self.runThread:
             if self.socketio is not None:
-                self.socketio.emit('General',
+                self.socketio.emit('Controller event',
                                     {'data':'Controller event'},
                                     broadcast=True)
             sleep(5)

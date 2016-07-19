@@ -31,8 +31,7 @@ $(document).ready(function(){
     }
 
     socket.on('General', function (msg) {
-
-        console.log('recived: ' + msg.data);
+        console.log('Recived on general channel: ' + msg.data);
     });
 
     socket.on('reconnect', function () {

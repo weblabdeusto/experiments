@@ -16,6 +16,7 @@ lab = Blueprint('lab', __name__)
 dummy = Blueprint('dummy', __name__)
 weblab = Blueprint("weblab", __name__)
 checker = Blueprint("errorReporter", __name__)
+video = Blueprint("video", __name__)
 
 socketio = SocketIO(app, async_mode='eventlet', resource = APPLICATION_ROOT + "/socket.io")
 redisClient = redis.Redis()
@@ -60,9 +61,12 @@ else:
 from app import views
 from app.sessionManager import views
 from app.errorReporter import views
+from app.camera import views
 from dummy import views
+
 
 app.register_blueprint(lab, url_prefix=APPLICATION_ROOT)
 app.register_blueprint(dummy, url_prefix=APPLICATION_ROOT+'/controller')
 app.register_blueprint(weblab, url_prefix=APPLICATION_ROOT+'/weblab')
 app.register_blueprint(checker, url_prefix=APPLICATION_ROOT+'/checker')
+app.register_blueprint(video, url_prefix=APPLICATION_ROOT+'/camera')

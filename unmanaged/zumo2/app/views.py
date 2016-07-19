@@ -22,7 +22,7 @@ import time
 def check():
     error = redisClient.hget('zumo:board','error')
     if error == 'Arduino not responding':
-        return 'REBOOT'
+        return 'Error'
     else:
         return 'SUCCESS!!'
 

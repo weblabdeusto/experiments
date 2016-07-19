@@ -12,8 +12,14 @@
         }
     </script>
 
-<img id="board-cam" style="display: block;margin: auto;width: 30%;" src="{{ url_for('video.video_feed') }}">
+    <img id="board-cam" style="display: block;margin: auto;width: 30%;" src="{{ url_for('video.video_feed') }}">
+    <br>
+    <div style="text-align: center">
+        <button id="test-button">Control example</button>
+    </div>
 
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/dummy.js') }}"></script>
 
 {% endblock %}
 

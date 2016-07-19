@@ -63,6 +63,7 @@ from app.sessionManager import views
 from app.errorReporter import views
 from app.camera import views
 from dummy import views
+from app.communications import views
 
 
 app.register_blueprint(lab, url_prefix=APPLICATION_ROOT)

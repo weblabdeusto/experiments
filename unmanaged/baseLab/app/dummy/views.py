@@ -1,4 +1,4 @@
-from app import dummy
+from app import dummy, socketio
 from app.sessionManager.tools import check_permission
 from flask import jsonify
 
@@ -7,3 +7,7 @@ from flask import jsonify
 def test(data):
     print 'Front-end event'
     return jsonify(success=True)
+
+@socketio.on('button')
+def button(data):
+    print 'Recived: {}'.format(data)

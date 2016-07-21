@@ -1,6 +1,6 @@
 from app import socketio
 from flask import request
-from flask_socketio import disconnect, emit
+from flask_socketio import disconnect
 
 
 #############################################
@@ -27,10 +27,3 @@ def test_disconnect():
     print('Client disconnected', request.sid)
 
 
-#############################################
-### -----> Lab specific methods <-----#######
-#############################################
-
-@socketio.on('button')
-def button(data):
-    print 'Recived: {}'.format(data)

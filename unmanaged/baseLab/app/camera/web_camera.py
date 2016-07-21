@@ -4,6 +4,7 @@ import time
 import cv2
 import Image
 import redis
+from facedetect import detect_face
 
 class Camera(object):
     thread = None  # background thread that reads frames from camera
@@ -47,13 +48,21 @@ class Camera(object):
             rc,img = camera.read()
             if not rc:
                 continue
-            imgRGB=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+
+            ##################################
+            ## include computer vision here ##
+            ##################################
+            img_face = detect_face(img)
+            imgRGB=cv2.cvtColor(img_face,cv2.COLOR_BGR2RGB)
+            ##################################
+
             jpg = Image.fromarray(imgRGB)
             jpg.save(stream,'JPEG')
 
             # store frame
             stream.seek(0)
             cls.frame = stream.read()
+
 
             # reset stream for next frame
             stream.seek(0)

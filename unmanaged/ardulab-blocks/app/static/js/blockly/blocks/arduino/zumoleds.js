@@ -1,14 +1,14 @@
 /**
  * Created by gabi on 7/09/16.
  */
-
+'use strict';
 
 goog.provide('Blockly.Blocks.zumoleds');
 
 goog.require('Blockly.Blocks');
 goog.require('Blockly.Types');
 
-Blockly.Blocks.zumoleds.HUE = 130;
+Blockly.Blocks.zumoleds.HUE = 170;
 
 Blockly.Blocks['setLedValue'] = {
     init: function() {
@@ -28,3 +28,14 @@ Blockly.Blocks['setLedValue'] = {
 
 //Create a block for allow logic operators as input
 
+Blockly.Blocks['readProximity2'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(Blockly.Msg.ZUM_PROX_READ);
+    this.setColour(Blockly.Blocks.zumoproxsensors.HUE);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip(Blockly.Msg.ZUM_PROX_READ_TIP);
+    this.setHelpUrl(Blockly.Msg.ZUM_PROX_HELP);
+  }
+};

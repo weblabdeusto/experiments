@@ -187,8 +187,10 @@
     </block>
   </category>
     <sep></sep>
-<category id="catLineSens" name="{{ gettext('Leds') }}">
-   <block type="setLedValue"></block>
+<category id="catLeds" name="{{ gettext('Leds') }}">
+    <block type="Button_config"></block>
+    <block type="readProximity2"></block>
+    <block type="setLedValue"></block>
 </category>
  <category id="catButtons" name="{{ gettext('Buttons') }}">
    <block type="Button_config"></block>

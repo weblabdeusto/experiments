@@ -1,10 +1,10 @@
-from app.camera.config import CAMERA
+
 from flask import Response
 import time
 from app.sessionManager.tools import check_permission
-from app import video
+from app import app, video
 
-if CAMERA == 'pi_camera':
+if app.config['CAMERA'] == 'pi_camera':
     from app.camera.pi_camera import Camera
 else:
     from app.camera.web_camera import Camera

@@ -3,7 +3,6 @@ from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 from datetime import datetime, timedelta
 from app import app, db, lm
-from .forms import LoginForm
 from .models import User
 from config import LOGIN_URL
 from functools import wraps
@@ -13,8 +12,6 @@ import requests
 import time
 from gevent import monkey, queue
 from camera import Camera
-from updater import Updater
-import redis
 
 def check_permission(func):
     @wraps(func)
@@ -41,7 +38,7 @@ def load_user(id):
 @app.before_request
 def before_request():
     g.user = current_user
-    if g.user.is_authenticated():
+    if g.user.is_authenticated:
         g.user.last_poll = datetime.now()
         db.session.add(g.user)
         db.session.commit()

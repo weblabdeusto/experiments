@@ -509,5 +509,12 @@
 	"ZUM_LEFT": "",
 	"ZUM_CENTER": "",
 	"ZUM_CENTERLEFT": "",
-	"ZUM_CENTERRIGHT": ""
+	"ZUM_CENTERRIGHT": "",
+	"ZUM_SET": "",
+	"ZUM_LED": "",
+	"ZUM_TO": "",
+	"ZUM_BLUE": "",
+	"ZUM_RED": "",
+	"ZUM_LEDS_TIP": "",
+	"ZUM_LEDS_HELP": ""
 }

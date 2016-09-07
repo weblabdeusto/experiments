@@ -14,3 +14,5 @@ SESSION_COOKIE_PATH = '/'
 
 WEBLAB_USERNAME = 'weblab_instance_name'
 WEBLAB_PASSWORD = 'weblab_password'
+
+CAMERA = 'web_camera'

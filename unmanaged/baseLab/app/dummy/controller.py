@@ -53,3 +53,12 @@ class DummyController(object):
                                     broadcast=True)
             sleep(5)
 
+
+    def doSomething(self):
+        self.socketio.emit('Controller event',
+                           {'data':'Task started'},
+                           broadcast=True)
+        sleep(5)
+        self.socketio.emit('Controller event',
+                           {'data':'Task finished'},
+                           broadcast=True)

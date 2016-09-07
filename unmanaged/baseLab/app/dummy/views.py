@@ -1,6 +1,7 @@
-from app import dummy, socketio
+from app import dummy, socketio, controller
 from app.sessionManager.tools import check_permission
 from flask import jsonify
+
 
 @dummy.route("/test")
 @check_permission
@@ -9,5 +10,7 @@ def test(data):
     return jsonify(success=True)
 
 @socketio.on('button')
+@check_permission
 def button(data):
     print 'Recived: {}'.format(data)
+    controller.doSomething()

@@ -1,4 +1,4 @@
-#!usr/bin/python
+#!/usr/bin/python
 
 from app import app,socketio
 

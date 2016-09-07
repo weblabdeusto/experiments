@@ -25,17 +25,3 @@ Blockly.Blocks['setLedValue'] = {
       this.setHelpUrl(Blockly.Msg.ZUM_LEDS_HELP);
     }
 };
-
-//Create a block for allow logic operators as input
-
-Blockly.Blocks['readProximity2'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField(Blockly.Msg.ZUM_PROX_READ);
-    this.setColour(Blockly.Blocks.zumoproxsensors.HUE);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip(Blockly.Msg.ZUM_PROX_READ_TIP);
-    this.setHelpUrl(Blockly.Msg.ZUM_PROX_HELP);
-  }
-};

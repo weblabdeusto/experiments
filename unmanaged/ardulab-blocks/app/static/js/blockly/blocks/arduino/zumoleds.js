@@ -11,17 +11,22 @@ goog.require('Blockly.Types');
 Blockly.Blocks.zumoleds.HUE = 170;
 
 Blockly.Blocks['setLedValue'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField(Blockly.Msg.ZUM_SET)
-          .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ZUM_BLUE, "Blue"], [Blockly.Msg.ZUM_RED, "Red"]]), "LED_LIST")
-          .appendField(Blockly.Msg.ZUM_LED)
-          .appendField(Blockly.Msg.ZUM_TO)
-          .appendField(new Blockly.FieldDropdown([[Blockly.Msg.HIGH, "0"], [Blockly.Msg.LOW, "1"]]), "LED_STATUS");
-      this.setColour(Blockly.Blocks.zumoleds.HUE);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setTooltip(Blockly.Msg.ZUM_LEDS_TIP);
-      this.setHelpUrl(Blockly.Msg.ZUM_LEDS_HELP);
-    }
+  /**
+   * Block for creating a 'set pin' to a state.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setHelpUrl(Blockly.Msg.ZUM_LEDS_HELP);
+    this.setColour(Blockly.Blocks.zumoleds.HUE);
+    this.appendValueInput('LED_STATE')
+        .appendField(Blockly.Msg.ZUM_LEDS_SET)
+        .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ZUM_LEDS_BLUE, "Blue"], [Blockly.Msg.ZUM_LEDS_RED, "Red"]]), 'LED')
+        .appendField(Blockly.Msg.ZUM_LEDS_TO)
+        .setCheck(Blockly.Types.BOOLEAN.checkList);
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip(Blockly.Msg.ZUM_LEDS_TIP);
+  }
 };
+

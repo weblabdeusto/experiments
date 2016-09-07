@@ -499,6 +499,7 @@
 	"ZUM_PROX_GET": "",
 	"ZUM_PROX_GET_TIP": "",
 	"ZUM_SENSOR_1": "",
+	"ZUM_SENSOR_2": "",
 	"ZUM_LINE_READ": "",
 	"ZUM_LINE_READ_TIP": "",
 	"ZUM_LINE_HELP": "",
@@ -510,11 +511,10 @@
 	"ZUM_CENTER": "",
 	"ZUM_CENTERLEFT": "",
 	"ZUM_CENTERRIGHT": "",
-	"ZUM_SET": "",
-	"ZUM_LED": "",
-	"ZUM_TO": "",
-	"ZUM_BLUE": "",
-	"ZUM_RED": "",
 	"ZUM_LEDS_TIP": "",
-	"ZUM_LEDS_HELP": ""
+	"ZUM_LEDS_HELP": "",
+	"ZUM_LEDS_BLUE": "",
+	"ZUM_LEDS_RED": "",
+	"ZUM_LEDS_SET": "",
+	"ZUM_LEDS_TO": ""
 }

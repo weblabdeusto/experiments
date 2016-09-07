@@ -1,5 +1,5 @@
 /**
- * Created by gabi on 7/09/16.
+ * Created by gabi on 22/04/16.
  */
 
 'use strict';
@@ -11,11 +11,11 @@ goog.require('Blockly.Arduino');
 Blockly.Arduino['setLedValue'] = function(block) {
 
     Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
+    var stateOutput = Blockly.Arduino.valueToCode(
+        block, 'LED_STATE', Blockly.Arduino.ORDER_ATOMIC) || 'LOW';
+    var led = block.getFieldValue('LED');
 
-    var led = block.getFieldValue('LED_LIST');
-    var value = block.getFieldValue('LED_STATUS');
-
-    var code = "led"+ led +"("+value+");";
+    var code = "led"+led+"("+stateOutput+");";
 
     return code;
 };

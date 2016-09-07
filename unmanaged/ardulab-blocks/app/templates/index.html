@@ -187,9 +187,14 @@
     </block>
   </category>
     <sep></sep>
-<category id="catLeds" name="{{ gettext('Leds') }}">
-    <block type="setLedValue"></block>
-</category>
+ <category id="catLeds" name="{{ gettext('Leds') }}">
+    <block type="setLedValue">
+        <value name="LED_STATE">
+            <block type="io_highlow"></block>
+        </value>
+    </block>
+ </category>
+
  <category id="catButtons" name="{{ gettext('Buttons') }}">
    <block type="Button_config"></block>
    <block type="Button_isPressed"></block>

@@ -51,7 +51,7 @@ class Manager(object):
                     if response.status_code == 200:
                         logging.info('[%s]: Lab is up',lab['name'])
                         if response.content == 'Error':
-                            logging.warning('[%s]: report error...', lab['name'])
+                            logging.warning('[%s]: reported some error', lab['name'])
                             try:
                                 self._shutDownRelay(lab['relay'])
                                 logging.info('[%s]: Lab restarted', lab['name'])

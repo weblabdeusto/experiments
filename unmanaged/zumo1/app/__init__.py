@@ -1,15 +1,13 @@
-async_mode = 'eventlet'
-if async_mode == 'eventlet':
-    import eventlet
-    eventlet.monkey_patch()
-elif async_mode == 'gevent':
-    from gevent import monkey
-    monkey.patch_all()
+
+import eventlet
+eventlet.monkey_patch()
 
 from flask import Flask,Blueprint
 from flask_socketio import SocketIO
+#from flask_sslify import SSLify
 
 app = Flask(__name__)
+
 app.config.from_object('config')
 
 zumo = Blueprint('zumo',
@@ -20,7 +18,8 @@ zumo = Blueprint('zumo',
 weblab = Blueprint("weblab", __name__)
 checker = Blueprint("checker", __name__)
 
-socketio = SocketIO(app, async_mode=async_mode, resource = "/labs/zumoline/socket.io")
+socketio = SocketIO(app, async_mode='eventlet', resource = "/labs/zumoline/socket.io")
+#sslify = SSLify(app)
 
 if not app.debug:
     import logging
@@ -38,4 +37,4 @@ from app import views, zumo, weblab, checker
 
 app.register_blueprint(zumo, url_prefix='/labs/zumoline')
 app.register_blueprint(weblab, url_prefix='/labs/zumoline/weblab')
-app.register_blueprint(checker, url_prefix='/checker/')
+app.register_blueprint(checker, url_prefix='/checker')

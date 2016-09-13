@@ -5,6 +5,7 @@ from .experiments import Aquarium
 
 app = Flask(__name__)
 app.config.from_object('config')
+from flask_bcrypt import Bcrypt
 db = SQLAlchemy(app)
 lm = LoginManager()
 lm.init_app(app)

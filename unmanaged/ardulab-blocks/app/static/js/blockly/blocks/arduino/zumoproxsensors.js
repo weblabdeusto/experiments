@@ -13,27 +13,28 @@ Blockly.Blocks.zumoproxsensors.HUE = 130;
 Blockly.Blocks['readProximity'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Read proximity sensors");
+        .appendField(Blockly.Msg.ZUM_PROX_READ);
     this.setColour(Blockly.Blocks.zumoproxsensors.HUE);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('');
-    this.setHelpUrl('http://pololu.github.io/zumo-32u4-arduino-library/class_zumo32_u4_motors.html');
+    this.setTooltip(Blockly.Msg.ZUM_PROX_READ_TIP);
+    this.setHelpUrl(Blockly.Msg.ZUM_PROX_HELP);
   }
 };
 
 Blockly.Blocks['countsGeneric'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["left", "LEFT"], ["center", "CENTER"], ["right", "RIGHT"]]), "SENSOR_LIST")
-        .appendField("sensor");
+        .appendField(Blockly.Msg.ZUM_SENSOR_1)
+        .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ZUM_LEFT_M, "LEFT"], [Blockly.Msg.ZUM_CENTER, "CENTER"], [Blockly.Msg.ZUM_RIGHT_M, "RIGHT"]]), "SENSOR_LIST")
+        .appendField(Blockly.Msg.ZUM_SENSOR_2);
     this.appendDummyInput()
-        .appendField("detect on his")
-        .appendField(new Blockly.FieldDropdown([["left", "LEFT"], ["right", "RIGHT"]]), "DETECT_LIST");
+        .appendField(Blockly.Msg.ZUM_PROX_GET)
+        .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ZUM_LEFT, "LEFT"], [Blockly.Msg.ZUM_RIGHT, "RIGHT"]]), "DETECT_LIST");
     this.setColour(Blockly.Blocks.zumoproxsensors.HUE);
     this.setOutput(true, "Number");
-    this.setTooltip('');
-    this.setHelpUrl('http://pololu.github.io/zumo-32u4-arduino-library/class_zumo32_u4_motors.html');
+    this.setTooltip(Blockly.Msg.ZUM_PROX_GET_TIP);
+    this.setHelpUrl(Blockly.Msg.ZUM_PROX_HELP);
   },
   getBlockType: function() {
     return Blockly.Types.NUMBER;

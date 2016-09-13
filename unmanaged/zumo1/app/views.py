@@ -414,9 +414,18 @@ def eraseThread():
 
     time.sleep(2)
     try:
-        #result = subprocess.check_output('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e', stderr=subprocess.STDOUT)
-        result = os.system('avrdude -c avr109 -p atmega32U4 -P /dev/ttyACM0 -e')
-        print "Success!"
+        resp = subprocess.check_output(["ls","/dev"])
+        resp = resp.split("\n")
+        port = ""
+        for dev in resp:
+            if "ttyACM" in dev:
+                port = dev
+        if port != "":
+            result = subprocess.check_output(['avrdude', '-c' , 'avr109', '-p', 'atmega32U4', '-P', '/dev/'+port, '-e'], stderr=subprocess.STDOUT)
+            print result
+        else:
+            print "Device not found"
+            #TODO: activate error flag
 
     except subprocess.CalledProcessError, ex:
         # error code <> 0
@@ -504,26 +513,41 @@ def launch_binary(basedir,file_name,demo,board):
     print 'Loading code'
     time.sleep(2)
     if(demo):
-        #try:
+        try:
             print file_name
-            print 'flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex'
-            #subprocess.call('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
+            file = 'flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex'
+            resp = subprocess.check_output(["ls","/dev"])
+            resp = resp.split("\n")
+            port = ""
+            for dev in resp:
+                if "ttyACM" in dev:
+                    port = dev
+            if port != "":
+                result = subprocess.check_output(['avrdude', '-c' , 'avr109', '-p', 'atmega32U4', '-P', '/dev/'+port, '-U', file], stderr=subprocess.STDOUT)
+                print result
+            else:
+                print "Device not found"
+                #TODO: activate error flag
 
-            result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/demo/'+file_name+'.hex')
-            print "Success!"
+        except subprocess.CalledProcessError, ex:
+            print "Exception loading code"
 
-
-        #except subprocess.CalledProcessError, ex:
-            # error code <> 0
-        #    print "Error loading file"
-        #    return {'current': 100, 'total': 100, 'status': 'Task completed!',
-        #        'result': "Error loading binary"}
     else:
         try:
             print file_name
-            #result = subprocess.check_output(['avrdude','-p','atmega32u4','-c','avr109','-P','/dev/ttyACM0','-U','flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'], stderr=subprocess.STDOUT)
-            result = os.system('avrdude -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:'+basedir+'/binaries/user/'+file_name+'.hex')
-            print "Success!"
+            file = 'flash:w:'+basedir+'/binaries/user/'+file_name+'.hex'
+            resp = subprocess.check_output(["ls","/dev"])
+            resp = resp.split("\n")
+            port = ""
+            for dev in resp:
+                if "ttyACM" in dev:
+                    port = dev
+            if port != "":
+                result = subprocess.check_output(['avrdude', '-c' , 'avr109', '-p', 'atmega32U4', '-P', '/dev/'+port, '-U', file], stderr=subprocess.STDOUT)
+                print result
+            else:
+                print "Device not found"
+                #TODO: activate error flag
 
         except subprocess.CalledProcessError, ex:
             # error code <> 0
@@ -629,7 +653,8 @@ def index(session_id):
 
     renew_poll(session_id)
     session['zumo_session_id'] = session_id
-    return redirect(url_for('.home'))
+    return redirect(url_for('.home', _external = True,_scheme="https"))
+    #return redirect(url_for('.home'))
 
 def get_json():
     # Retrieve the submitted JSON
@@ -695,7 +720,9 @@ def start_experiment():
     pipeline.expire('weblab:active:{}'.format(session_id), 30 + int(float(server_initial_data['priority.queue.slot.length'])))
     pipeline.execute()
 
-    link = url_for('zumo.index', session_id=session_id, _external = True)
+    link = url_for('zumo.index', session_id=session_id, _external = True, _scheme="https")
+    #link = url_for('zumo.index', session_id=session_id, _external = True)
+
     #app.logger.info("Weblab requesting session for "+  user.nickname +", Assigned session_id: " + session_id)
     print "Assigned session_id: %s" % session_id
     print "See:",link

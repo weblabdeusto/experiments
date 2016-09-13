@@ -1,0 +1,50 @@
+#binary-selector{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 2%;
+    border: 1px solid #444;
+    height: 20px;
+    overflow-y: scroll;
+}
+.section{
+   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 140%;
+    line-height: 20px;
+}
+
+#demo-files{
+    height: 200px;
+    overflow-y: scroll;
+}
+#controls{
+    color: #333;
+    border-radius: 6px;
+    border: 1px solid #444;
+    margin-top:5%;
+    padding-bottom: 40%;
+    height: 100%;
+}
+#serial-monitor{
+    line-height: 10px;
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+#chrono{
+    line-height: 16px;
+    height: 150px;
+    overflow-y: scroll;
+}
+
+.file{
+    cursor:pointer;
+}
+
+.remote-btn{
+    cursor:pointer;
+}
+
+.lap_time{
+    line-height: 16px;
+}

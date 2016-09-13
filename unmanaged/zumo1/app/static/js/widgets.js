@@ -136,7 +136,7 @@ TimerDisplayer = function (timer_id) {
 // stop().
 CameraRefresher = function (img_id) {
 
-    var INTERVAL = 500; // Seconds to wait between image changes.
+    var INTERVAL = 200; // Seconds to wait between image changes.
 
     var $img = $("#" + img_id);
     var _url;
@@ -243,13 +243,27 @@ CameraRefresher = function (img_id) {
 }; // end-of CameraRefresher
 
 
+
+
 $(document).ready(function(){
     timerDisplayer = new TimerDisplayer("timer");
     timerDisplayer.setTimeLeft(TIME_LEFT);
     timerDisplayer.startCountDown();
-    //var FIRST_CAMERA_URL = "https://cams.weblab.deusto.es/webcam/proxied.py/zumoline";
-    //cameraRefresher = new CameraRefresher("cam");
-    //cameraRefresher.start(FIRST_CAMERA_URL);
+    var FIRST_CAMERA_URL = "https://cams.weblab.deusto.es/webcam/proxied.py/zumoline";
+    cameraRefresher = new CameraRefresher("cam");
+    cameraRefresher.start(FIRST_CAMERA_URL);
 
+    $("#mjpeg").click(function() {
+        cameraRefresher.stop();
+        $("#cam").attr("src", "https://admin:@cams.weblab.deusto.es/webcam/zumoline/video.mjpeg");
+        $("#jpg").show();
+        $("#mjpeg").hide();
+                });
+    $("#jpg").click(function() {
+        $("#cam").attr("src", FIRST_CAMERA_URL);
+        cameraRefresher.start(FIRST_CAMERA_URL);
+        $("#jpg").hide();
+        $("#mjpeg").show();
+    });
 
 });

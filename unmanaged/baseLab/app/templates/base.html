@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>{{ gettext('Dummy Lab') }}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/commons.css')}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-lg-4">
+                <br>
+                <div style="text-align:left;margin-left: 5%" >
+                    <h2>
+                        <span class="timer" id="timer"></span>
+                    </h2>
+                </div>
+            </div>
+            <div class="col-lg-4" style="text-align:center">
+                <h1><b>{{ gettext('Dummy lab') }}</b></h1>
+            </div>
+            <div class="col-lg-4">
+
+            </div>
+        </div>
+        <div>
+            {% block content %}{% endblock %}
+        </div>
+        <div id="bfinish" class="text-center">
+            <br>
+            <button id="button_finish" type="button" class="btn btn-default btn-lg">{{ gettext('Finish') }}</button>
+        </div>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/commons.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/widgets.js') }}"></script>
+        <script>
+
+            var BACK_URL = "{{back}}";
+            var BASE_URL = "{{base_url}}";
+            var TIME_LEFT = {{timeleft-1}};
+            var DEBUG = ("{{ DEBUG }}"== "True");
+        </script>
+        <script type="text/javascript"  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/iframeResizer.contentWindow.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/iframeResizer.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/commons.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/sockets.js') }}"></script>

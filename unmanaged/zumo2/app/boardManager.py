@@ -243,6 +243,7 @@ class BoardManager(object):
         self.erased = True
 
         success = self.stopSerial()
+        time.sleep(0.2)
 
         if self.avrThread is None:
             self.avrThread = Thread(target=self.eraseTask)
@@ -283,7 +284,7 @@ class BoardManager(object):
 
     def loadBinary(self,path):
         success = self.stopSerial()
-
+        time.sleep(0.2)
         if self.avrThread is None:
             self.avrThread = Thread(target=self.programTask, args=(path,))
             self.avrThread.daemon = False

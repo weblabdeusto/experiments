@@ -23,6 +23,8 @@ def check():
     error = redisClient.hget('zumo:board','error')
     if error == 'Arduino not responding':
         return 'Error'
+    elif error == 'AVR not working':
+        return 'Error'
     else:
         return 'SUCCESS!!'
 

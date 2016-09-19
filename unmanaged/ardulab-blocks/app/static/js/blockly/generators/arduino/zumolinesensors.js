@@ -17,7 +17,7 @@ Blockly.Arduino['basicReadLine'] = function(block) {
     var values = 'unsigned int values[5] = {0,0,0,0,0};';
     Blockly.Arduino.addDeclaration('values_', values);
 
-    var lineSetupCode = 'lineSensores.initFiveSensors();';
+    var lineSetupCode = 'lineSensors.initFiveSensors();';
     Blockly.Arduino.addSetup('line_', lineSetupCode, true);
 
     var code = 'lineSensors.read(values, QTR_EMITTERS_ON);\n';

@@ -80,10 +80,10 @@ class Manager(object):
                                 self._shutDownRelay(lab['relay'])
                             except:
                                 logging.warning('[%s]: Restarting failed', lab['name'])
-                except:
+                except Exception, ex:
                    if lab['lastDown'] == None:
                        lab['lastDown'] = datetime.now()
-                       logging.warning('[%s]:EXCEPTION... Lab is down,starting countdown for restart...', lab['name'])
+                       logging.warning('[%s]:EXCEPTION: [%s]', lab['name'],ex)
 
                    print (datetime.now()-lab['lastDown']).seconds
                    count = (datetime.now()-lab['lastDown']).seconds

@@ -47,8 +47,10 @@ class Manager(object):
 
         while self.run:
             for lab in self.labs:
-                try:
+#                try:
                     response = requests.get('http://'+lab['ip']+lab['path'],timeout=10)
+                    print response.status_code
+                    print response.content
                     if response.status_code == 200:
                         #logging.info('[%s]: Lab is up',lab['name'])
                         if response.content.contains("Error"):
@@ -78,22 +80,22 @@ class Manager(object):
                                 self._shutDownRelay(lab['relay'])
                             except:
                                 logging.warning('[%s]: Restarting failed', lab['name'])
-                except:
-                    if lab['lastDown'] == None:
-                        lab['lastDown'] = datetime.now()
-                        logging.warning('[%s]:EXCEPTION... Lab is down,starting countdown for restart...', lab['name'])
-
-                    print (datetime.now()-lab['lastDown']).seconds
-                    count = (datetime.now()-lab['lastDown']).seconds
-                    logging.warning('[%s]: %d seconds for shutting power down...', lab['name'],self.timeout*60 - count)
-                    if count >= self.timeout*60:
-                        try:
-                            lab['lastDown'] = datetime.now()
-                            logging.warning('[%s]: Shutting power down!', lab['name'])
-                            self._shutDownRelay(lab['relay'])
-                        except:
-                            logging.warning('[%s]: Restarting failed', lab['name'])
-
+#                except:
+#                    if lab['lastDown'] == None:
+#                        lab['lastDown'] = datetime.now()
+#                        logging.warning('[%s]:EXCEPTION... Lab is down,starting countdown for restart...', lab['name'])
+#
+#                    print (datetime.now()-lab['lastDown']).seconds
+#                    count = (datetime.now()-lab['lastDown']).seconds
+#                    logging.warning('[%s]: %d seconds for shutting power down...', lab['name'],self.timeout*60 - count)
+#                    if count >= self.timeout*60:
+#                        try:
+#                            lab['lastDown'] = datetime.now()
+#                            logging.warning('[%s]: Shutting power down!', lab['name'])
+#                            self._shutDownRelay(lab['relay'])
+#                        except:
+#                            logging.warning('[%s]: Restarting failed', lab['name'])
+#
             time.sleep(self.checkingTime*60)
 
 

@@ -14,10 +14,10 @@ Blockly.Arduino['basicReadLine'] = function(block) {
     var globalCode = 'Zumo32U4LineSensors lineSensors;';
     Blockly.Arduino.addDeclaration('lineSensors_', globalCode);
 
-    var values = 'int values[5] = {0,0,0,0,0};';
+    var values = 'unsigned int values[5] = {0,0,0,0,0};';
     Blockly.Arduino.addDeclaration('values_', values);
 
-    var lineSetupCode = 'lineSensores.initFiveSensors();';
+    var lineSetupCode = 'lineSensors.initFiveSensors();';
     Blockly.Arduino.addSetup('line_', lineSetupCode, true);
 
     var code = 'lineSensors.read(values, QTR_EMITTERS_ON);\n';
@@ -36,7 +36,7 @@ Blockly.Arduino['getLineSensorValue'] = function(block) {
     var values = 'int values[5] = {0,0,0,0,0};';
     Blockly.Arduino.addDeclaration('values_', values);
 
-    var lineSetupCode = 'lineSensores.initFiveSensors();';
+    var lineSetupCode = 'lineSensors.initFiveSensors();';
     Blockly.Arduino.addSetup('line_', lineSetupCode, true);
 
     var code = 'values[' + sensor + ']';

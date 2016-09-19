@@ -10,6 +10,7 @@ if not DEBUG:
 class Manager(object):
 
     def __init__(self):
+        print 'power manager started'
         #Init piface object
         if not DEBUG:
             self.pfd = pifacedigitalio.PiFaceDigital()
@@ -49,9 +50,10 @@ class Manager(object):
                 try:
                     response = requests.get('http://'+lab['ip']+lab['path'],timeout=10)
                     if response.status_code == 200:
-                        logging.info('[%s]: Lab is up',lab['name'])
-                        if response.content == 'Error':
-                            logging.warning('[%s]: reported some error', lab['name'])
+                        #logging.info('[%s]: Lab is up',lab['name'])
+                        if response.content.contains("Error"):
+                            logging.warning('[%s]: [%s]', lab['name'],response.content)
+                            print '[{}]: {}'.format(lab['name'],response.content)
                             try:
                                 self._shutDownRelay(lab['relay'])
                                 logging.info('[%s]: Lab restarted', lab['name'])
@@ -59,7 +61,7 @@ class Manager(object):
                                 logging.warning('[%s]: Restarting failed', lab['name'])
                         else:
                             lab['lastDown']= None
-                            logging.info('[%s]: No error reported',lab['name'])
+                            #logging.info('[%s]: No error reported',lab['name'])
 
                     else:
                         if lab['lastDown'] == None:

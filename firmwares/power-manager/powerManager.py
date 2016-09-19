@@ -53,7 +53,7 @@ class Manager(object):
                     print response.content
                     if response.status_code == 200:
                         #logging.info('[%s]: Lab is up',lab['name'])
-                        if response.content.contains("Error"):
+                        if "Error" in response.content:
                             logging.warning('[%s]: [%s]', lab['name'],response.content)
                             print '[{}]: {}'.format(lab['name'],response.content)
                             try:

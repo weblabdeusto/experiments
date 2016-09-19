@@ -48,6 +48,8 @@ class Manager(object):
             for lab in self.labs:
 #                try:
                     response = requests.get('http://'+lab['ip']+lab['path'],timeout=10)
+                    print response.status_code
+                    print response.content
                     if response.status_code == 200:
                         logging.info('[%s]: Lab is up',lab['name'])
                         if response.content == 'Error':

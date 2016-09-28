@@ -113,7 +113,7 @@ def disconnect_request():
 @socketio.on('reconnect')
 def test_reconnect():
     print 'Reonected to general channel'
-    socketio.emit('General', {'data': 'Reconnected'},broadcast=True)
+    socketio.emit('General', {'data':"Ready"}, broadcast=True)
 
 @socketio.on('connect')
 def test_connect():

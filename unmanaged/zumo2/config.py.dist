@@ -1,0 +1,41 @@
+import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+DEBUG = False
+
+APPLICATION_ROOT="/labs/zumoline"
+
+CSRF_ENABLED = True
+SECRET_KEY = 'Secret_Password_Here'
+
+SESSION_COOKIE_NAME = 'zumo_cookie'
+SESSION_COOKIE_PATH = '/labs/'
+
+#Weblab
+LOGIN_URL = ""
+WEBLAB_USERNAME = 'test'
+WEBLAB_PASSWORD = 'rodela'
+
+#Board config
+GPIOS = {'buttons':
+             {'A':'/sys/class/gpio/gpio16/value',
+              'B':'/sys/class/gpio/gpio20/value',
+              'C':'/sys/class/gpio/gpio26/value'
+              },
+         'leds':
+             {'Red':'/sys/class/gpio/gpio6/value',
+              'Blue':'/sys/class/gpio/gpio5/value'
+              },
+         'reset':'/sys/class/gpio/gpio21/value'
+         }
+#Line follower config
+CARDS = 4
+#Ardulab config
+if not DEBUG:
+    ideIP = "192.168.0.2/labs/ardulab"
+    blocklyIP = "192.168.0.2/labs/ardublocks"
+else:
+    ideIP = "weblab.deusto.es/labs/ardulab"
+    blocklyIP = "weblab.deusto.es/labs/ardublocks"
+

@@ -244,6 +244,13 @@ $(document).ready(function(){
 
         socket.on('reconnect', function () {
             console.log('reconnecteeeeed');
+            launch_btn.prop("disabled", false);
+            $("#btn-A").prop( "disabled", false );
+            $("#btn-B").prop( "disabled", false );
+            $("#btn-C").prop( "disabled", false );
+            $("#send-data").prop( "disabled", false );
+            status_div.html("<p>"+ msgs.READY +"</p>")
+
         });
 
         socket.on('connect_failed', function () {

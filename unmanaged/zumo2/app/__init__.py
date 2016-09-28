@@ -5,7 +5,7 @@ eventlet.monkey_patch()
 
 from flask import Flask, Blueprint, request, session
 from flask_socketio import SocketIO
-from pi_camera import Camera
+#from pi_camera import Camera
 
 import redis
 from boardManager import BoardManager
@@ -26,7 +26,7 @@ checker = Blueprint("checker", __name__)
 
 socketio = SocketIO(app, async_mode='eventlet', resource = "/labs/zumoline/socket.io")
 redisClient = redis.Redis()
-camera = Camera()
+#camera = Camera()
 
 board_manager = BoardManager(socketio=socketio,redis=redisClient, gpios=GPIOS)
 chrono = Chrono(socketio=socketio,redis=redisClient, cards=CARDS)

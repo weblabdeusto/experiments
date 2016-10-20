@@ -6,6 +6,7 @@ try:
     from config import DB_URI
 except:
     import os
+    DB_URI = 'localhost'
     basedir = os.path.abspath(os.path.dirname(__file__)).split('/app/')[0]
 
 
@@ -207,7 +208,8 @@ class dbManager(object):
         for comp in competitions:
             if comp in active:
                 self.client.ardulab_db.competitions.update_one({"name": comp,
-                                                           "users.username": username
+                                                                "circuit": circuit,
+                                                                "users.username": username
                                                            },
                                                            {"$push": {
                                                               "users.$.uses": {

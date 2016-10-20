@@ -2,6 +2,7 @@ import time
 import subprocess
 import serial
 from threading import Thread
+from config import DEBUG
 
 
 class BoardManager(object):
@@ -21,20 +22,21 @@ class BoardManager(object):
         self.runLeds = False
 
     def startLeds(self):
-        if self.ledThread is None:
-            print 'Led thread not running'
-        else:
-            if self.ledThread.isAlive():
-                print 'led thread running...stop'
-                self.runLeds = False
-                self.ledThread.join()
-                print 'Led thread stopped'
+        if not DEBUG:
+            if self.ledThread is None:
+                print 'Led thread not running'
             else:
-                print 'Led thread is not running'
-        self.runLeds = True
-        self.ledThread = Thread(target= self.ledChecker)
-        self.ledThread.setDaemon(True)
-        self.ledThread.start()
+                if self.ledThread.isAlive():
+                    print 'led thread running...stop'
+                    self.runLeds = False
+                    self.ledThread.join()
+                    print 'Led thread stopped'
+                else:
+                    print 'Led thread is not running'
+            self.runLeds = True
+            self.ledThread = Thread(target= self.ledChecker)
+            self.ledThread.setDaemon(True)
+            self.ledThread.start()
 
     def ledChecker(self):
         l1=open(self.gpios['leds']['Red'],'r')
@@ -144,21 +146,21 @@ class BoardManager(object):
     ### --------> Serial-Manager <-----------####
     #############################################
     def startSerial(self):
-
-        if self.serialThread is None:
-            print 'Thread not running'
-        else:
-            if self.serialThread.isAlive():
-                print 'serial thread running...stop'
-                self.serialRun = False
-                self.serialThread.join()
-                print 'Serial thread stopped'
+        if not DEBUG:
+            if self.serialThread is None:
+                print 'Thread not running'
             else:
-                print 'serial thread is not running'
-        self.serialRun = True
-        self.serialThread = Thread(target= self.serialTask)
-        self.serialThread.setDaemon(True)
-        self.serialThread.start()
+                if self.serialThread.isAlive():
+                    print 'serial thread running...stop'
+                    self.serialRun = False
+                    self.serialThread.join()
+                    print 'Serial thread stopped'
+                else:
+                    print 'serial thread is not running'
+            self.serialRun = True
+            self.serialThread = Thread(target= self.serialTask)
+            self.serialThread.setDaemon(True)
+            self.serialThread.start()
 
 
     def stopSerial(self):

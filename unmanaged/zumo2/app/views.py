@@ -7,9 +7,9 @@ from flask_socketio import disconnect
 from functools import wraps
 
 from datetime import datetime, timedelta
-from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale
+from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale, db_manager
 
-from config import basedir, ideIP, blocklyIP, DEBUG
+from config import basedir, ideIP, blocklyIP, DEBUG, CIRCUIT
 
 import json
 import random
@@ -135,31 +135,6 @@ def sendSerial():
     else:
         return jsonify(success=False)
 
-#############################################
-#### ----------> VIDEO <--------------#######
-#############################################
-def gen(camera):
-    """Video streaming generator function."""
-    while True:
-        time.sleep(0.2)
-        frame = camera.get_frame()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-
-
-
-@zumo.route('/video_feed')
-@check_permission
-def video_feed():
-    if not camera.stop:
-        print 'camera is running'
-        camera.close()
-        print 'camera is clossed'
-    """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(camera),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 #############################################
 ##### ----------> BUTTONS <-----------#######
@@ -252,7 +227,10 @@ def endSession():
     board_manager.stopLeds()
     chrono.stopChrono()
     board_manager.eraseMemory()
-    #camera.close()
+    best = chrono.getBestTime()
+    if best != None:
+        db_manager.addUserTime(g.user["username"], best, CIRCUIT)
+
 
 def get_user_data(session_id):
     pipeline = redisClient.pipeline()

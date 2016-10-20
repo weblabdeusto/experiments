@@ -230,7 +230,6 @@ def endSession(username):
     if best != None:
         print 'endSession tying to push'
         try:
-            print g.user['username']
             success, msg = db_manager.addUserTime(username,best,CIRCUIT)
         except Exception, ex:
             print 'Error: '+ ex.message

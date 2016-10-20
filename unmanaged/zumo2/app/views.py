@@ -232,6 +232,7 @@ def endSession():
     if best != None:
         print 'endSession tying to push'
         try:
+            print g.user['username']
             success, msg = db_manager.addUserTime(g.user['username'],best,CIRCUIT)
         except Exception, ex:
             print 'Error: '+ ex.message
@@ -450,6 +451,7 @@ def dispose_experiment(session_id):
             # the original URL. After that, every record of the user has been deleted
             pipeline.expire("weblab:inactive:{}".format(session_id), 3600)
             pipeline.execute()
+            print 'Session deleted'
             return 'deleted'
         return 'not found'
     return 'unknown op'

@@ -103,7 +103,6 @@ class Chrono(object):
                         print 'first card so... Starting chrono'
                         self._lapInfo['First'] = timeit.default_timer()
 
-            sleep(0.2)
         self.RFID_reader.stop()
         self._card_ids = []
         self._lapInfo['First'] = None

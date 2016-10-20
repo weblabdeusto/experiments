@@ -17,6 +17,9 @@ LOGIN_URL = ""
 WEBLAB_USERNAME = 'test'
 WEBLAB_PASSWORD = 'rodela'
 
+DB_URI = 'localhost'
+#DB_URI = 'mongodb://competitionst:password@192.168.0.7'
+
 #Board config
 GPIOS = {'buttons':
              {'A':'/sys/class/gpio/gpio16/value',
@@ -29,8 +32,11 @@ GPIOS = {'buttons':
               },
          'reset':'/sys/class/gpio/gpio21/value'
          }
+
 #Line follower config
 CARDS = 4
+CIRCUIT = "Montmelo"
+
 #Ardulab config
 if not DEBUG:
     ideIP = "192.168.0.2/labs/ardulab"

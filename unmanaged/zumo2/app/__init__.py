@@ -11,6 +11,7 @@ import redis
 from boardManager import BoardManager
 from lineFollowerTools import Chrono
 from config import GPIOS, CARDS
+from db import dbManager
 
 app = Flask(__name__)
 
@@ -30,6 +31,7 @@ redisClient = redis.Redis()
 
 board_manager = BoardManager(socketio=socketio,redis=redisClient, gpios=GPIOS)
 chrono = Chrono(socketio=socketio,redis=redisClient, cards=CARDS)
+db_manager = dbManager()
 
 if not app.debug:
     import logging

@@ -200,7 +200,7 @@ class dbManager(object):
         except:
             return False, "Unexpected error"
 
-    def addUserTime(self, username, time):
+    def addUserTime(self, username, time, circuit):
 
         active = self.getActiveCompetitions()
         competitions = self.getUserCompetitions(username)

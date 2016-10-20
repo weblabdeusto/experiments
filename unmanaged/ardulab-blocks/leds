@@ -1,0 +1,38 @@
+/**
+ * Created by gabi on 7/09/16.
+ */ 'use strict'; goog.provide('Blockly.Blocks.zumoleds'); goog.require('Blockly.Blocks'); goog.require('Blockly.Types'); Blockly.Blocks.zumoleds.HUE = 170; Blockly.Blocks['setLedValue'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField(Blockly.Msg.ZUM_SET)
+          .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ZUM_BLUE, "Blue"], [Blockly.Msg.ZUM_RED, "Red"]]), "LED_LIST")
+          .appendField(Blockly.Msg.ZUM_LED)
+          .appendField(Blockly.Msg.ZUM_TO)
+          .appendField(new Blockly.FieldDropdown([[Blockly.Msg.HIGH, "0"], [Blockly.Msg.LOW, "1"]]), "LED_STATUS");
+      this.setColour(Blockly.Blocks.zumoleds.HUE);
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setTooltip(Blockly.Msg.ZUM_LEDS_TIP);
+      this.setHelpUrl(Blockly.Msg.ZUM_LEDS_HELP);
+    }
+};
+
+______________________________________________________________________
+GENERATOR
+______________________________________________________________________
+
+/**
+ * Created by gabi on 7/09/16.
+ */ 'use strict'; goog.provide('Blockly.Arduino.zumoleds'); goog.require('Blockly.Arduino'); Blockly.Arduino['setLedValue'] = function(block) {
+    Blockly.Arduino.addInclude('zumo', '#include <Wire.h>\n#include <Zumo32U4.h>');
+    var led = block.getFieldValue('LED_LIST');
+    var value = block.getFieldValue('LED_STATUS');
+    var code = "led"+ led +"("+value+");";
+    return code;
+};
+________________________________________________-
+
+<category id="catLeds" name="{{ gettext('Leds') }}">
+    <block type="setLedValue"></block>
+</category>
+____________________________________________________
+

@@ -1,0 +1,45 @@
+import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+DEBUG = True
+
+APPLICATION_ROOT="/labs/zumoline"
+
+CSRF_ENABLED = True
+SECRET_KEY = ';t0xck(X*m&]drZw`nlqQM!0PQ7>$}H|L|[bCs^:_CjFp>5g/@Ouc>X$jRWeIeU'
+
+SESSION_COOKIE_NAME = 'zumo_cookie'
+SESSION_COOKIE_PATH = '/labs/'
+
+WEBLAB_USERNAME = 'test'
+WEBLAB_PASSWORD = 'rodela'
+
+DB_URI = 'localhost'
+#DB_URI = 'mongodb://competitionst:password@192.168.0.7'
+
+#Board config
+GPIOS = {'buttons':
+             {'A':'/sys/class/gpio/gpio16/value',
+              'B':'/sys/class/gpio/gpio20/value',
+              'C':'/sys/class/gpio/gpio26/value'
+              },
+         'leds':
+             {'Red':'/sys/class/gpio/gpio5/value',
+              'Green':'/sys/class/gpio/gpio6/value',
+              'Blue':'/sys/class/gpio/gpio13/value'
+              },
+         'reset':'/sys/class/gpio/gpio21/value'
+         }
+#Line follower config
+CARDS = 1
+
+
+#Ardulab config
+if not DEBUG:
+    ideIP = "192.168.0.2/labs/ardulab"
+    blocklyIP = "192.168.0.2/labs/ardublocks"
+else:
+    ideIP = "weblab.deusto.es/labs/ardulab"
+    blocklyIP = "weblab.deusto.es/labs/ardublocks"
+

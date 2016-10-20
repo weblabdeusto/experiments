@@ -228,6 +228,7 @@ def endSession():
     chrono.stopChrono()
     board_manager.eraseMemory()
     best = chrono.getBestTime()
+    print 'Reporting: ' + str(best) + 'to circuit ' + CIRCUIT
     if best != None:
         db_manager.addUserTime(g.user["username"], best, CIRCUIT)
 

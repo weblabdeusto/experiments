@@ -206,11 +206,9 @@ def load():
 def logout():
     print g.user['username'] +' going out'
     app.logger.info(g.user['username'] + ' logout')
-
-    force_exited(g.user['session_id'])
     print "User close session and memory is going to be erased"
-    endSession()
-
+    endSession(g.user['username'])
+    force_exited(g.user['session_id'])
     return jsonify(error=False,auth=False)
 
 
@@ -223,7 +221,7 @@ def poll():
     # Save in User or Redis or whatever that the user has just polled
     return jsonify(error=False,auth=True)
 
-def endSession():
+def endSession(username):
     board_manager.stopLeds()
     chrono.stopChrono()
     board_manager.eraseMemory()
@@ -233,7 +231,7 @@ def endSession():
         print 'endSession tying to push'
         try:
             print g.user['username']
-            success, msg = db_manager.addUserTime(g.user['username'],best,CIRCUIT)
+            success, msg = db_manager.addUserTime(username,best,CIRCUIT)
         except Exception, ex:
             print 'Error: '+ ex.message
 
@@ -439,7 +437,8 @@ def status(session_id):
 def dispose_experiment(session_id):
     print "Weblab trying to delete user"
     print "Weblab erasing memory"
-    endSession()
+    username = redisClient.hget("weblab:active:{}".format(session_id), "username")
+    endSession(username)
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':
         back = redisClient.hget("weblab:active:{}".format(session_id), "back")

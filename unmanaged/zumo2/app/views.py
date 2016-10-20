@@ -236,6 +236,9 @@ def endSession():
             print 'PUSH RESULT: ' + msg
         except Exception, ex:
             print 'Error: '+ ex.message
+    else:
+        print 'best is None'
+        print 'best: '+ str(best)
 
 
 

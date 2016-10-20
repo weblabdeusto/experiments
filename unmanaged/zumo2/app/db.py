@@ -197,6 +197,7 @@ class dbManager(object):
                     }
                 }}
             )
+            print 'Time push done'
             return True, "Success registering user"
         except:
             return False, "Unexpected error"

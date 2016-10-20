@@ -203,7 +203,7 @@ class dbManager(object):
             return False, "Unexpected error"
 
     def addUserTime(self, username, time, circuit):
-
+        print 'trying to push time'
         active = self.getActiveCompetitions()
         competitions = self.getUserCompetitions(username)
         for comp in competitions:

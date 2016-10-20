@@ -228,9 +228,10 @@ def endSession():
     chrono.stopChrono()
     board_manager.eraseMemory()
     best = chrono.getBestTime()
-    print 'Reporting: ' + str(best) + 'to circuit ' + CIRCUIT
+    print 'Reporting: ' + str(best) + ' to circuit ' + CIRCUIT
     if best != None:
-        db_manager.addUserTime(g.user["username"], best, CIRCUIT)
+        success, msg = db_manager.addUserTime(db_manager,g.user['username'],best,CIRCUIT)
+        print 'PUSH RESULT: ' + msg
 
 
 def get_user_data(session_id):

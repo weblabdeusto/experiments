@@ -2,7 +2,6 @@ import time
 import subprocess
 import serial
 from threading import Thread
-from app import db_manager
 
 
 class BoardManager(object):

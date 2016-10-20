@@ -2,6 +2,7 @@ from threading import Thread
 from time import sleep
 from serial import Serial
 import timeit
+from db import dbManager
 
 class RFID_Reader(object):
 
@@ -11,6 +12,7 @@ class RFID_Reader(object):
         self.serial.baudrate = 9600
         self.serial.parity = "N"
         self.serial.bytesize = 8
+        self.db_manager = dbManager()
 
 
     def start(self):

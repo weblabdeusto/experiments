@@ -94,7 +94,7 @@ class Chrono(object):
                         print 'LAP DONE'
                         print self._lapInfo
                         if self._bestTime == None:
-                            self._card_ids = self._lapInfo['LapTime']
+                            self._bestTime = self._lapInfo['LapTime']
                         elif self._bestTime > self._lapInfo['LapTime']:
                             self._bestTime = self._lapInfo['LapTime']
                         if self.socketio is not None:

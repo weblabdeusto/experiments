@@ -229,10 +229,8 @@ def endSession(username):
     print 'Reporting: ' + str(best) + ' to circuit ' + CIRCUIT
     if best != None:
         print 'endSession tying to push'
-        try:
-            success, msg = db_manager.addUserTime(username,best,CIRCUIT)
-        except Exception, ex:
-            print 'Error: '+ ex.message
+        success, msg = db_manager.addUserTime(username,best,CIRCUIT)
+
 
 
 

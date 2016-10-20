@@ -72,7 +72,9 @@ class Chrono(object):
             return True
 
     def getBestTime(self):
-        return self._bestTime
+        best = self._bestTime
+        self._bestTime = None
+        return best
 
     def resetBestTime(self):
         self._bestTime=None

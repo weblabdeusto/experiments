@@ -7,7 +7,7 @@ from flask_socketio import disconnect
 from functools import wraps
 
 from datetime import datetime, timedelta
-from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale, camera
+from app import app, socketio, zumo, checker, weblab, redisClient, board_manager, chrono, get_locale
 
 from config import basedir, ideIP, blocklyIP, DEBUG
 
@@ -113,7 +113,7 @@ def disconnect_request():
 @socketio.on('reconnect')
 def test_reconnect():
     print 'Reonected to general channel'
-    socketio.emit('General', {'data': 'Reconnected'},broadcast=True)
+    #socketio.emit('General', {'data':"Ready"}, broadcast=True)
 
 @socketio.on('connect')
 def test_connect():
@@ -252,7 +252,7 @@ def endSession():
     board_manager.stopLeds()
     chrono.stopChrono()
     board_manager.eraseMemory()
-    camera.close()
+    #camera.close()
 
 def get_user_data(session_id):
     pipeline = redisClient.pipeline()

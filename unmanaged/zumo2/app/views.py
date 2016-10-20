@@ -230,8 +230,13 @@ def endSession():
     best = chrono.getBestTime()
     print 'Reporting: ' + str(best) + ' to circuit ' + CIRCUIT
     if best != None:
-        success, msg = db_manager.addUserTime(db_manager,g.user['username'],best,CIRCUIT)
-        print 'PUSH RESULT: ' + msg
+        print 'endSession tying to push'
+        try:
+            success, msg = db_manager.addUserTime(db_manager,g.user['username'],best,CIRCUIT)
+            print 'PUSH RESULT: ' + msg
+        except Exception, ex:
+            print 'Error: '+ ex.message
+
 
 
 def get_user_data(session_id):

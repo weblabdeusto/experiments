@@ -5,7 +5,6 @@ workspace.xml
 *.pid*
 #ignore build directory
 .build/
-*.txt*
 #ignore user files
 #src/
 

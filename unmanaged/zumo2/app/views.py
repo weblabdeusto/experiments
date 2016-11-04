@@ -1,6 +1,4 @@
 
-#TODO: - Check last poll for erasing memory ONLY IF NECESARY
-#TODO: - Improve logging
 
 from flask import render_template, redirect, url_for, request, g, jsonify, current_app, session, Response
 from flask_socketio import disconnect
@@ -37,17 +35,20 @@ def check_permission(func):
     def wrapper(*args, **kwargs):
         session_id = session.get('zumo_session_id')
         if not session_id:
+            print 'No session cookie found'
             return jsonify(error=False, auth=False, reason="No zumo_session_id found in cookies")
 
         user_data = get_user_data(session_id)
         if user_data is None:
+            print 'No session in Redis'
             return jsonify(error=False, auth=False, reason="session_id not found in Redis")
 
         if user_data['exited'] == 'true':
+            print 'User previusly exited'
             return jsonify(error=False, auth=False, reason="User had previously clicked on logout")
-
+   
         user_data['session_id'] = session_id
-
+        print user_data
         renew_poll(session_id)
         g.user = user_data
         return func(*args, **kwargs)
@@ -221,11 +222,13 @@ def poll():
     # Save in User or Redis or whatever that the user has just polled
     return jsonify(error=False,auth=True)
 
-def endSession(username):
+def endSession(username,session_id):
     board_manager.stopLeds()
     chrono.stopChrono()
     board_manager.eraseMemory()
+    delete_session(session_id)
     best = chrono.getBestTime()
+    
     print 'Reporting: ' + str(best) + ' to circuit ' + CIRCUIT
     if best != None:
         print 'endSession tying to push'
@@ -435,11 +438,17 @@ def dispose_experiment(session_id):
     print "Weblab trying to delete user"
     print "Weblab erasing memory"
     username = redisClient.hget("weblab:active:{}".format(session_id), "username")
-    endSession(username)
+    endSession(username,session_id)
+    print 'Session clossed'
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':
+        return 'deleted'
+    return 'unknown op'
+
+def delete_session(session_id):
         back = redisClient.hget("weblab:active:{}".format(session_id), "back")
         if back is not None:
+            print 'Redis session delete'
             pipeline = redisClient.pipeline()
             pipeline.delete("weblab:active:{}".format(session_id))
             pipeline.hset("wetblab:inactive:{}".format(session_id), "back", back)
@@ -448,7 +457,5 @@ def dispose_experiment(session_id):
             pipeline.expire("weblab:inactive:{}".format(session_id), 3600)
             pipeline.execute()
             print 'Session deleted'
-            return 'deleted'
-        return 'not found'
-    return 'unknown op'
+
 

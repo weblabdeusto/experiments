@@ -275,7 +275,7 @@ PositionUpdater = function (urls){
     };
 
     this.longPoll = function() {
-        _this = this
+        _this = this;
         return $.ajax({
                 type: "GET",
                 url: _this.update_position_url,

@@ -29,13 +29,16 @@ class Camera(object):
     @classmethod
     def _thread(cls):
         camera = cv2.VideoCapture(0)
-        camera.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320); 
-        camera.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 240);
-        camera.set(cv2.cv.CV_CAP_PROP_SATURATION,0.2);
+        camera.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320)
+        camera.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 240)
+        camera.set(cv2.cv.CV_CAP_PROP_SATURATION,0.2)
         time.sleep(1)
         stream = io.BytesIO()
         while True:
+            time.sleep(0.1)
             rc,img = camera.read()
+            print "Thread Frame"
+            print rc
             if not rc:
                 continue
             imgRGB=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)

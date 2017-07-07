@@ -28,3 +28,12 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.nickname)
+
+class Sample(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    active = db.Column(db.Boolean)
+    sample_height = db.Column(db.Float)
+    max_x = db.Column(db.Integer)
+    min_x = db.Column(db.Integer)
+    max_y = db.Column(db.Integer)
+    min_y = db.Column(db.Integer)

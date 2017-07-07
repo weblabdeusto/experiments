@@ -1,17 +1,17 @@
-from flask import render_template, flash, redirect, url_for, request, g, jsonify, Response
+from flask import render_template, redirect, url_for, request, g, jsonify, Response
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 from datetime import datetime, timedelta
 from app import app, db, lm
-from .models import User
-from config import LOGIN_URL
+from .models import User, Sample
+from config import DEBUG
 from functools import wraps
 import json
 import random
 import requests
 import time
-from gevent import monkey, queue
 from camera import Camera
+import redis
 
 def check_permission(func):
     @wraps(func)
@@ -38,10 +38,10 @@ def load_user(id):
 @app.before_request
 def before_request():
     g.user = current_user
-    if g.user.is_authenticated:
-        g.user.last_poll = datetime.now()
-        db.session.add(g.user)
-        db.session.commit()
+#    if g.user.is_authenticated:
+#        g.user.last_poll = datetime.now()
+#        db.session.add(g.user)
+#        db.session.commit()
 
 def gen(camera):
     """Video streaming generator function."""
@@ -49,6 +49,8 @@ def gen(camera):
         try:
             time.sleep(0.1)
             frame = camera.get_frame()
+            print "Frame: "
+            print frame
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
         except:
@@ -59,10 +61,7 @@ def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
-
-@app.route('/position_stream')
-def stream():
-    def events():
+def events():
         first = True
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         r = redis.StrictRedis(host='localhost', port=6379, db=13)
@@ -71,18 +70,31 @@ def stream():
             try:
                 time.sleep(0.2)
                 while r.get('events:position') != 'True' and not first:
+
                     time.sleep(0.2)
-                resp = requests.get('http://192.168.0.193:8083/position', headers=headers)
+
+                if DEBUG != True:
+                    resp = requests.get('http://192.168.0.193:8083/position', headers=headers)
+                else:
+                    resp = requests.get('http://localhost:8083/position', headers=headers)
                 x = json.loads(resp.content).get('x','')
                 y = json.loads(resp.content).get('y','')
                 z = json.loads(resp.content).get('z','')
+                des = json.loads(resp.content).get('desired','')
+                r.set('events:desiredposition', des)
                 r.set('events:position', 'False')
                 first = False
-                yield "data:%.1f:%.1f:%.1f\n\n" % (round(x,1),round(y,1),round(z,1))
+                yield "data:%.1f:%.1f:%.1f:%s\n\n" % (round(x,1),round(y,1),round(z,1),str(des))
             except:
+                print "position_stream failed"
                 break
 
+@app.route('/position_stream')
+def stream():
     return Response(events(), content_type='text/event-stream')
+
+
+
 
 @app.route('/push_position')
 def pushPosition():
@@ -94,25 +106,36 @@ def pushPosition():
         return jsonify(success=False)
 
 @app.route('/home')
-#@app.route('/labs/flies/home')
 @login_required
 def home():
     if datetime.now() >= g.user.max_date:
         time = 0
     else:
         time=(g.user.max_date - datetime.now()).seconds
+#    if DEBUG!=True:
+#        resp = requests.get("http://192.168.0.193:8083/autohome")
+#    else:
+#        resp = requests.get("http://localhost:8083/autohome")
+
+    samples=Sample.query.all()
+    for s in samples:
+        if s.active:
+            current = s.id-1
+            break
+
     return render_template('index.html',
                            title='Home',
                            user=g.user,
-                           timeleft=time)
+                           timeleft=time,
+                           samples=samples,
+                           current=current
+                           )
 
 @app.route('/test')
-#@app.route('/labs/flies/info')
 def test():
     return 'WORKS!'
 
 @app.route('/info')
-#@app.route('/labs/flies/info')
 @login_required
 def info():
     time=(g.user.max_date - datetime.now()).seconds
@@ -123,41 +146,78 @@ def info():
     return 'infoo'
 
 @app.route('/move', methods=['POST'])
-#@app.route('/labs/flies/move', methods=['POST'])
 @login_required
 @check_permission
 def move():
     axis = request.form['axis'].strip()
     direction = request.form['direction'].strip()
     mm = request.form['dist'].strip()
+
+    current_sample = request.form['current_sample'].strip()
+
+    try:
+        sample = Sample.query.get(int(current_sample)+1)
+        if axis == 'x':
+            min = sample.min_x
+            max = sample.max_x
+        elif axis == 'y':
+            min = sample.min_y
+            max = sample.max_y
+        else:
+            min = sample.sample_height
+            max = -1
+    except:
+        print 'error accessing database'
+        min = -1
+        max = -1
+
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
-    data = {'direction': direction,'dist': mm, 'axis': axis}
+    data = {'direction': direction,'dist': mm, 'axis': axis, 'min': min, 'max': max}
     data = json.dumps(data)
+    r = redis.StrictRedis(host='localhost', port=6379, db=13)
     try:
-        resp = requests.post('http://192.168.0.193:8083/move', data=data, headers=headers)
-#        resp = requests.post('http://localhost:8083/move', data=data, headers=headers)
-        print resp.content
+        if r.get('events:desiredposition')!='False':
+            if DEBUG!=True:
+                resp = requests.post('http://192.168.0.193:8083/move', data=data, headers=headers)
+            else:
+                resp = requests.post('http://localhost:8083/move', data=data, headers=headers)
+        else:
+            print "In movement"
+            return jsonify(success=False,auth=True)
         return jsonify(success=True, auth=True)
     except:
         return jsonify(success=False, auth=True)
 
+
 @app.route('/moveall', methods=['POST'])
-#@app.route('/labs/flies/moveall', methods=['POST'])
 @login_required
 @check_permission
 def moveall():
     x = request.form['x'].strip()
     y = request.form['y'].strip()
     z = request.form['z'].strip()
-    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
-    data = {'x': x,'y': y, 'z': z}
+    current_sample = request.form['current_sample'].strip()
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    r = redis.StrictRedis(host='localhost', port=6379, db=13)
+    if int(current_sample) !=-1:
+        sample = Sample.query.get(int(current_sample)+1)
+        data = {'x': x,'y': y, 'z': z,'max_x': sample.max_x,'min_x':sample.min_x, 'min_y':sample.min_y, 'max_y':sample.max_y, 'min_z':sample.sample_height, 'max_z': -1}
+    else:
+        data = {'x': x,'y': y, 'z': z,'max_x': -1,'min_x':-1, 'min_y':-1, 'max_y':-1, 'min_z':-1, 'max_z': -1}
     data = json.dumps(data)
     try:
-        resp = requests.post('http://192.168.0.193:8083/moveall', data=data, headers=headers)
-#        resp = requests.post('http://localhost:8083/moveall', data=data, headers=headers)
-        print resp.content
+        print "moveall in position: "+ r.get('events:desiredposition')
+        if r.get('events:desiredposition')!='False':
+            if DEBUG!= True:
+                resp = requests.post('http://192.168.0.193:8083/moveall', data=data, headers=headers)
+            else:
+                resp = requests.post('http://localhost:8083/moveall', data=data, headers=headers)
+            print resp.content
+        else:
+            print 'in movement'
+            return jsonify(success=False,auth=True)
         return jsonify(success=True, auth=True)
     except:
         return jsonify(success=False, auth=True)
@@ -167,7 +227,10 @@ def moveall():
 @check_permission
 def stopAll():
     try:
-        resp = requests.get('http://192.168.0.193:8083/stopall')
+        if DEBUG != True:
+            resp = requests.get('http://192.168.0.193:8083/stopall')
+        else:
+            resp = requests.get('http://localhost:8083/stopall')
         print resp.content
         return jsonify(success=True, auth=True)
     except:
@@ -202,8 +265,6 @@ def photo():
 @check_permission
 def fullphoto():
     try:
-        t = Thread(target=generate_photo)
-        t.start()
         return jsonify(success=True, auth=True)
     except:
         return jsonify(success=False, auth=True)
@@ -212,14 +273,15 @@ def generate_photo():
     print 'doing photo'    
 
 @app.route('/position')
-#@app.route('/labs/flies/position')
 @login_required
 @check_permission
 def position():
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     try:
-        resp = requests.get('http://192.168.0.193:8083/position', headers=headers)
-#        resp = requests.get('http://localhost:8083/position', headers=headers)
+        if DEBUG != True:
+            resp = requests.get('http://192.168.0.193:8083/position', headers=headers)
+        else:
+            resp = requests.get('http://localhost:8083/position', headers=headers)
         print resp.content
         x = json.loads(resp.content).get('x','')
         y = json.loads(resp.content).get('y','')
@@ -229,21 +291,41 @@ def position():
         return jsonify(success=False, auth=True)
 
 @app.route('/autohome')
-#@app.route('/labs/flies/autohome')
 @login_required
 @check_permission
 def autohome():
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     try:
-        resp = requests.get('http://192.168.0.193:8083/autohome', headers=headers)
-#        resp = requests.get('http://localhost:8083/autohome', headers=headers)
+        if DEBUG!=True:
+            resp = requests.get('http://192.168.0.193:8083/autohome', headers=headers)
+        else:
+            resp = requests.get('http://localhost:8083/autohome', headers=headers)
         return jsonify(success=True, auth=True)
     except:
         return jsonify(success=False, auth=True)
 
+@app.route('/updateconf',  methods=['POST'])
+@login_required
+@check_permission
+def updateConfiguration():
+    f = request.form
+    try:
+        for i in range(1,7):
+
+            sample = Sample.query.get(i)
+            print sample.id
+            sample.active = (f["sample"+str(i)+"[enabled]"]=="true")
+            sample.sample_height = float(f["sample"+str(i)+"[height]"])
+            print "Sample " + str(i)+": "+str(sample.active)+", "+str(sample.sample_height)
+            db.session.add(sample)
+            db.session.commit()
+
+        return jsonify(success=True, auth=True)
+    except:
+        print "Error saving config changes"
+        return jsonify(success=False, auth=True)
 
 @app.route('/poll')
-#@app.route('/labs/flies/poll')
 @login_required
 @check_permission
 def poll():
@@ -255,7 +337,6 @@ def poll():
     return jsonify(error=False, auth=True)
 
 @app.route('/logout')
-#@app.route('/labs/flies/logout')
 @login_required
 def logout():
     print g.user.nickname +' going out'
@@ -281,44 +362,11 @@ def logout():
 # should be stored in a Redis or 
 # SQL database.
 
-@app.route('/login/<session_id>/', methods=['GET', 'POST'])
-#@app.route('/labs/flies/login/<session_id>/', methods=['GET', 'POST'])
-def login(session_id):
-    demouser = User.query.filter_by(session_id=session_id).first()
-    if demouser is None:
-        return "Session identifier not found"
-    print 'Demouser: ' + demouser.back    
-    form = LoginForm()
-    if form.validate_on_submit():
-        user=User.query.filter_by(nickname=form.name.data).first()
-        if user is None:
-            user=User(nickname=form.name.data, session_id=session_id, max_date=demouser.max_date, last_poll=datetime.now(),
-                    back=demouser.back,weblab=False,permission=True)
-        if user.weblab:
-            flash('User name in use')
-            return redirect(url_for('login', session_id=session_id))
-        user.session_id = demouser.session_id
-        print 'user: '+user.session_id
-        db.session.add(user)
-        db.session.delete(demouser)
-        db.session.commit()
-        login_user(user)
-        return redirect(url_for('home'))
-    return render_template('login.html',
-                           title='Sign In',
-                           form=form)
-
 @app.route("/lab/<session_id>/")
-#@app.route("/labs/flies/lab/<session_id>/")
 def index(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is None:
         return "Session identifier not found"
-    if user.nickname == "demo":
-        user.weblab=False
-        db.session.add(user)
-        db.session.commit() 
-        return redirect(url_for('login', session_id=session_id))
     user.last_poll = datetime.now()
     user.weblab=True
     user.permission=True
@@ -330,6 +378,7 @@ def index(session_id):
 def get_json():
     # Retrieve the submitted JSON
     if request.data:
+        data = request.data
         data = request.data
     else:
         keys = request.form.keys() or ['']
@@ -345,7 +394,6 @@ def get_json():
 # 
 
 @app.route("/weblab/sessions/", methods=['POST'])
-#@app.route("/labs/flies/weblab/sessions/", methods=['POST'])
 def start_experiment():
     # Parse it: it is a JSON file containing two fields:
     request_data = get_json()
@@ -389,7 +437,6 @@ def start_experiment():
 # 
 
 @app.route('/weblab/sessions/<session_id>/status')
-#@app.route('/labs/flies/weblab/sessions/<session_id>/status')
 def status(session_id):
     user = User.query.filter_by(session_id=session_id).first()
     if user is not None: 
@@ -420,7 +467,6 @@ def status(session_id):
 # 
 
 @app.route('/weblab/sessions/<session_id>', methods=['POST'])
-#@app.route('/labs/flies/weblab/sessions/<session_id>', methods=['POST'])
 def dispose_experiment(session_id):
     request_data = get_json()
     if 'action' in request_data and request_data['action'] == 'delete':

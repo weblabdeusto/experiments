@@ -1,45 +1,81 @@
 <!DOCTYPE html>
 
 <html lan="en">
-  <head>
-    <title>Weblab microscope</title>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/microscope.css')}}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  </head>
-  <body>
-    <div class="container-fluid" id="nav1">
-      <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a href="#" class="navbar-brand">Weblab-Microscope </a>
-            </div>
-            <div>
-              <ul class="nav navbar-nav">
-                {% if g.user.is_authenticated() %}
-                <li><a href="{{ url_for('home') }}">Control</a></li>
-                <li><a href="{{ url_for('info') }}">Information</a></li>
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                {% endif %} 
-              </ul>
-              {% if g.user.is_authenticated() %}
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Conected as: <span> {{g.user.nickname}}</span></a><li>
-              </ul>
-              {% endif %} 
-            </div>
-          </div>
-      </nav>
-    </div>
-    <div>
-        {% block content %}{% endblock %}
-    </div>
-    <script>
-        var BACK_URL = "{{g.user.back}}";
-    </script>
-    <script type="text/javascript"  src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/microscope.js') }}"></script>
+    <head>
+        <title>Weblab microscope</title>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/microscope.css')}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>
+            {% block content %}{% endblock %}
+        </div>
+        <script>
+            var BACK_URL = "{{g.user.back}}";
+            var CURRENT_SAMPLE = {{ current }};
 
-  </body>
+            var SAMPLES = [];
+            {% for i in range(0,6) %}
+                SAMPLES[{{ i }}] = {
+                    {% if samples[i].active %}
+                        active: true,
+                    {% else %}
+                        active: false,
+                    {% endif %}
+                    height: {{ samples[i].sample_height }},
+                    max_x: {{ samples[i].max_x }},
+                    min_x: {{ samples[i].min_x }},
+                    max_y: {{ samples[i].max_y }},
+                    min_y: {{ samples[i].min_y }}
+                };
+            {% endfor %}
+
+            var MAG_DIST_RATIO ={
+                20: 60.2,
+                30: 55.3,
+                40: 50.4,
+                50: 45.1,
+                60: 40.9,
+                70: 35.5,
+                80: 30.2,
+                90: 25.5,
+                100: 20.8,
+                110: 15.2,
+                120: 10.8,
+                130: 9.7,
+                140: 8.4,
+                150: 7.2,
+                160: 6.9,
+                170: 5.4,
+                180: 3.2,
+                190: 2.1,
+                200: 1.0,
+                210: 1.5,
+                220: 0
+            };
+
+        </script>
+        <script type="text/javascript"  src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/microscope.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/widgets.js') }}"></script>
+<!--<script type="text/javascript" src="http://weblab.deusto.es/labs/flies/static/js/widgets.js"></script> -->
+
+        <script type="text/javascript">
+            var FIRST_CAMERA_URL = "https://cams.weblab.deusto.es/webcam/proxied.py/flies1";
+            var STATUS_UPDATES_FREQUENCY = 2500;
+
+            var augmentedViewEnabled = true; // To indicate in which mode we are.
+            var cameraRefresher; // To help refresh the main cameras.
+
+            var statusUpdaterTimer; //
+
+            cameraRefresher = new CameraRefresher("cam_img");
+            cameraRefresher.start(FIRST_CAMERA_URL);
+            timerDisplayer = new TimerDisplayer("timer");
+            timerDisplayer.setTimeLeft({{timeleft-1}});
+            timerDisplayer.startCountDown();
+        </script>
+    </body>
 </html>

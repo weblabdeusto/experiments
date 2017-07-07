@@ -4,112 +4,147 @@
 <div class="row" id="back">
     <div class="col-sm-3" style="margin-left:5%">
         <br>
-        <div class="container">
-            <h3>Machine view</h3>
-            <img id='cam_img' width="30%" src= 'http://cams.weblab.deusto.es/webcam/proxied.py/flies1'>
-        </div>
-        <br>
-        <div class="text-center">
-            <button id="mjpeg" type="button" class="btn btn-info btn-sm">MJPEG</button>
-            <button id="jpg" style="display:none" type="button" class="btn btn-info btn-sm">JPG</button>
-        </div>
-    </div>
-    <div class="col-sm-5">
-        <br>
-        <h3>Microscope view</h3>
-        <img width="100%" src= '{{url_for('video_feed')}}'>
-        <div class="text-center" style="margin-top: 5%">
-            <button id="photo" type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">PARTIAL PICTURE</button>
-            <button id="fullphoto" style="margin-left:5%" type="button" class="btn btn-info btn-md">FULL PICTURE</button>
-        </div>
-    </div>
-    <div class="col-sm-3" style="margin-left:2%">
         <div style="text-align:center">
             <h1>
                 <span class="timer" id="timer"></span>
             </h1>
         </div>
-        <br>
-        <div>
-            <h3>Controls</h3><br>
-            <div>
-                <span><b>X Axis: </b> </span>
-                <select name="menu" id='Xresolution' style="margin-left: 11%">
-                    <option value="0" selected>-</option>
-                    <option value="1">0.1</option>
-                    <option value="2">1</option>
-                    <option value="3">10</option>
-                </select><span> mm</span>
-                <button id='button_left' class="btn btn-default " style="margin-left:5%">Left</button>
-                <button id='button_right' class="btn btn-default">Right</button>
-            </div>
-            <br>
-            <div>
-                <span><b>Y Axis: </b> </span>
-                <select name="menu" id='Yresolution' style="margin-left: 11%">
-                    <option value="0" selected>-</option>
-                    <option value="1">0.1</option>
-                    <option value="2">1</option>
-                    <option value="3">10</option>
-                </select><span> mm</span>
-                <button id='button_back' class="btn btn-default" style="margin-left:5%">Down</button>
-                <button id='button_front' class="btn btn-default">Up</button>
-            </div>
-            <br>
-            <div>
-                <span><b>Bed level:</b> </span>
-                <select name="menu" id='Zresolution' style="margin-left: 6%">
-                    <option value="0" selected>-</option>
-                    <option value="1">0.1</option>
-                    <option value="2">1</option>
-                    <option value="3">10</option>
-                </select><span> mm</span>
-                <button id='button_up' class="btn btn-default" style="margin-left:5%">Farder</button>
-                <button id='button_down' class="btn btn-default">Closer</button>
-            </div>
+        <div  style="margin-top:11%">
+            <img id='cam_img' width="100%" src= 'https://cams.weblab.deusto.es/webcam/proxied.py/flies1'>
         </div>
         <br>
-        <div>
-            <h3>Position</h3><br>
-            <div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th width="20%"></th>
-                            <th width="33%">Current</th>
-                            <th width="40%">New position</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td width="20%"><b>X Axis: </b></td>
-                            <td width="30%" style="text-align:center"><span id="x_position"></span> mm</td>
-                            <td width="40%"><input id="x_new_position" style="width:40%; margin-left:7%"/> mm</td>
-                        </tr>
-                        <tr>
-                            <td width="20%"><b>Y Axis:</b></td>
-                            <td width="30%" style="text-align:center"><span id="y_position"></span> mm</td>
-                            <td width="40%"><input id="y_new_position" style="width:40%; margin-left:7%"/> mm</td>
-                        </tr>
-                        <tr>
-                            <td width="20%"><b>Z Axis:</b></td>
-                            <td width="30%" style="text-align:center"><span id="z_position"></span> mm</td>
-                            <td width="40"><input id="z_new_position" style="width:40%; margin-left:7%"/> mm</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="text-left" style="margin-left:5%">
-                    <button id="autohome" type="button" class="btn btn-info btn-sm">AUTOHOME</button>
-                    <button id="set" style='margin-left:5%' type="button" class="btn btn-info btn-sm">SET CHANGES</button>
-                    <button id="stop" style='margin-left:5%' type="button" class="btn btn-danger btn-sm">STOP</button>
-                </div>
-            </div>
+        <div class="text-center">
+            <!--<button id="mjpeg" type="button" class="btn btn-primary btn-sm">MJPEG</button>-->
+            <button id="jpg" style="display:none" type="button" class="btn btn-primary btn-sm">JPG</button>
         </div>
     </div>
-</div>
-<div class="text-center">
-    <br>
-    <button id="button_finish" type="button" class="btn btn-default btn-lg">Fisnish</button>
+    <div class="col-sm-5">
+
+        <h1 class="text-center"><b>Weblab-Microscope</b></h1>
+        <br>
+        <div class="text-center" style="margin-left:5%">
+            {% if samples[0].active %}
+                <button id="btn_sample1" style="margin-right: 1%" type="button" class="btn btn-primary btn-md">Sample 1</button>
+            {% else %}
+                <button id="btn_sample1" style="margin-right: 1%" type="button" class="btn btn-primary btn-md" disabled>Sample 1</button>
+            {% endif %}
+            {% if samples[1].active %}
+                <button id="btn_sample2" style="margin-right: 1%" type="button" class="btn btn-primary btn-md">Sample 2</button>
+            {% else %}
+                <button id="btn_sample2" style="margin-right: 1%" type="button" class="btn btn-primary btn-md" disabled>Sample 2</button>
+            {% endif %}
+            {% if samples[2].active %}
+                <button id="btn_sample3" style="margin-right: 1%" type="button" class="btn btn-primary btn-md">Sample 3</button>
+            {% else %}
+                <button id="btn_sample3" style="margin-right: 1%" type="button" class="btn btn-primary btn-md" disabled>Sample 3</button>
+            {% endif %}
+            {% if samples[3].active %}
+                <button id="btn_sample4" style="margin-right: 1%" type="button" class="btn btn-primary btn-md">Sample 4</button>
+            {% else %}
+                <button id="btn_sample4" style="margin-right: 1%" type="button" class="btn btn-primary btn-md" disabled>Sample 4</button>
+            {% endif %}
+            {% if samples[4].active %}
+                <button id="btn_sample5" style="margin-right: 1%" type="button" class="btn btn-primary btn-md">Sample 5</button>
+            {% else %}
+                <button id="btn_sample5" style="margin-right: 1%" type="button" class="btn btn-primary btn-md" disabled>Sample 5</button>
+            {% endif %}
+            {% if samples[5].active %}
+                <button id="btn_sample6" style="margin-right: 1%" type="button" class="btn btn-primary btn-md">Sample 6</button>
+            {% else %}
+                <button id="btn_sample6" style="margin-right: 1%" type="button" class="btn btn-primary btn-md" disabled>Sample 6</button>
+            {% endif %}
+
+        </div>
+        <br>
+        <img width="100%" src= '{{url_for('video_feed')}}'>
+        <div class="text-center" style="margin-top: 5%">
+            <button id="photo" type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal">PARTIAL PICTURE</button>
+            <!--<button id="fullphoto" style="margin-left:5%" type="button" class="btn btn-primary btn-md">FULL PICTURE</button>-->
+        </div>
+        <div class="text-center">
+            <br>
+            <button id="button_finish" type="button" class="btn btn-default btn-lg">Finish</button>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin-left:2%">
+
+            <div class="panel panel-primary" style="margin-top:10%">
+                <div class="panel-heading"><b>Position</b></div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="30%">X position</th>
+                                <th width="30%">Y position</th>
+                                <th width="40%">Working distance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td width="30%" style="text-align:center"><span id="x_position"></span> mm</td>
+                                <td width="30%" style="text-align:center"><span id="y_position"></span> mm</td>
+                                <td width="40%" style="text-align:center"><span id="z_position"></span> mm</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><b>Controls</b></div>
+                <div class="panel-body">
+                    <section class="col-md-12 row container controls">
+                        <div class="row">
+                            <button type="button" class="col-md-2 col-md-offset-5 forward" id="button_back">
+                                <img src="{{url_for('static', filename="img/up.png") }}" >
+                            </button>
+                        </div>
+                        <div class="row">
+                            <button type="button" class="col-md-2 col-md-offset-3" id="button_left">
+                                <img src="{{ url_for('static', filename="img/left.png") }}" >
+                            </button>
+                            <button type="button" class="col-md-2 col-md-offset-2" id="button_right">
+                                <img src="{{url_for('static', filename="img/right.png") }}" >
+                            </button>
+                        </div>
+                        <div class="row">
+                            <button type="button" class="col-md-2 col-md-offset-5" id="button_front">
+                                <img src="{{url_for('static', filename="img/down.png") }}" >
+                            </button>
+                        </div>
+                        <br>
+                    </section>
+                    <div>
+                        <span>Movment resolution: </span>
+                        <select name="menu" id='XYresolution' style="margin-left: 3%">
+                            <option value="1" selected>0.1</option>
+                            <option value="2">1</option>
+                            <option value="3">10</option>
+                        </select><span> mm</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><b>Microscope configuration</b></div>
+                <div class="panel-body">
+                    <div>
+                        <span>Operation mode: </span>
+                        <input type="radio" name="auto_manual" value="automatic" checked="checked" style="margin-left: 5%">Automatic
+                        <input type="radio" name="auto_manual" value="manual"  style="margin-left: 5%">Manual
+                    </div>
+                    <div style="margin-top:5%">
+                        <span>Magnification: <span id="magnification_value">20</span>x</span>
+                        <input type="range" id="magnification_bar" style="margin-top:1%;width:100%" value="20"min="20" max="220" step="10">
+
+                    </div>
+                    <div style="margin-top:5%">
+                        <span>Working distance: </span>
+                        <input type="number" disabled id="z_position_in" min="0.0" max="100.0" step="0.1" style="width: 20%; margin-left: 5%">
+                    </div>
+                </div>
+            </div>
+            <button id="btn_adv_config" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#configModal">Admin configuration</button>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="myModal" role="dialog">
@@ -130,22 +165,136 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/widgets.js') }}"></script>
-<!--<script type="text/javascript" src="http://weblab.deusto.es/labs/flies/static/js/widgets.js"></script> -->
+<div class="modal fade" id="configModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Advanced configuration</h4>
+            </div>
+            <div class="modal-body text-center">
+                <div class="tabs">
+                    <ul class="tab-links">
+                        <li><a href="#tab1">Zone 1 </a></li>
+                        <li><a href="#tab2">Zone 2 </a></li>
+                        <li><a href="#tab3">Zone 3</a></li>
+                        <li><a href="#tab4">Zone 4</a></li>
+                        <li><a href="#tab5">Zone 5</a></li>
+                        <li><a href="#tab6">Zone 6</a></li>
+                    </ul>
 
-<script type="text/javascript">
-    var FIRST_CAMERA_URL = "http://cams.weblab.deusto.es/webcam/proxied.py/flies1";
-    var STATUS_UPDATES_FREQUENCY = 2500;
+                    <div class="tab-content">
+                        <div id="tab1" class="tab">
+                            <div>
+                                <span>Status: </span>
+                                {% if samples[0].active %}
+                                    <input type="radio" name="enable1" value=true  style="margin-left:5%" checked>Enabled
+                                    <input type="radio" name="enable1" value=false style="margin-left:5%" >Disabled
+                                {% else %}
+                                    <input type="radio" name="enable1" value=true  style="margin-left:5%" >Enabled
+                                    <input type="radio" name="enable1" value=false style="margin-left:5%" checked>Disabled
+                                {% endif %}
+                            </div>
+                            <div style="margin-top: 3%">
+                                <span>Sample height: </span>
+                                <input type="number" id="height1" min="0.0" max="100.0" step="0.1" style="width: 20%; margin-left: 5%" value="{{ samples[0].sample_height }}">
+                            </div>
+                        </div>
 
-    var augmentedViewEnabled = true; // To indicate in which mode we are.
-    var cameraRefresher; // To help refresh the main cameras.
+                        <div id="tab2" class="tab">
+                            <div>
+                                <span>Status: </span>
+                                {% if samples[1].active %}
+                                    <input type="radio" name="enable2" value=true  style="margin-left:5%" checked>Enabled
+                                    <input type="radio" name="enable2" value=false style="margin-left:5%" >Disabled
+                                {% else %}
+                                    <input type="radio" name="enable2" value=true  style="margin-left:5%" >Enabled
+                                    <input type="radio" name="enable2" value=false style="margin-left:5%" checked>Disabled
+                                {% endif %}
+                            </div>
+                            <div style="margin-top: 3%">
+                                <span>Sample height: </span>
+                                <input type="number" id="height2" min="0.0" max="100.0" step="0.1" style="width: 20%; margin-left: 5%" value="{{ samples[1].sample_height }}">
+                            </div>
+                        </div>
 
-    var statusUpdaterTimer; //
+                        <div id="tab3" class="tab">
+                            <div>
+                                <span>Status: </span>
+                                {% if samples[2].active %}
+                                    <input type="radio" name="enable3" value=true  style="margin-left:5%" checked>Enabled
+                                    <input type="radio" name="enable3" value=false style="margin-left:5%" >Disabled
+                                {% else %}
+                                    <input type="radio" name="enable3" value=true  style="margin-left:5%" >Enabled
+                                    <input type="radio" name="enable3" value=false style="margin-left:5%" checked>Disabled
+                                {% endif %}
+                            </div>
+                            <div style="margin-top: 3%">
+                                <span >Sample height: </span>
+                                <input type="number" id="height3" min="0.0" max="100.0" step="0.1" style="width: 20%; margin-left: 5%" value="{{ samples[2].sample_height }}">
+                            </div>
+                        </div>
 
-    cameraRefresher = new CameraRefresher("cam_img");
-    cameraRefresher.start(FIRST_CAMERA_URL);
-    timerDisplayer = new TimerDisplayer("timer");
-    timerDisplayer.setTimeLeft({{timeleft-1}});
-    timerDisplayer.startCountDown();
-</script>
+                        <div id="tab4" class="tab">
+                            <div>
+                                <span >Status: </span>
+                                {% if samples[3].active %}
+                                    <input type="radio" name="enable4" value=true  style="margin-left:5%" checked>Enabled
+                                    <input type="radio" name="enable4" value=false style="margin-left:5%" >Disabled
+                                {% else %}
+                                    <input type="radio" name="enable4" value=true  style="margin-left:5%" >Enabled
+                                    <input type="radio" name="enable4" value=false style="margin-left:5%" checked>Disabled
+                                {% endif %}
+                            </div>
+                            <div style="margin-top: 3%">
+                                <span >Sample height: </span>
+                                <input type="number" id="height4" min="0.0" max="100.0" step="0.1" style="width: 20%; margin-left: 5%" value="{{ samples[3].sample_height }}">
+                            </div>
+                        </div>
+                        <div id="tab5" class="tab">
+                            <div>
+                                <span >Status: </span>
+                                {% if samples[4].active %}
+                                    <input type="radio" name="enable5" value=true  style="margin-left:5%" checked>Enabled
+                                    <input type="radio" name="enable5" value=false style="margin-left:5%" >Disabled
+                                {% else %}
+                                    <input type="radio" name="enable5" value=true  style="margin-left:5%" >Enabled
+                                    <input type="radio" name="enable5" value=false style="margin-left:5%" checked>Disabled
+                                {% endif %}
+                            </div>
+                            <div style="margin-top: 3%">
+                                <span >Sample height: </span>
+                                <input type="number" id="height5" min="0.0" max="100.0" step="0.1" style="width: 20%; margin-left: 5%" value="{{ samples[4].sample_height }}">
+                            </div>
+                        </div>
+                        <div id="tab6" class="tab">
+                            <div>
+                                <span>Status: </span>
+                                {% if samples[5].active %}
+                                    <input type="radio" name="enable6" value=true  style="margin-left:5%" checked>Enabled
+                                    <input type="radio" name="enable6" value=false style="margin-left:5%" >Disabled
+                                {% else %}
+                                    <input type="radio" name="enable6" value=true  style="margin-left:5%" >Enabled
+                                    <input type="radio" name="enable6" value=false style="margin-left:5%" checked>Disabled
+                                {% endif %}
+                            </div>
+                            <div style="margin-top: 3%">
+                                <span >Sample height: </span>
+                                <input type="number" id="height6" min="0.0" max="100.0" step="0.1" style="width: 20%; margin-left: 5%" value="{{ samples[5].sample_height }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right" style="margin-top:3%">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_config"  type="button" class="btn btn-primary btn-sm">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
